@@ -2,11 +2,18 @@ name: Build & Deploy Flutter Web to docs
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [main]
+    paths:
+      - "lib/**"
+      - "web/**"
+      - "assets/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - "!docs/**"          # ignore docs changes so we don't infinite-loop
+  workflow_dispatch:        # allow manual runs from Actions tab
 
 permissions:
-  contents: write   # needed to push changes back to the repo
+  contents: write           # needed so the workflow can commit to the repo
 
 jobs:
   build:
@@ -15,38 +22,39 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Setup Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          channel: "stable"          # or set flutter-version: "3.22.x" if you want a fixed one
 
-      - name: Cache pub packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-pub-cache-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-cache-
+      - name: Flutter version
+        run: flutter --version
 
-      - name: flutter pub get
+      - name: Get packages
         run: flutter pub get
 
-      - name: Build Web (for GitHub Pages in /portfolio)
+      - name: Build web
         run: flutter build web --release --base-href /portfolio/
 
-      - name: Prepare docs folder
+      - name: Move build to docs
         run: |
           rm -rf docs
           mkdir -p docs
-          cp -R build/web/* docs/
-          # helps Pages ignore Jekyll processing
-          touch docs/.nojekyll
+          cp -r build/web/* docs/
+          # SPA fallback so direct URLs work on GitHub Pages
+          cp docs/index.html docs/404.html
 
-      # Automatically commit the updated docs/ back to main
       - name: Commit & push docs
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: update docs (GitHub Actions)"
-          file_pattern: docs/**
-
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "ci: deploy web to docs [skip ci]"
+            git push
+          fi
