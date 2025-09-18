@@ -12,9 +12,6 @@ import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 
-
-
-
 void main() {
   runApp(const PortfolioApp());
 }
@@ -31,7 +28,6 @@ extension _MapIndexed<E> on Iterable<E> {
     }
   }
 }
-
 
 class _PortfolioAppState extends State<PortfolioApp> {
     ThemeMode _mode = ThemeMode.dark;
