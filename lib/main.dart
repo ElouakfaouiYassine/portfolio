@@ -40,14 +40,14 @@ class _PortfolioAppState extends State<PortfolioApp> {
     @override
     Widget build(BuildContext context) {
       return MaterialApp(
-        title: 'Portfolio',
+        title: 'Elouakfaoui Yassine',
         debugShowCheckedModeBanner: false,
         themeMode: _mode,
-          locale: I18n.locale,                    // 👈 use chosen language
+          locale: I18n.locale,
         supportedLocales: const [
           Locale('en'),
           Locale('fr'),
-          Locale('ar'),                         // RTL locale
+          Locale('ar'),
         ],
         builder: (context, child) => Directionality(
           textDirection: I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
@@ -61,7 +61,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
         ],
         localeResolutionCallback: (device, supported) =>
             supported.firstWhere((l) => l.languageCode == I18n.current, orElse: () => const Locale('en')),
-        // ⬇️ Replace your `theme:` and `darkTheme:` inside MaterialApp
+
         scrollBehavior: const MaterialScrollBehavior().copyWith(
           dragDevices: {
             PointerDeviceKind.touch,
@@ -74,7 +74,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
           useMaterial3: true,
           brightness: Brightness.light,
           colorSchemeSeed: Colors.indigo,
-          // keep only ONE textTheme:
+
           textTheme: I18n.current == 'ar'
               ? GoogleFonts.cairoTextTheme(Typography.material2021(platform: TargetPlatform.android).black)
               : Typography.material2021(platform: TargetPlatform.android).black.apply(
@@ -116,7 +116,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
           colorSchemeSeed: Colors.indigo,
           scaffoldBackgroundColor: const Color(0xFF0B0D13),
           cardColor: const Color(0x80121623),
-          // locale-aware dark text theme:
+
           textTheme: I18n.current == 'ar'
               ? GoogleFonts.cairoTextTheme(Typography.whiteCupertino)
               : Typography.whiteCupertino,
@@ -168,7 +168,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
   }
 }
 
-// ==================== CONFIG (edit this) ====================
+
 class ProfileConfig {
   static const name = 'Elouakfaoui Yassine';
   static const title = 'Mobile Developer & SOC Analyst';
@@ -247,7 +247,7 @@ class ProfileConfig {
       id: 'ecommerce',
     ),
     Project(
-      title: 'Protect House App',
+      title: 'StopFire App',
       kind: 'Mobile (Kotlin)',
       summary:
       'Created a real-time alert app that detects charging-related fire risks. Implemented instant notifications to warn users of potential hazards.',
@@ -256,8 +256,8 @@ class ProfileConfig {
       demo: '',
       imageUrl: 'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Feature%20graphic.png',
       category: 'mobile',
-      detail: 'SOC playbook for phishing: detections, triage, containment and lessons learned.',
-        images: [
+      detail: 'Protect Your House App is a mobile application built with Kotlin to strengthen home safety against fire risks caused by charging devices. It continuously monitors charging conditions, detects anomalies in real-time, and provides instant notifications to alert users. The app is designed with an MVVM architecture to ensure scalability, clean code, and maintainability.',
+      images: [
           'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/2.png',
           'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250704_224606.png',
           'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250708_235434.png',
@@ -265,10 +265,13 @@ class ProfileConfig {
           'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr1.png',
           'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr2.png',
         ],
-        highlights: [
-          'Splunk correlation & dashboards.',
-          'IR checklist and containment steps.',
-        ],
+      highlights: [
+        'Built with Kotlin and MVVM architecture for clean and maintainable code.',
+        'Real-time monitoring of charging devices to prevent fire hazards.',
+        'Instant notifications and alerts to warn users of risks.',
+        'Lightweight UI optimized for fast performance and low battery usage.',
+        'Modular design enabling easy future expansion (e.g., IoT integration).',
+      ],
       id: 'stopfire',
     ),
     Project(
@@ -399,11 +402,12 @@ class ProfileConfig {
 
   static final certs = <Certification>[
     Certification('Python Programming', 'Cisco', '2023'),
-    Certification('Blue Team Fundamentals', 'CyberWarFare Labs', '2025'),
+    Certification('Blue Team Fundamentals (BTF)', 'CyberWarFare Labs', '2025'),
+    Certification('Cyber Security Analyst (C3SA)', 'CyberWarFare Labs', '2025'),
   ];
 }
 
-// ==================== MODELS ====================
+
 class Project {
   final String title;
   final String kind;
@@ -453,7 +457,7 @@ class Certification {
   const Certification(this.name, this.issuer, this.year);
 }
 
-// ==================== HOME ====================
+
 class PortfolioHome extends StatefulWidget {
     final VoidCallback onToggleTheme;
     final bool isDark;
@@ -502,7 +506,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   int _active = 0;
 
   void _handleScrollHighlight() {
-    // pick the section whose top is closest to the "focus line" (120 px from top)
+
     const focusY = 120.0;
     double best = double.infinity;
     int bestIdx = _active;
@@ -512,7 +516,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
       if (ctx == null) continue;
       final box = ctx.findRenderObject();
       if (box is! RenderBox) continue;
-      final dy = box.localToGlobal(Offset.zero).dy; // section top in viewport
+      final dy = box.localToGlobal(Offset.zero).dy;
       final score = (dy - focusY).abs();
       if (score < best) { best = score; bestIdx = i; }
     }
@@ -533,7 +537,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _openProject(match);
       });
-      // NOTE: analytics call you added earlier stays as-is (move it above if needed)
+
     }
 
     _scroll.addListener(_handleScrollHighlight);
@@ -563,7 +567,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   void _downloadResume() async {
     analytics.trackEvent('Resume Click');
     final url = ProfileConfig.resumeUrl.isEmpty
-        ? '/assets/resume.pdf'   // local web asset fallback
+        ? '/assets/resume.pdf'
         : ProfileConfig.resumeUrl;
     await _launch(url);
   }
@@ -572,10 +576,10 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width >= 980;
 
-    // ✅ ADD: Shortcuts/Actions wrapper
+
     return Shortcuts(
         shortcuts: {
-          // Pressing digits 1..8 will trigger ActivateIntent
+
           LogicalKeySet(LogicalKeyboardKey.digit1): const ActivateIntent(),
           LogicalKeySet(LogicalKeyboardKey.digit2): const ActivateIntent(),
           LogicalKeySet(LogicalKeyboardKey.digit3): const ActivateIntent(),
@@ -607,7 +611,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                 child: Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,          // glass = transparent
+        backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(ProfileConfig.name),
         flexibleSpace: ClipRect(
@@ -625,7 +629,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         ),
         actions: MediaQuery.of(context).size.width >= 980
             ? [
-          // dynamic nav buttons with active highlight
+
           ..._sections.mapIndexed((i, entry) => _navItemButton(
             label: entry.key,
             onTap: () => _scrollTo(entry.value),
@@ -716,10 +720,10 @@ class _PortfolioHomeState extends State<PortfolioHome> {
       ),
       body: Stack(
         children: [
-          // ✨ Parallax orbs behind all content
+
           ParallaxOrbs(controller: _scroll, isDark: widget.isDark),
 
-          // content
+
       Scrollbar(
         controller: _scroll,
         thumbVisibility: true,
@@ -824,7 +828,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
 class Section extends StatelessWidget {
   final Widget child;
   final bool showDivider;
-  final bool altBackground; // 👈 new flag
+  final bool altBackground;
 
   const Section({
     super.key,
@@ -837,8 +841,8 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     final bg = altBackground
         ? Theme.of(context).brightness == Brightness.dark
-        ? Colors.white.withOpacity(0.02) // subtle tint for dark mode
-        : Colors.black.withOpacity(0.03) // subtle tint for light mode
+        ? Colors.white.withOpacity(0.02)
+        : Colors.black.withOpacity(0.03)
         : Colors.transparent;
 
     return Container(
@@ -852,7 +856,7 @@ class Section extends StatelessWidget {
               Center(child: child),
               if (showDivider) ...[
                 const SizedBox(height: 28),
-                const _GradientDivider(), // from our previous step
+                const _GradientDivider(),
               ],
             ],
           ),
@@ -895,7 +899,7 @@ class _GradientDividerState extends State<_GradientDivider>
               end: Alignment(1.0 + _c.value * 2, 0),
               colors: const [
                 Colors.transparent,
-                Color(0x66FFFFFF), // glowing center
+                Color(0x66FFFFFF),
                 Colors.transparent,
               ],
               stops: const [0.2, 0.5, 0.8],
@@ -909,7 +913,7 @@ class _GradientDividerState extends State<_GradientDivider>
 
 
 
-// ==================== HERO ====================
+
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
@@ -1044,7 +1048,7 @@ class _HeroVisualState extends State<_HeroVisual> with TickerProviderStateMixin 
     return AnimatedBuilder(
       animation: _c,
       builder: (context, _) {
-        final t = (_c.value - .5) * 2; // -1..1
+        final t = (_c.value - .5) * 2;
         return AspectRatio(
           aspectRatio: 4 / 3,
           child: Stack(
@@ -1113,7 +1117,7 @@ class _HeroVisualState extends State<_HeroVisual> with TickerProviderStateMixin 
   }
 }
 
-// ==================== ABOUT ====================
+
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
@@ -1174,7 +1178,7 @@ class _Pill extends StatelessWidget {
   }
 }
 
-// ⬇️ Replace your SectionTitle with this:
+
 class SectionTitle extends StatelessWidget {
   final String text;
   const SectionTitle(this.text, {super.key});
@@ -1210,7 +1214,7 @@ class SectionTitle extends StatelessWidget {
 }
 
 
-// ==================== SKILLS (Tabs) ====================
+
 class SkillsSection extends StatefulWidget {
   const SkillsSection({super.key});
 
@@ -1254,7 +1258,7 @@ class _SkillsSectionState extends State<SkillsSection>
         ),
         const SizedBox(height: 16),
         Align(
-          alignment: Alignment.centerLeft, // <- prevent centering by switcher
+          alignment: Alignment.centerLeft,
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             switchInCurve: Curves.easeOut,
@@ -1263,7 +1267,7 @@ class _SkillsSectionState extends State<SkillsSection>
               opacity: anim,
               child: SizeTransition(
                 sizeFactor: anim,
-                axisAlignment: -1.0, // grow from the left
+                axisAlignment: -1.0,
                 child: child,
               ),
             ),
@@ -1295,7 +1299,7 @@ class _SkillsSectionState extends State<SkillsSection>
   }
 }
 
-// ==================== PROJECTS ====================
+
 class ProjectsSection extends StatefulWidget {
   const ProjectsSection({super.key});
 
@@ -1372,7 +1376,7 @@ class _ProjectCardState extends State<ProjectCard> {
       child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Image + overlay as you have it
+
         AspectRatio(
           aspectRatio: 16 / 9,
 
@@ -1396,7 +1400,7 @@ class _ProjectCardState extends State<ProjectCard> {
               Positioned(
                 right: 10,
                 bottom: 10,
-                child: Material( // <- provides InkWell ripple
+                child: Material(
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(DS.pill),
@@ -1423,14 +1427,14 @@ class _ProjectCardState extends State<ProjectCard> {
             ],
           ),
         ),
-        // 👇 restored content
+
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // kind + 3 tags
+
                 Row(children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -1494,7 +1498,7 @@ class _ProjectCardState extends State<ProjectCard> {
 
 
   void _openDetails(BuildContext context, Project p) {
-    // Set the URL fragment on Web; no-op on mobile/desktop
+
     web.replaceHash('project=${p.id}');
     analytics.trackEvent('Project Open', {'id': p.id, 'title': p.title});
     showDialog(
@@ -1509,12 +1513,12 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
       ),
     ).then((_) {
-            // Clear hash when modal closes (Web only)
+
             web.clearHash();
     });
   }
 }
-// ==================== EXPERIENCE ====================
+
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
 
@@ -1621,7 +1625,7 @@ class _TimelineDot extends StatelessWidget {
   }
 }
 
-// ==================== CERTIFICATIONS ====================
+
 class CertsSection extends StatelessWidget {
   const CertsSection({super.key});
 
@@ -1685,7 +1689,7 @@ class _CertCard extends StatelessWidget {
   }
 }
 
-// ==================== CONTACT ====================
+
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
 
@@ -1741,7 +1745,7 @@ class Footer extends StatelessWidget {
   }
 }
 
-// ==================== HELPERS ====================
+
 Future<void> _launch(String url) async {
   final parsed = Uri.tryParse(url);
   if (parsed == null) return;
@@ -2061,7 +2065,6 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
             Row(
               children: [
                 Expanded(
@@ -2090,7 +2093,7 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
                   child: Text(p.kind, style: const TextStyle(fontSize: 12)),
                 ),
                 const SizedBox(width: 12),
-                Expanded( // 👈 give Wrap a max width so it can wrap
+                Expanded(
                   child: Wrap(
                   spacing: 10,
                   runSpacing: 2,
@@ -2223,7 +2226,7 @@ class _ImageLightboxState extends State<_ImageLightbox> {
               ),
             ),
           ),
-          // Close
+
           Positioned(
             top: 24,
             right: 24,
@@ -2235,7 +2238,7 @@ class _ImageLightboxState extends State<_ImageLightbox> {
               tooltip: 'Close',
             ),
           ),
-          // Prev / Next
+
           Positioned.fill(
             child: Row(
               children: [
@@ -2386,7 +2389,7 @@ class _TestimonialCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ⬇️ In _TestimonialCard.build(), replace the `card` content with:
+
     final theme = Theme.of(context);
     final card = Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -2440,7 +2443,7 @@ class Testimonial {
   final String quote;
   final String name;
   final String role;
-  final String avatar; // network or assets path
+  final String avatar;
   const Testimonial({required this.quote, required this.name, required this.role, required this.avatar});
 }
 
@@ -2533,7 +2536,7 @@ class DS {
   static const pill = 999.0;
 
 
-  static const surfaceGlass = Color(0x0FFFFFFF); // white with tiny opacity
+  static const surfaceGlass = Color(0x0FFFFFFF);
   static const divider = Color(0x1AFFFFFF);
 
   static List<BoxShadow> shadowSoft(BuildContext c) => [
@@ -2546,7 +2549,7 @@ class DS {
   ];
 }
 
-// === Parallax Orbs Background ===
+
 class ParallaxOrbs extends StatelessWidget {
   final ScrollController controller;
   final bool isDark;
@@ -2565,7 +2568,7 @@ class ParallaxOrbs extends StatelessWidget {
           builder: (_, __) {
             final o = controller.hasClients ? controller.offset : 0.0;
 
-            // Parallax factors (smaller = slower = deeper)
+
             final a = o * 0.06;
             final b = o * 0.03;
             final c = o * 0.045;
@@ -2616,7 +2619,7 @@ class ParallaxOrbs extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          // soft radial glow
+
           gradient: RadialGradient(
             colors: [color, color.withOpacity(0.0)],
             stops: const [0.0, 1.0],
