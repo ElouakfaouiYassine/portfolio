@@ -1,66 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/portfolio/">
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <meta name="description" content="Mobile Developer & SOC Analyst — Yassine Elouakfaoui">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Yassine Elouakfaoui — Portfolio">
   <meta property="og:description" content="Flutter/Kotlin, Stripe, Firebase · SOC detections & incident response.">
-  <meta property="og:image" content="/og-image.png">
-  <meta property="og:url" content="https://<your-domain>">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="/favicon.ico">
+  <!-- use a relative path so it works under /portfolio/ -->
+  <meta property="og:image" content="icons/Icon-512.png">
+  <meta property="og:url" content="https://elouakfaouiyassine.github.io/portfolio/">
+  <link rel="icon" href="favicon.ico">
 
-
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-
-  <!-- iOS meta tags & icons -->
+  <!-- iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="portfolio">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-
   <title>portfolio</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "194338795";
+    // Disable SW (we're building with --pwa-strategy=none)
+    const serviceWorkerVersion = "2869881058";
   </script>
-  <!-- This script adds the flutter initialization JS code -->
+
+  <!-- DEBUG OVERLAY: keep temporarily to see errors on iOS -->
+  <script>
+    (function(){
+      function show(msg){
+        var p = document.createElement('pre');
+        p.style.cssText =
+          'position:fixed;left:0;top:0;right:0;padding:12px;' +
+          'background:#111;color:#ff6b6b;z-index:999999;' +
+          'white-space:pre-wrap;font-family:monospace';
+        p.textContent = msg;
+        document.body ? document.body.appendChild(p)
+                      : document.addEventListener('DOMContentLoaded', function(){ document.body.appendChild(p); });
+      }
+      window.addEventListener('error', function(e){
+        show('JS Error: ' + e.message + '\n' + ((e.error && e.error.stack) ? e.error.stack : 'no stack'));
+      });
+      window.addEventListener('unhandledrejection', function(e){
+        var r = e.reason || {};
+        show('Promise rejection:\n' + (r.stack || r.message || String(r)));
+      });
+    })();
+  </script>
+
+  <!-- Flutter loader -->
   <script src="flutter.js" defer></script>
 </head>
 <body>
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
+<script>
+  window.addEventListener('load', function() {
+    _flutter.loader.loadEntrypoint({
+      serviceWorker: { serviceWorkerVersion: serviceWorkerVersion },
+      onEntrypointLoaded: function(engineInitializer) {
+        engineInitializer.initializeEngine().then(function(appRunner) { appRunner.runApp(); });
+      }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
