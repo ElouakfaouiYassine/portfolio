@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<title>Reset Cache</title>
+<style>
+    body{font:16px system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:18px}
+    button{padding:10px 14px;font-weight:700;border-radius:10px}
+</style>
+<h1>Resetting cache & service workers…</h1>
+<p>If you see this page for more than a second, tap the button below.</p>
+<button id="go">Go to portfolio</button>
+<script>
+    (async () => {
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) { try { await r.unregister(); } catch(e){} }
+        }
+        // Clear caches API, too.
+        if (window.caches && caches.keys) {
+          const keys = await caches.keys();
+          for (const k of keys) { try { await caches.delete(k); } catch(e){} }
+        }
+      } catch(_) {}
+      // small delay then go to app with a cache buster
+      setTimeout(() => location.replace('./?v=' + Date.now()), 300);
+    })();
+    document.getElementById('go').onclick = () =>
+      location.replace('./?v=' + Date.now());
+</script>
+</html>
