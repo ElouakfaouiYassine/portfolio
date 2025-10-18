@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diag</title>
+<pre id="out" style="white-space:pre-wrap;font:14px/1.35 system-ui,Segoe UI,Roboto,Helvetica,Arial">
+Running diagnostics…
+</pre>
+<script>
+    const out = (m)=>document.getElementById('out').textContent += '\n' + m;
+    window.addEventListener('error', e=>out('JS Error: ' + e.message));
+    window.addEventListener('unhandledrejection', e=>out('Promise: ' + e.reason));
+    out(navigator.userAgent);
+    out('screen=' + screen.width + 'x' + screen.height + ', DPR=' + devicePixelRatio);
+    out('history.state OK=' + !!history.replaceState);
+    out('SW=' + ('serviceWorker' in navigator));
+    out('CacheStorage=' + ('caches' in window));
+    fetch('main.dart.js', {cache:'no-store'})
+      .then(r=>{ out('main.dart.js status=' + r.status); return r.text(); })
+      .then(_=>out('main.dart.js loaded'))
+      .catch(e=>out('main.dart.js fetch error: ' + e));
+</script>
