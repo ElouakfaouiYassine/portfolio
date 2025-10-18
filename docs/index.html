@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Flutter replaces this when you pass --base-href -->
+  <base href="/portfolio/">
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta name="description" content="Mobile Developer & SOC Analyst — Yassine Elouakfaoui">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Yassine Elouakfaoui — Portfolio">
+  <meta property="og:description" content="Flutter/Kotlin, Stripe, Firebase · SOC detections & incident response.">
+  <!-- relative paths (no leading /) so they work under /portfolio/ -->
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:url" content="https://elouakfaouiyassine.github.io/portfolio/">
+
+  <link rel="icon" href="favicon.ico">
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="portfolio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <title>portfolio</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Load flutter.js so window._flutter is defined -->
+  <script src="flutter.js"></script>
+
+  <script>
+    // Keep SW disabled
+    const serviceWorkerVersion = "1122352189";
+  </script>
+</head>
+<body>
+<!-- Safe startup that also handles the rare race where flutter.js loads late -->
+<script>
+  (function () {
+    function startFlutter() {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: { serviceWorkerVersion: null },
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    }
+    window.addEventListener('load', function () {
+      if (window._flutter && _flutter.loader) {
+        startFlutter();
+        return;
+      }
+      var s = document.createElement('script');
+      s.src = 'flutter.js';
+      s.onload = startFlutter;
+      document.head.appendChild(s);
+    });
+  })();
+</script>
+</body>
+</html>
