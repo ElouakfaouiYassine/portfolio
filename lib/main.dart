@@ -13,7 +13,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const PortfolioApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    Container(
+      color: const Color(0xFF0B0D13),   // solid background behind everything
+      child: const PortfolioApp(),
+    ),
+  );
 }
 class PortfolioApp extends StatefulWidget {
     const PortfolioApp({super.key});
@@ -2663,7 +2669,6 @@ class _EducationTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           const Icon(Icons.school, color: Colors.white70, size: 28),
           const SizedBox(width: 12),
           Expanded(

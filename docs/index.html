@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Yassine — Portfolio (Mobile Debug)</title>
 
+  <style>
+    /* Make the page dark even if Flutter paints transparent initially */
+    html, body {
+      margin: 0;
+      background: #0B0D13;         /* same as your dark scaffold */
+      color-scheme: dark light;
+    }
+    /* Cover both HTML and CanvasKit renderers */
+    #flt-glass-pane, .flt-glass-pane, canvas {
+      background: #0B0D13 !important;
+    }
+  </style>
+
   <script>
     // Visible markers
     document.addEventListener('DOMContentLoaded', function() {
