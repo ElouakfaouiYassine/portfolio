@@ -15,19 +15,10 @@ import 'package:flutter/services.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    Stack(children: [
-      Container(color: const Color(0xFF0B0D13), child: const PortfolioApp()),
-      const Positioned(
-        left: 8, top: 8,
-        child: ColoredBox(
-          color: Color(0xFF113311),
-          child: Padding(
-            padding: EdgeInsets.all(6),
-            child: Text('PAINTED', style: TextStyle(color: Color(0xFF00FF66))),
-          ),
-        ),
-      ),
-    ]),
+    Container(
+      color: const Color(0xFF0B0D13),
+  child: const PortfolioApp(),
+    ),
   );
 }
 
