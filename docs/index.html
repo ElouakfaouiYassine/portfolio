@@ -1,55 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Flutter uses this line to inject the correct base path -->
   <base href="/portfolio/">
-
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yassine Elouakfaoui — Portfolio</title>
-
-  <!-- Meta description for SEO & link previews -->
-  <meta name="description" content="Mobile Developer & SOC Analyst — Kotlin & Flutter projects, SOC detections & incident response.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Yassine Elouakfaoui — Portfolio">
-  <meta property="og:description" content="Mobile Developer (Kotlin/Flutter) | SOC Analyst (Detection, Response, Security).">
-  <meta property="og:image" content="icons/Icon-512.png">
-  <meta property="og:url" content="https://elouakfaouiyassine.github.io/portfolio/">
-
-  <link rel="icon" href="favicon.ico">
-  <link rel="manifest" href="manifest.json">
-
-  <!-- iOS compatibility -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Portfolio">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Yassine — Portfolio (Mobile Debug)</title>
 
   <script>
-    // Disable service worker (avoids Safari caching bugs)
-    const serviceWorkerVersion = "1161212844";
+    // Visible markers
+    document.addEventListener('DOMContentLoaded', function() {
+      var mark = document.createElement('div');
+      mark.id = 'marker';
+      mark.style.cssText = 'font:14px/1.4 monospace;padding:8px;color:#0f0;background:#111';
+      mark.textContent = 'Stage A: DOMContentLoaded';
+      document.body.appendChild(mark);
+    });
+
+    // Error overlay
+    (function () {
+      function show(msg){
+        var p = document.createElement('pre');
+        p.style.cssText = 'position:fixed;left:0;top:0;right:0;padding:10px;background:#111;color:#ff6b6b;z-index:999999;font-family:monospace;white-space:pre-wrap';
+        p.textContent = msg;
+        document.body.appendChild(p);
+      }
+      window.addEventListener('error', e => show('JS Error: ' + e.message + '\n' + (e.error && e.error.stack || 'no stack')));
+      window.addEventListener('unhandledrejection', e => show('Promise rejection: ' + (e.reason && e.reason.stack || e.reason)));
+    })();
+
+    // Service worker off
+    const serviceWorkerVersion = null;
   </script>
 
-  <!-- Load flutter.js immediately so it’s ready for the app -->
+  <!-- Load flutter.js synchronously -->
   <script src="flutter.js"></script>
 </head>
-
 <body>
 <script>
-  // Start the Flutter app
+  // Marker: flutter.js tag executed
+  (function stepB(){
+    var m = document.getElementById('marker') || (function(){var d=document.createElement('div');d.id='marker';d.style.cssText='font:14px/1.4 monospace;padding:8px;color:#0f0;background:#111';document.body.appendChild(d);return d})();
+    m.textContent = 'Stage B: flutter.js tag executed';
+  })();
+
+  // Start Flutter
   window.addEventListener('load', function () {
+    var m = document.getElementById('marker');
+    m.textContent = 'Stage C: window.load fired';
+
     if (!window._flutter || !_flutter.loader) {
-      console.error('flutter.js not loaded');
+      m.textContent = 'Stage D: flutter.js NOT loaded (window._flutter missing)';
       return;
+    } else {
+      m.textContent = 'Stage D: flutter.js present. Starting loadEntrypoint...';
     }
 
     _flutter.loader.loadEntrypoint({
       serviceWorker: { serviceWorkerVersion },
       onEntrypointLoaded: function (engineInitializer) {
+        m.textContent = 'Stage E: engineInitializer OK. Initializing engine...';
         engineInitializer.initializeEngine().then(function (appRunner) {
+          m.textContent = 'Stage F: engine initialized. Running app...';
           appRunner.runApp();
+          m.textContent = 'Stage G: appRunner.runApp() called ✅';
+        }).catch(function(err){
+          m.textContent = 'Stage E error: ' + (err && (err.stack || err.message) || err);
         });
       }
+    }).catch(function (err){
+      m.textContent = 'Stage D error: ' + (err && (err.stack || err.message) || err);
     });
   });
 </script>
