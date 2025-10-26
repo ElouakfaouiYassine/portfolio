@@ -14,12 +14,7 @@ import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    Container(
-      color: const Color(0xFF0B0D13),
-  child: const PortfolioApp(),
-    ),
-  );
+  runApp(const PortfolioApp());
 }
 
 class PortfolioApp extends StatefulWidget {
@@ -43,7 +38,6 @@ class _PortfolioAppState extends State<PortfolioApp> {
         _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
       });
     }
-
     @override
     Widget build(BuildContext context) {
       return MaterialApp(
@@ -186,7 +180,7 @@ class ProfileConfig {
   static const phone = '+212 777539454';
   static const github = 'https://github.com/ElouakfaouiYassine';
   static const linkedin = 'https://www.linkedin.com/in/yassine-elouakfaoui/';
-  static const resumeUrl = 'web/assets/resume.pdf';
+  static const resumeUrl = 'assets/resume.pdf';
   static const contactEndpoint = 'https://formspree.io/f/mpwjborw';
 
   static const mobileSkills = [
@@ -621,7 +615,16 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(ProfileConfig.name),
-        flexibleSpace: ClipRect(
+        flexibleSpace: kIsWeb
+            ? Container(
+          decoration: BoxDecoration(
+            color: (widget.isDark ? Colors.black : Colors.white).withOpacity(0.20),
+            border: const Border(
+              bottom: BorderSide(color: Color(0x22FFFFFF), width: 1),
+            ),
+          ),
+        )
+            : ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
             child: Container(
@@ -634,40 +637,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
             ),
           ),
         ),
-        actions: MediaQuery.of(context).size.width >= 980
-            ? [
-
-          ..._sections.mapIndexed((i, entry) => _navItemButton(
-            label: entry.key,
-            onTap: () => _scrollTo(entry.value),
-            active: _active == i,
-          )),
-          const SizedBox(width: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: FilledButton.icon(
-              onPressed: _downloadResume,
-              icon: const Icon(Icons.file_download),
-              label: const Text('Resume'),
-            ),
-          ),
-          IconButton(
-            tooltip: 'Toggle theme',
-            onPressed: widget.onToggleTheme,
-            icon: Icon(widget.isDark ? Icons.wb_sunny_outlined : Icons.nightlight_round),
-          ),
-          PopupMenuButton<String>(
-            tooltip: 'Language',
-            icon: const Icon(Icons.language),
-            onSelected: (lang) => setState(() { I18n.current = lang; }),
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: 'en', child: Text('English')),
-              PopupMenuItem(value: 'fr', child: Text('Français')),
-              PopupMenuItem(value: 'ar', child: Text('العربية')),
-            ],
-          ),
-        ]
-            : null,
       ),
 
       floatingActionButton: AnimatedBuilder(
