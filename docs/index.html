@@ -15,6 +15,7 @@
   <meta property="og:description" content="Mobile Developer (Kotlin/Flutter) | SOC Analyst (Detection, Response, Security).">
   <meta property="og:image" content="icons/Icon-512.png">
   <meta property="og:url" content="https://elouakfaouiyassine.github.io/portfolio/">
+  <meta name="flutter-web-renderer" content="html">
 
   <link rel="icon" href="favicon.ico">
   <link rel="manifest" href="manifest.json">
@@ -39,6 +40,11 @@
       console.error('flutter.js not loaded');
       return;
     }
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations()
+      .then(list => list.forEach(r => r.unregister()))
+      .catch(() => {});
+  }
 
     _flutter.loader.loadEntrypoint({
       serviceWorker: { serviceWorkerVersion },
