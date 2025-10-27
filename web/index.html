@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Flutter uses this line to inject the correct base path -->
+  <!-- Let Flutter inject the correct base path during build -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yassine Elouakfaoui — Portfolio</title>
 
-  <!-- Meta description for SEO & link previews -->
-  <meta name="description" content="Mobile Developer & SOC Analyst — Kotlin & Flutter projects, SOC detections & incident response.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Yassine Elouakfaoui — Portfolio">
-  <meta property="og:description" content="Mobile Developer (Kotlin/Flutter) | SOC Analyst (Detection, Response, Security).">
-  <meta property="og:image" content="icons/Icon-512.png">
-  <meta property="og:url" content="https://elouakfaouiyassine.github.io/portfolio/">
+  <!-- Optional: comment out PWA hints while debugging iOS caching -->
+  <!-- <link rel="manifest" href="manifest.json"> -->
+  <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+  <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+  <!-- <meta name="apple-mobile-web-app-title" content="Portfolio"> -->
+  <!-- <link rel="apple-touch-icon" href="icons/Icon-192.png"> -->
 
   <link rel="icon" href="favicon.ico">
-  <link rel="manifest" href="manifest.json">
 
-  <!-- iOS compatibility -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Portfolio">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <!-- 0) Kill any old service workers ASAP -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then(rs => rs.forEach(r => r.unregister()))
+        .catch(()=>{});
+    }
+  </script>
 
-  <script>const serviceWorkerVersion = null;</script>
-
-  <!-- Load flutter.js immediately so it’s ready for the app -->
+  <!-- 1) Load the Flutter loader -->
   <script src="flutter.js"></script>
 </head>
-
 <body>
+<!-- 2) Start Flutter with: no SW, HTML renderer, and cache-busted entrypoint -->
 <script>
-  // Start the Flutter app
   window.addEventListener('load', function () {
-    if (!window._flutter || !_flutter.loader) {
-      console.error('flutter.js not loaded');
-      return;
-    }
-
+    if (!window._flutter || !_flutter.loader) { console.error('flutter.js not loaded'); return; }
     _flutter.loader.loadEntrypoint({
-      serviceWorker: { serviceWorkerVersion },
+      serviceWorker: null,                 // hard-disable SW registration
+      entrypointUrl: 'main.dart.js?v=4',   // bust stale caches on mobile
       onEntrypointLoaded: function (engineInitializer) {
-        engineInitializer.initializeEngine().then(function (appRunner) {
-          appRunner.runApp();
-        });
+        engineInitializer.initializeEngine({ renderer: 'html' })
+          .then(appRunner => appRunner.runApp());
       }
     });
   });
