@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'web_url_stub.dart' if (dart.library.html) 'web_url_web.dart' as web;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'web_analytics_stub.dart' if (dart.library.html) 'web_analytics_web.dart' as analytics;
+import 'web_analytics_stub.dart' if (dart.library.html) 'web_analytics_web.dart'
+    as analytics;
 import 'dart:ui' show ImageFilter;
 import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,12 +18,12 @@ void main() {
   runApp(const PortfolioApp());
 }
 
-
 class PortfolioApp extends StatefulWidget {
-    const PortfolioApp({super.key});
-    @override
-    State<PortfolioApp> createState() => _PortfolioAppState();
-  }
+  const PortfolioApp({super.key});
+  @override
+  State<PortfolioApp> createState() => _PortfolioAppState();
+}
+
 extension _MapIndexed<E> on Iterable<E> {
   Iterable<T> mapIndexed<T>(T Function(int i, E e) f) sync* {
     var i = 0;
@@ -33,144 +34,152 @@ extension _MapIndexed<E> on Iterable<E> {
 }
 
 class _PortfolioAppState extends State<PortfolioApp> {
-    ThemeMode _mode = ThemeMode.dark;
-    void _toggleTheme() {
-      setState(() {
-        _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-      });
-    }
+  ThemeMode _mode = ThemeMode.dark;
+  void _toggleTheme() {
+    setState(() {
+      _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return MaterialApp(
-        title: 'Elouakfaoui Yassine',
-        debugShowCheckedModeBanner: false,
-        themeMode: _mode,
-          locale: I18n.locale,
-        supportedLocales: const [
-          Locale('en'),
-          Locale('fr'),
-          Locale('ar'),
-        ],
-        builder: (context, child) => Directionality(
-          textDirection: I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-          child: child!,
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Elouakfaoui Yassine',
+      debugShowCheckedModeBanner: false,
+      themeMode: _mode,
+      locale: I18n.locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fr'),
+        Locale('ar'),
+      ],
+      builder: (context, child) => Directionality(
+        textDirection:
+            I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+        child: child!,
+      ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      localeResolutionCallback: (device, supported) => supported.firstWhere(
+          (l) => l.languageCode == I18n.current,
+          orElse: () => const Locale('en')),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown,
+        },
+      ),
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        colorSchemeSeed: Colors.indigo,
+        textTheme: I18n.current == 'ar'
+            ? GoogleFonts.cairoTextTheme(
+                Typography.material2021(platform: TargetPlatform.android).black)
+            : Typography.material2021(platform: TargetPlatform.android)
+                .black
+                .apply(
+                  bodyColor: const Color(0xFF1B1F2A),
+                  displayColor: const Color(0xFF0F1230),
+                ),
+        cardTheme: CardTheme(
+          elevation: 0,
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(DS.radius)),
         ),
-
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        localeResolutionCallback: (device, supported) =>
-            supported.firstWhere((l) => l.languageCode == I18n.current, orElse: () => const Locale('en')),
-
-        scrollBehavior: const MaterialScrollBehavior().copyWith(
-          dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-            PointerDeviceKind.stylus,
-            PointerDeviceKind.unknown,
-          },
-        ),
-        theme: ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.light,
-          colorSchemeSeed: Colors.indigo,
-
-          textTheme: I18n.current == 'ar'
-              ? GoogleFonts.cairoTextTheme(Typography.material2021(platform: TargetPlatform.android).black)
-              : Typography.material2021(platform: TargetPlatform.android).black.apply(
-            bodyColor: const Color(0xFF1B1F2A),
-            displayColor: const Color(0xFF0F1230),
-          ),
-          cardTheme: CardTheme(
-            elevation: 0,
-            color: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.radius)),
-          ),
-          filledButtonTheme: FilledButtonThemeData(
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
-            ),
-          ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
-              side: const BorderSide(color: Color(0x331B1F2A)),
-            ),
-          ),
-          chipTheme: ChipThemeData(
-            shape: StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
-            labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-            backgroundColor: const Color(0x0F1B1F2A),
-            selectedColor: const Color(0x201B1F2A),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
           ),
         ),
-        darkTheme: ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.dark,
-          colorSchemeSeed: Colors.indigo,
-          scaffoldBackgroundColor: const Color(0xFF0B0D13),
-          cardColor: const Color(0x80121623),
-
-          textTheme: I18n.current == 'ar'
-              ? GoogleFonts.cairoTextTheme(Typography.whiteCupertino)
-              : Typography.whiteCupertino,
-          cardTheme: CardTheme(
-            elevation: 0,
-            color: const Color(0x66121623),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.radius)),
-          ),
-          filledButtonTheme: FilledButtonThemeData(
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
-            ),
-          ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
-              side: const BorderSide(color: Color(0x33FFFFFF)),
-              foregroundColor: Colors.white,
-            ),
-          ),
-          chipTheme: ChipThemeData(
-            shape: const StadiumBorder(side: BorderSide(color: DS.divider)),
-            labelStyle: const TextStyle(color: Colors.white),
-            backgroundColor: const Color(0x1AFFFFFF),
-            selectedColor: const Color(0x33FFFFFF),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: const Color(0x1416212B),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: DS.divider),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: DS.divider),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.4),
-            ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
+            side: const BorderSide(color: Color(0x331B1F2A)),
           ),
         ),
-        home: PortfolioHome(onToggleTheme: _toggleTheme, isDark: _mode==ThemeMode.dark),
-  );
+        chipTheme: ChipThemeData(
+          shape:
+              StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
+          labelStyle: const TextStyle(fontWeight: FontWeight.w500),
+          backgroundColor: const Color(0x0F1B1F2A),
+          selectedColor: const Color(0x201B1F2A),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.indigo,
+        scaffoldBackgroundColor: const Color(0xFF0B0D13),
+        cardColor: const Color(0x80121623),
+        textTheme: I18n.current == 'ar'
+            ? GoogleFonts.cairoTextTheme(Typography.whiteCupertino)
+            : Typography.whiteCupertino,
+        cardTheme: CardTheme(
+          elevation: 0,
+          color: const Color(0x66121623),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(DS.radius)),
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
+            side: const BorderSide(color: Color(0x33FFFFFF)),
+            foregroundColor: Colors.white,
+          ),
+        ),
+        chipTheme: ChipThemeData(
+          shape: const StadiumBorder(side: BorderSide(color: DS.divider)),
+          labelStyle: const TextStyle(color: Colors.white),
+          backgroundColor: const Color(0x1AFFFFFF),
+          selectedColor: const Color(0x33FFFFFF),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0x1416212B),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: DS.divider),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: DS.divider),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.4),
+          ),
+        ),
+      ),
+      home: PortfolioHome(
+          onToggleTheme: _toggleTheme, isDark: _mode == ThemeMode.dark),
+    );
   }
 }
-
 
 class ProfileConfig {
   static const name = 'Elouakfaoui Yassine';
@@ -225,23 +234,33 @@ class ProfileConfig {
       title: 'E‑commerce App',
       kind: 'Mobile (Kotlin)',
       summary:
-      'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend).',
-      tags: ['Kotlin', 'PHP', 'Stripe', 'MVVM', 'Clean Architecture', 'SQLite', 'MongoDB'],
+          'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend).',
+      tags: [
+        'Kotlin',
+        'PHP',
+        'Stripe',
+        'MVVM',
+        'Clean Architecture',
+        'SQLite',
+        'MongoDB'
+      ],
       github: 'https://github.com/ElouakfaouiYassine/E-commerce-app',
       demo: '',
-      imageUrl: 'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/Application%20sTORE.jpg',
+      imageUrl:
+          'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/Application%20sTORE.jpg',
       category: 'mobile',
-      detail: 'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend), with hybrid database support using SQLite (local) and MongoDB (remote). The app offers complete user experience including authentication, product browsing, cart, admin management, and dark mode.',
+      detail:
+          'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend), with hybrid database support using SQLite (local) and MongoDB (remote). The app offers complete user experience including authentication, product browsing, cart, admin management, and dark mode.',
       images: [
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/photo_32_2025-03-26_23-52-47.jpg',
-          'assets/images/3.jpg',
-          'assets/images/4.jpg',
-          'assets/images/5.jpg',
-          'assets/images/6.jpg',
-          'assets/images/7.jpg',
-          'assets/images/8.jpg',
-          'assets/images/9.jpg',
-          'assets/images/10.jpg',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/photo_32_2025-03-26_23-52-47.jpg',
+        'assets/images/3.jpg',
+        'assets/images/4.jpg',
+        'assets/images/5.jpg',
+        'assets/images/6.jpg',
+        'assets/images/7.jpg',
+        'assets/images/8.jpg',
+        'assets/images/9.jpg',
+        'assets/images/10.jpg',
       ],
       highlights: [
         'Stripe payments with 3-D Secure.',
@@ -253,21 +272,23 @@ class ProfileConfig {
       title: 'StopFire App',
       kind: 'Mobile (Kotlin)',
       summary:
-      'Created a real-time alert app that detects charging-related fire risks. Implemented instant notifications to warn users of potential hazards.',
+          'Created a real-time alert app that detects charging-related fire risks. Implemented instant notifications to warn users of potential hazards.',
       tags: ['kotlin', 'MVVM', 'Notification'],
       github: 'https://github.com/ElouakfaouiYassine/Protect-Your-House-App',
       demo: '',
-      imageUrl: 'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Feature%20graphic.png',
+      imageUrl:
+          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Feature%20graphic.png',
       category: 'mobile',
-      detail: 'Protect Your House App is a mobile application built with Kotlin to strengthen home safety against fire risks caused by charging devices. It continuously monitors charging conditions, detects anomalies in real-time, and provides instant notifications to alert users. The app is designed with an MVVM architecture to ensure scalability, clean code, and maintainability.',
+      detail:
+          'Protect Your House App is a mobile application built with Kotlin to strengthen home safety against fire risks caused by charging devices. It continuously monitors charging conditions, detects anomalies in real-time, and provides instant notifications to alert users. The app is designed with an MVVM architecture to ensure scalability, clean code, and maintainability.',
       images: [
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/2.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250704_224606.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250708_235434.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250709_004703.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr1.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr2.png',
-        ],
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/2.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250704_224606.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250708_235434.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250709_004703.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr1.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr2.png',
+      ],
       highlights: [
         'Built with Kotlin and MVVM architecture for clean and maintainable code.',
         'Real-time monitoring of charging devices to prevent fire hazards.',
@@ -281,66 +302,75 @@ class ProfileConfig {
       title: 'Chat App',
       kind: 'Mobile',
       summary:
-      'E2EE chat with offline cache, message reactions, and push notifications.',
+          'E2EE chat with offline cache, message reactions, and push notifications.',
       tags: ['Kotlin', 'Spring Boot', 'MongoDB', 'PGP', 'WebSocket'],
-      github: 'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      github:
+          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
       demo: '',
-      imageUrl: 'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
-      category: 'mobile',
-      detail: 'Realtime chat app with E2EE, offline cache, typing indicators and push notifications.',
-      images: [
+      imageUrl:
           'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/2.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/3.jpg',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/4.jpg',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/5.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/6.jpg',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/7.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/8.png',
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/9.jpg'
+      category: 'mobile',
+      detail:
+          'Realtime chat app with E2EE, offline cache, typing indicators and push notifications.',
+      images: [
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/2.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/3.jpg',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/4.jpg',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/5.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/6.jpg',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/7.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/8.png',
+        'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/9.jpg'
       ],
-        highlights: [
-          'End-to-end encryption with key rotation.',
-          'Message queue + optimistic UI.',
-        ],
+      highlights: [
+        'End-to-end encryption with key rotation.',
+        'Message queue + optimistic UI.',
+      ],
       id: 'chatpulse',
     ),
     Project(
       title: 'BlueTeam NetFlow Hunt',
       kind: 'Security (Threat Hunting)',
       summary:
-      'Python + Zeek pipeline to flag C2 beacons and rare destinations using rolling z‑scores.',
+          'Python + Zeek pipeline to flag C2 beacons and rare destinations using rolling z‑scores.',
       tags: ['Python', 'Zeek', 'NetFlow'],
-      github: 'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      github:
+          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
       demo: '',
-      imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      imageUrl:
+          'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       category: 'security',
-      detail: 'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
+      detail:
+          'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
       images: [
-          'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format'
-        ],
-        highlights: [
-          'Rolling z-scores & rarity analysis.',
-          'Python ETL into dashboards.',
-        ],
+        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format'
+      ],
+      highlights: [
+        'Rolling z-scores & rarity analysis.',
+        'Python ETL into dashboards.',
+      ],
       id: 'blueteam',
     ),
   ];
   static final testimonials = <Testimonial>[
     Testimonial(
-      quote: "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
+      quote:
+          "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
       name: "Anas B.",
       role: "Senior Android Engineer",
       avatar: "https://i.pravatar.cc/120?img=12",
     ),
     Testimonial(
-      quote: "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
+      quote:
+          "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
       name: "Sara M.",
       role: "SOC Team Lead",
       avatar: "https://i.pravatar.cc/120?img=32",
     ),
     Testimonial(
-      quote: "Our Kotlin app’s checkout went from flaky to rock-solid after his refactor and Stripe integration.",
+      quote:
+          "Our Kotlin app’s checkout went from flaky to rock-solid after his refactor and Stripe integration.",
       name: "Ismail K.",
       role: "Product Manager",
       avatar: "https://i.pravatar.cc/120?img=8",
@@ -350,7 +380,8 @@ class ProfileConfig {
   static final educationList = <Education>[
     Education(
       degree: "Bachelor’s Degree in Computer Security and Networks",
-      institution: "EST – École Supérieure de Technologie Guelmim, Ibn Zohr University",
+      institution:
+          "EST – École Supérieure de Technologie Guelmim, Ibn Zohr University",
       years: "2024 – 2025",
     ),
     Education(
@@ -363,19 +394,22 @@ class ProfileConfig {
   static final posts = <BlogPost>[
     BlogPost(
       title: "Building a Secure Kotlin Checkout Flow",
-      summary: "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
+      summary:
+          "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
       date: "Mar 2025",
       url: "https://medium.com/@yassine/secure-kotlin-checkout",
     ),
     BlogPost(
       title: "SOC Analyst Playbook: Reducing Alert Fatigue",
-      summary: "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
+      summary:
+          "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
       date: "Feb 2025",
       url: "https://medium.com/@yassine/soc-analyst-playbook",
     ),
     BlogPost(
       title: "From PHP to MongoDB Hybrid Backends",
-      summary: "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
+      summary:
+          "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
       date: "Jan 2025",
       url: "https://medium.com/@yassine/hybrid-backends",
     ),
@@ -409,7 +443,6 @@ class ProfileConfig {
     Certification('Cyber Security Analyst (C3SA)', 'CyberWarFare Labs', '2025'),
   ];
 }
-
 
 class Project {
   final String title;
@@ -460,11 +493,11 @@ class Certification {
   const Certification(this.name, this.issuer, this.year);
 }
 
-
 class PortfolioHome extends StatefulWidget {
-    final VoidCallback onToggleTheme;
-    final bool isDark;
-    const PortfolioHome({super.key, required this.onToggleTheme, required this.isDark});
+  final VoidCallback onToggleTheme;
+  final bool isDark;
+  const PortfolioHome(
+      {super.key, required this.onToggleTheme, required this.isDark});
 
   @override
   State<PortfolioHome> createState() => _PortfolioHomeState();
@@ -509,7 +542,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   int _active = 0;
 
   void _handleScrollHighlight() {
-
     const focusY = 120.0;
     double best = double.infinity;
     int bestIdx = _active;
@@ -521,12 +553,16 @@ class _PortfolioHomeState extends State<PortfolioHome> {
       if (box is! RenderBox) continue;
       final dy = box.localToGlobal(Offset.zero).dy;
       final score = (dy - focusY).abs();
-      if (score < best) { best = score; bestIdx = i; }
+      if (score < best) {
+        best = score;
+        bestIdx = i;
+      }
     }
     if (bestIdx != _active && mounted) {
       setState(() => _active = bestIdx);
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -534,13 +570,12 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     if (hash.startsWith('project=')) {
       final id = hash.split('=').last;
       final match = ProfileConfig.projects.firstWhere(
-            (p) => p.id == id,
+        (p) => p.id == id,
         orElse: () => ProfileConfig.projects.first,
       );
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _openProject(match);
       });
-
     }
 
     _scroll.addListener(_handleScrollHighlight);
@@ -561,12 +596,13 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: ConstrainedBox(
-           constraints: const BoxConstraints(maxWidth: 980),
-           child: _ProjectDetails(project: p),
+          constraints: const BoxConstraints(maxWidth: 980),
+          child: _ProjectDetails(project: p),
         ),
       ),
     );
   }
+
   void _downloadResume() async {
     analytics.trackEvent('Resume Click');
     final url = ProfileConfig.resumeUrl.isEmpty
@@ -579,186 +615,241 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width >= 980;
 
-
     return Shortcuts(
-        shortcuts: {
-
-          LogicalKeySet(LogicalKeyboardKey.digit1): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit2): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit3): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit4): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit5): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit6): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit7): const ActivateIntent(),
-          LogicalKeySet(LogicalKeyboardKey.digit8): const ActivateIntent(),
-        },
-        child: Actions(
-            actions: {
-              ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (intent) {
-                final label = HardwareKeyboard.instance.logicalKeysPressed
-                    .map((k) => k.keyLabel)
-                    .firstWhere(
-                      (l) => RegExp(r'^[1-8]$').hasMatch(l),
+      shortcuts: {
+        LogicalKeySet(LogicalKeyboardKey.digit1): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit2): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit3): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit4): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit5): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit6): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit7): const ActivateIntent(),
+        LogicalKeySet(LogicalKeyboardKey.digit8): const ActivateIntent(),
+      },
+      child: Actions(
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (intent) {
+            final label = HardwareKeyboard.instance.logicalKeysPressed
+                .map((k) => k.keyLabel)
+                .firstWhere(
+                  (l) => RegExp(r'^[1-8]$').hasMatch(l),
                   orElse: () => '',
                 );
-                if (label.isEmpty) return null;
-                final idx = int.parse(label) - 1;
-                if (idx >= 0 && idx < _sections.length) {
-                  _scrollTo(_sections[idx].value);
-                }
-                return null;
-              }),
-            },
-            child: Focus(
-                autofocus: true,
-                child: Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        title: Text(ProfileConfig.name),
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-            child: Container(
-              decoration: BoxDecoration(
-                color: (widget.isDark ? Colors.black : Colors.white).withOpacity(0.20),
-                border: const Border(
-                  bottom: BorderSide(color: Color(0x22FFFFFF), width: 1),
+            if (label.isEmpty) return null;
+            final idx = int.parse(label) - 1;
+            if (idx >= 0 && idx < _sections.length) {
+              _scrollTo(_sections[idx].value);
+            }
+            return null;
+          }),
+        },
+        child: Focus(
+          autofocus: true,
+          child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              title: Text(ProfileConfig.name),
+              flexibleSpace: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: (widget.isDark ? Colors.black : Colors.white)
+                          .withOpacity(0.20),
+                      border: const Border(
+                        bottom: BorderSide(color: Color(0x22FFFFFF), width: 1),
+                      ),
+                    ),
+                  ),
                 ),
               ),
+              actions: MediaQuery.of(context).size.width >= 980
+                  ? [
+                      ..._sections.mapIndexed((i, entry) => _navItemButton(
+                            label: entry.key,
+                            onTap: () => _scrollTo(entry.value),
+                            active: _active == i,
+                          )),
+                      const SizedBox(width: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: FilledButton.icon(
+                          onPressed: _downloadResume,
+                          icon: const Icon(Icons.file_download),
+                          label: const Text('Resume'),
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: 'Toggle theme',
+                        onPressed: widget.onToggleTheme,
+                        icon: Icon(widget.isDark
+                            ? Icons.wb_sunny_outlined
+                            : Icons.nightlight_round),
+                      ),
+                      PopupMenuButton<String>(
+                        tooltip: 'Language',
+                        icon: const Icon(Icons.language),
+                        onSelected: (lang) => setState(() {
+                          I18n.current = lang;
+                        }),
+                        itemBuilder: (_) => const [
+                          PopupMenuItem(value: 'en', child: Text('English')),
+                          PopupMenuItem(value: 'fr', child: Text('Français')),
+                          PopupMenuItem(value: 'ar', child: Text('العربية')),
+                        ],
+                      ),
+                    ]
+                  : null,
             ),
-          ),
-        ),
-        actions: MediaQuery.of(context).size.width >= 980
-            ? [
-
-          ..._sections.mapIndexed((i, entry) => _navItemButton(
-            label: entry.key,
-            onTap: () => _scrollTo(entry.value),
-            active: _active == i,
-          )),
-          const SizedBox(width: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: FilledButton.icon(
-              onPressed: _downloadResume,
-              icon: const Icon(Icons.file_download),
-              label: const Text('Resume'),
+            floatingActionButton: AnimatedBuilder(
+              animation: _scroll,
+              builder: (_, __) {
+                final show = _scroll.hasClients && _scroll.offset > 600;
+                return AnimatedSlide(
+                  duration: const Duration(milliseconds: 200),
+                  offset: show ? Offset.zero : const Offset(0, 2),
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 200),
+                    opacity: show ? 1 : 0,
+                    child: FloatingActionButton.small(
+                      onPressed: () => _scroll.animateTo(0,
+                          duration: const Duration(milliseconds: 450),
+                          curve: Curves.easeOut),
+                      child: const Icon(Icons.arrow_upward),
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-          IconButton(
-            tooltip: 'Toggle theme',
-            onPressed: widget.onToggleTheme,
-            icon: Icon(widget.isDark ? Icons.wb_sunny_outlined : Icons.nightlight_round),
-          ),
-          PopupMenuButton<String>(
-            tooltip: 'Language',
-            icon: const Icon(Icons.language),
-            onSelected: (lang) => setState(() { I18n.current = lang; }),
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: 'en', child: Text('English')),
-              PopupMenuItem(value: 'fr', child: Text('Français')),
-              PopupMenuItem(value: 'ar', child: Text('العربية')),
-            ],
-          ),
-        ]
-            : null,
-      ),
-
-      floatingActionButton: AnimatedBuilder(
-        animation: _scroll,
-        builder: (_, __) {
-          final show = _scroll.hasClients && _scroll.offset > 600;
-          return AnimatedSlide(
-            duration: const Duration(milliseconds: 200),
-            offset: show ? Offset.zero : const Offset(0, 2),
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 200),
-              opacity: show ? 1 : 0,
-              child: FloatingActionButton.small(
-                onPressed: () => _scroll.animateTo(0, duration: const Duration(milliseconds: 450), curve: Curves.easeOut),
-                child: const Icon(Icons.arrow_upward),
-              ),
-            ),
-          );
-        },
-      ),
-      drawer: isWide
-          ? null
-          : Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(color: Colors.indigo),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text(ProfileConfig.title,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-            ),
-            _drawerItem('About', _aboutKey),
-            _drawerItem('Skills', _skillsKey),
-            _drawerItem('Projects', _projectsKey),
-            _drawerItem('Experience', _experienceKey),
-            _drawerItem('Education', _educationKey),
-            _drawerItem('Certs', _certsKey),
-            _drawerItem('Contact', _contactKey),
-            _drawerItem('Testimonials', _testimonialsKey),
-            _drawerItem('Blog', _blogKey),
-            ListTile(
-            leading: const Icon(Icons.description),
-            title: const Text('Resume'),
-            onTap: _downloadResume,
-        ),
-            const Divider(),
-            const ListTile(title: Text('Language')),
-            ListTile(title: const Text('English'),  onTap: () { setState(() { I18n.current = 'en'; }); Navigator.pop(context); }),
-            ListTile(title: const Text('Français'), onTap: () { setState(() { I18n.current = 'fr'; }); Navigator.pop(context); }),
-            ListTile(title: const Text('العربية'),  onTap: () { I18n.current = 'ar'; setState(() {}); Navigator.pop(context); }),
-          ],
-        ),
-      ),
-      body: Stack(
-        children: [
-
-          ParallaxOrbs(controller: _scroll, isDark: widget.isDark),
-
-
-      Scrollbar(
-        controller: _scroll,
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          controller: _scroll,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            drawer: isWide
+                ? null
+                : Drawer(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        DrawerHeader(
+                          decoration: const BoxDecoration(color: Colors.indigo),
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(ProfileConfig.title,
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                        _drawerItem('About', _aboutKey),
+                        _drawerItem('Skills', _skillsKey),
+                        _drawerItem('Projects', _projectsKey),
+                        _drawerItem('Experience', _experienceKey),
+                        _drawerItem('Education', _educationKey),
+                        _drawerItem('Certs', _certsKey),
+                        _drawerItem('Contact', _contactKey),
+                        _drawerItem('Testimonials', _testimonialsKey),
+                        _drawerItem('Blog', _blogKey),
+                        ListTile(
+                          leading: const Icon(Icons.description),
+                          title: const Text('Resume'),
+                          onTap: _downloadResume,
+                        ),
+                        const Divider(),
+                        const ListTile(title: Text('Language')),
+                        ListTile(
+                            title: const Text('English'),
+                            onTap: () {
+                              setState(() {
+                                I18n.current = 'en';
+                              });
+                              Navigator.pop(context);
+                            }),
+                        ListTile(
+                            title: const Text('Français'),
+                            onTap: () {
+                              setState(() {
+                                I18n.current = 'fr';
+                              });
+                              Navigator.pop(context);
+                            }),
+                        ListTile(
+                            title: const Text('العربية'),
+                            onTap: () {
+                              I18n.current = 'ar';
+                              setState(() {});
+                              Navigator.pop(context);
+                            }),
+                      ],
+                    ),
+                  ),
+            body: Stack(
               children: [
-                Section(key: _homeKey, child: const HeroSection(), altBackground: false),
-                Section(key: _aboutKey, child: const AboutSection(), altBackground: true),
-                Section(key: _skillsKey, child: const SkillsSection(), altBackground: false),
-                Section(key: _projectsKey, child: const ProjectsSection(), altBackground: true),
-                Section(key: _experienceKey, child: const ExperienceSection(), altBackground: false),
-                Section(key: _educationKey, child: EducationSection(educationList: ProfileConfig.educationList), altBackground: true,),
-                Section(key: _certsKey, child: const CertsSection(), altBackground: false),
-                Section(key: _testimonialsKey, child: const TestimonialsSection(), altBackground: true),
-                Section(key: _blogKey, child: const BlogSection(), altBackground: false),
-                Section(key: _contactKey, child: const ContactSection(), altBackground: true),
-                const Footer(),
+                ParallaxOrbs(controller: _scroll, isDark: widget.isDark),
+                Scrollbar(
+                  controller: _scroll,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    controller: _scroll,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Section(
+                            key: _homeKey,
+                            child: const HeroSection(),
+                            altBackground: false),
+                        Section(
+                            key: _aboutKey,
+                            child: const AboutSection(),
+                            altBackground: true),
+                        Section(
+                            key: _skillsKey,
+                            child: const SkillsSection(),
+                            altBackground: false),
+                        Section(
+                            key: _projectsKey,
+                            child: const ProjectsSection(),
+                            altBackground: true),
+                        Section(
+                            key: _experienceKey,
+                            child: const ExperienceSection(),
+                            altBackground: false),
+                        Section(
+                          key: _educationKey,
+                          child: EducationSection(
+                              educationList: ProfileConfig.educationList),
+                          altBackground: true,
+                        ),
+                        Section(
+                            key: _certsKey,
+                            child: const CertsSection(),
+                            altBackground: false),
+                        Section(
+                            key: _testimonialsKey,
+                            child: const TestimonialsSection(),
+                            altBackground: true),
+                        Section(
+                            key: _blogKey,
+                            child: const BlogSection(),
+                            altBackground: false),
+                        Section(
+                            key: _contactKey,
+                            child: const ContactSection(),
+                            altBackground: true),
+                        const Footer(),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-      ),
-        ],
-      ),
-                ),
-            ),
         ),
+      ),
     );
   }
 
-  Widget _navItemButton({required String label, required VoidCallback onTap, required bool active}) {
+  Widget _navItemButton(
+      {required String label,
+      required VoidCallback onTap,
+      required bool active}) {
     final theme = Theme.of(context);
     final bg = active
         ? theme.colorScheme.primary.withOpacity(0.16)
@@ -774,7 +865,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         style: TextButton.styleFrom(
           foregroundColor: fg,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           backgroundColor: bg,
         ),
         child: Row(
@@ -795,37 +887,36 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                   borderRadius: BorderRadius.circular(99),
                 ),
               ),
-
           ],
         ),
       ),
     );
   }
 
-
   Widget _navBtn(String label, VoidCallback onTap) => TextButton(
-    onPressed: onTap,
-    child: Text(label),
-  );
+        onPressed: onTap,
+        child: Text(label),
+      );
 
   Widget _drawerItem(String label, GlobalKey key) => ListTile(
-    title: Text(label),
-    onTap: () {
-      Navigator.of(context).maybePop();
-      Future.delayed(const Duration(milliseconds: 180), () => _scrollTo(key));
-    },
-  );
+        title: Text(label),
+        onTap: () {
+          Navigator.of(context).maybePop();
+          Future.delayed(
+              const Duration(milliseconds: 180), () => _scrollTo(key));
+        },
+      );
 
   Widget _glow(double size, Color color) => IgnorePointer(
-    child: Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: RadialGradient(colors: [color, Colors.transparent]),
-      ),
-    ),
-  );
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: RadialGradient(colors: [color, Colors.transparent]),
+          ),
+        ),
+      );
 }
 
 class Section extends StatelessWidget {
@@ -844,8 +935,8 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     final bg = altBackground
         ? Theme.of(context).brightness == Brightness.dark
-        ? Colors.white.withOpacity(0.02)
-        : Colors.black.withOpacity(0.03)
+            ? Colors.white.withOpacity(0.02)
+            : Colors.black.withOpacity(0.03)
         : Colors.transparent;
 
     return Container(
@@ -914,15 +1005,13 @@ class _GradientDividerState extends State<_GradientDivider>
   }
 }
 
-
-
-
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final onSurfaceMuted = Theme.of(context).colorScheme.onSurface.withOpacity(.70);
+    final onSurfaceMuted =
+        Theme.of(context).colorScheme.onSurface.withOpacity(.70);
     final theme = Theme.of(context);
     return LayoutBuilder(builder: (context, c) {
       final isWide = c.maxWidth > 900;
@@ -933,24 +1022,34 @@ class HeroSection extends StatelessWidget {
             flex: isWide ? 6 : 10,
             child: Column(
               crossAxisAlignment:
-              isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                  isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
               children: [
-            Container(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          border: Border.all(color: DS.divider),
-          color: Colors.white.withOpacity(0.04),
-          borderRadius: BorderRadius.circular(DS.pill),
-        ),
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.bolt, size: 16),
-            SizedBox(width: 6),
-            Text('Open to Work', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, letterSpacing: .2,)),
-          ],
-        ),
-      ).animate().fadeIn(duration: 500.ms).slideY(begin: .15).scale(begin: const Offset(.98,.98)),
+                Container(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: DS.divider),
+                    color: Colors.white.withOpacity(0.04),
+                    borderRadius: BorderRadius.circular(DS.pill),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.bolt, size: 16),
+                      SizedBox(width: 6),
+                      Text('Open to Work',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: .2,
+                          )),
+                    ],
+                  ),
+                )
+                    .animate()
+                    .fadeIn(duration: 500.ms)
+                    .slideY(begin: .15)
+                    .scale(begin: const Offset(.98, .98)),
                 const SizedBox(height: 18),
                 Text(
                   ProfileConfig.name,
@@ -963,7 +1062,10 @@ class HeroSection extends StatelessWidget {
                   ProfileConfig.title,
                   textAlign: isWide ? TextAlign.start : TextAlign.center,
                   style: theme.textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(.70),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(.70),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -971,7 +1073,10 @@ class HeroSection extends StatelessWidget {
                   ProfileConfig.tagline,
                   textAlign: isWide ? TextAlign.start : TextAlign.center,
                   style: theme.textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(.70),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(.70),
                   ),
                 ).animate().fadeIn(duration: 800.ms),
                 const SizedBox(height: 16),
@@ -979,7 +1084,7 @@ class HeroSection extends StatelessWidget {
                   spacing: 12,
                   runSpacing: 8,
                   alignment:
-                  isWide ? WrapAlignment.start : WrapAlignment.center,
+                      isWide ? WrapAlignment.start : WrapAlignment.center,
                   children: [
                     FilledButton.icon(
                       onPressed: () => _launch('mailto:${ProfileConfig.email}'),
@@ -1001,18 +1106,39 @@ class HeroSection extends StatelessWidget {
                   ],
                 ).animate().fadeIn(duration: 900.ms),
                 const SizedBox(height: 14),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
+                Wrap(
+                  spacing: 18,
+                  runSpacing: 8,
+                  alignment:
+                      isWide ? WrapAlignment.start : WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    const Icon(Icons.place, size: 16, color: Colors.white70),
-                    const SizedBox(width: 6),
-                    Text(ProfileConfig.location,
-                      style: theme.textTheme.titleMedium?.copyWith(color: onSurfaceMuted),),
-                    const SizedBox(width: 18),
-                    const Icon(Icons.phone, size: 16, color: Colors.white70),
-                    const SizedBox(width: 6),
-                    Text(ProfileConfig.phone,
-                      style: theme.textTheme.titleMedium?.copyWith(color: onSurfaceMuted),),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.place,
+                            size: 16, color: Colors.white70),
+                        const SizedBox(width: 6),
+                        Text(
+                          ProfileConfig.location,
+                          style: theme.textTheme.titleMedium
+                              ?.copyWith(color: onSurfaceMuted),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.phone,
+                            size: 16, color: Colors.white70),
+                        const SizedBox(width: 6),
+                        Text(
+                          ProfileConfig.phone,
+                          style: theme.textTheme.titleMedium
+                              ?.copyWith(color: onSurfaceMuted),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -1035,10 +1161,11 @@ class _HeroVisual extends StatefulWidget {
   State<_HeroVisual> createState() => _HeroVisualState();
 }
 
-class _HeroVisualState extends State<_HeroVisual> with TickerProviderStateMixin {
+class _HeroVisualState extends State<_HeroVisual>
+    with TickerProviderStateMixin {
   late final AnimationController _c =
-  AnimationController(vsync: this, duration: const Duration(seconds: 6))
-    ..repeat(reverse: true);
+      AnimationController(vsync: this, duration: const Duration(seconds: 6))
+        ..repeat(reverse: true);
 
   @override
   void dispose() {
@@ -1083,7 +1210,8 @@ class _HeroVisualState extends State<_HeroVisual> with TickerProviderStateMixin 
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Combining Mobile Development Expertise with Cybersecurity Skills',
+                      Text(
+                          'Combining Mobile Development Expertise with Cybersecurity Skills',
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 6),
                       Text('Where Mobile Innovation Meets Cyber Defense',
@@ -1120,13 +1248,13 @@ class _HeroVisualState extends State<_HeroVisual> with TickerProviderStateMixin 
   }
 }
 
-
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final onSurfaceMuted = Theme.of(context).colorScheme.onSurface.withOpacity(.70);
+    final onSurfaceMuted =
+        Theme.of(context).colorScheme.onSurface.withOpacity(.70);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1144,10 +1272,16 @@ class AboutSection extends StatelessWidget {
           spacing: 10,
           runSpacing: 10,
           children: const [
-            _Pill(icon: Icons.integration_instructions, text: 'Clean, testable app architectures'),
-            _Pill(icon: Icons.dataset, text: 'Data‑driven detections & dashboards'),
+            _Pill(
+                icon: Icons.integration_instructions,
+                text: 'Clean, testable app architectures'),
+            _Pill(
+                icon: Icons.dataset,
+                text: 'Data‑driven detections & dashboards'),
             _Pill(icon: Icons.device_hub, text: 'Network & endpoint triage'),
-            _Pill(icon: Icons.lock_outline, text: 'Privacy by Design / Secure SDLC'),
+            _Pill(
+                icon: Icons.lock_outline,
+                text: 'Privacy by Design / Secure SDLC'),
           ],
         ),
       ],
@@ -1180,7 +1314,6 @@ class _Pill extends StatelessWidget {
     );
   }
 }
-
 
 class SectionTitle extends StatelessWidget {
   final String text;
@@ -1215,8 +1348,6 @@ class SectionTitle extends StatelessWidget {
     );
   }
 }
-
-
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({super.key});
@@ -1302,7 +1433,6 @@ class _SkillsSectionState extends State<SkillsSection>
   }
 }
 
-
 class ProjectsSection extends StatefulWidget {
   const ProjectsSection({super.key});
 
@@ -1311,53 +1441,71 @@ class ProjectsSection extends StatefulWidget {
 }
 
 class _ProjectsSectionState extends State<ProjectsSection> {
-    String _filter = 'all';
+  String _filter = 'all';
 
-    @override
-    Widget build(BuildContext context) {
-      final w = MediaQuery.of(context).size.width;
-      final cross = w >= 1200 ? 3 : w >= 800 ? 2 : 1;
-      final ratio = w >= 1200 ? 1.05 : w >= 800 ? 0.90 : 0.78;
+  @override
+  Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final cross = w >= 1200
+        ? 3
+        : w >= 800
+            ? 2
+            : 1;
+    final ratio = w >= 1200
+        ? 1.05
+        : w >= 800
+            ? 0.90
+            : 0.78;
 
-      final projects = _filter == 'all'
-          ? ProfileConfig.projects
-          : ProfileConfig.projects.where((p) => p.category == _filter).toList();
+    final projects = _filter == 'all'
+        ? ProfileConfig.projects
+        : ProfileConfig.projects.where((p) => p.category == _filter).toList();
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionTitle(I18n.t('projects_title')),
-          const SizedBox(height: 8),
-          Text('A mix of mobile apps and blue-team security work. More on my GitHub.',
-             style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white70)),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 10,
-            children: [
-              ChoiceChip(label: const Text('All'), selected: _filter == 'all',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(I18n.t('projects_title')),
+        const SizedBox(height: 8),
+        Text(
+            'A mix of mobile apps and blue-team security work. More on my GitHub.',
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: Colors.white70)),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 10,
+          children: [
+            ChoiceChip(
+                label: const Text('All'),
+                selected: _filter == 'all',
                 onSelected: (_) => setState(() => _filter = 'all')),
-              ChoiceChip(label: const Text('Mobile'), selected: _filter == 'mobile',
+            ChoiceChip(
+                label: const Text('Mobile'),
+                selected: _filter == 'mobile',
                 onSelected: (_) => setState(() => _filter = 'mobile')),
-              ChoiceChip(label: const Text('Security'), selected: _filter == 'security',
+            ChoiceChip(
+                label: const Text('Security'),
+                selected: _filter == 'security',
                 onSelected: (_) => setState(() => _filter = 'security')),
-            ],
+          ],
+        ),
+        const SizedBox(height: 16),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: cross,
+            mainAxisSpacing: 14,
+            crossAxisSpacing: 14,
+            childAspectRatio: ratio,
           ),
-          const SizedBox(height: 16),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: cross,
-              mainAxisSpacing: 14,
-              crossAxisSpacing: 14,
-              childAspectRatio: ratio,
-            ),
-            itemCount: projects.length,
-            itemBuilder: (context, i) => ProjectCard(project: projects[i]),
-          ),
-        ],
-      );
-    }
+          itemCount: projects.length,
+          itemBuilder: (context, i) => ProjectCard(project: projects[i]),
+        ),
+      ],
+    );
+  }
 }
 
 class ProjectCard extends StatefulWidget {
@@ -1377,131 +1525,139 @@ class _ProjectCardState extends State<ProjectCard> {
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
       child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-
-        AspectRatio(
-          aspectRatio: 16 / 9,
-
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              _netImage(widget.project.imageUrl, fit: BoxFit.cover),
-              Positioned(
-                left: 0, right: 0, bottom: 0,
-                child: Container(
-                  height: 56,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [Color(0xAA000000), Color(0x00000000)],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 10,
-                bottom: 10,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(DS.pill),
-                    onTap: () => _openDetails(context, widget.project),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(.55),
-                        borderRadius: BorderRadius.circular(DS.pill),
-                        border: Border.all(color: Colors.white24),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.visibility, size: 16, color: Colors.white70),
-                          SizedBox(width: 6),
-                          Text('View', style: TextStyle(color: Colors.white70)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-
-                Row(children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.06),
-                      borderRadius: BorderRadius.circular(999),
+                _netImage(widget.project.imageUrl, fit: BoxFit.cover),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    height: 56,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [Color(0xAA000000), Color(0x00000000)],
+                      ),
                     ),
-                    child: Text(widget.project.kind, style: const TextStyle(fontSize: 12)),
                   ),
-                  const Spacer(),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: widget.project.tags.take(3).map((t) => Padding(
-                        padding: const EdgeInsets.only(left: 6),
-                        child: Chip(
-                          label: Text(t),
-                          visualDensity: const VisualDensity(horizontal: -2, vertical: -2),
+                ),
+                Positioned(
+                  right: 10,
+                  bottom: 10,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(DS.pill),
+                      onTap: () => _openDetails(context, widget.project),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(.55),
+                          borderRadius: BorderRadius.circular(DS.pill),
+                          border: Border.all(color: Colors.white24),
                         ),
-                      )).toList(),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.visibility,
+                                size: 16, color: Colors.white70),
+                            SizedBox(width: 6),
+                            Text('View',
+                                style: TextStyle(color: Colors.white70)),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ]),
-                const SizedBox(height: 10),
-                Text(
-                  widget.project.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  widget.project.summary,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white70),
-                ),
-                const Spacer(),
-                Row(children: [
-                  if (widget.project.github.isNotEmpty)
-                    TextButton.icon(
-                      onPressed: () => _launch(widget.project.github),
-                      icon: const Icon(Icons.code),
-                      label: const Text('Code'),
-                    ),
-                  if (widget.project.demo.isNotEmpty)
-                    TextButton.icon(
-                      onPressed: () => _launch(widget.project.demo),
-                      icon: const Icon(Icons.open_in_new),
-                      label: const Text('Live'),
-                    ),
-                ]),
               ],
             ),
           ),
-        ),
-      ],
-    ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(.06),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Text(widget.project.kind,
+                          style: const TextStyle(fontSize: 12)),
+                    ),
+                    const Spacer(),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: widget.project.tags
+                            .take(3)
+                            .map((t) => Padding(
+                                  padding: const EdgeInsets.only(left: 6),
+                                  child: Chip(
+                                    label: Text(t),
+                                    visualDensity: const VisualDensity(
+                                        horizontal: -2, vertical: -2),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ]),
+                  const SizedBox(height: 10),
+                  Text(
+                    widget.project.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.project.summary,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  const Spacer(),
+                  Row(children: [
+                    if (widget.project.github.isNotEmpty)
+                      TextButton.icon(
+                        onPressed: () => _launch(widget.project.github),
+                        icon: const Icon(Icons.code),
+                        label: const Text('Code'),
+                      ),
+                    if (widget.project.demo.isNotEmpty)
+                      TextButton.icon(
+                        onPressed: () => _launch(widget.project.demo),
+                        icon: const Icon(Icons.open_in_new),
+                        label: const Text('Live'),
+                      ),
+                  ]),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-
   void _openDetails(BuildContext context, Project p) {
-
     web.replaceHash('project=${p.id}');
     analytics.trackEvent('Project Open', {'id': p.id, 'title': p.title});
     showDialog(
@@ -1516,8 +1672,7 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
       ),
     ).then((_) {
-
-            web.clearHash();
+      web.clearHash();
     });
   }
 }
@@ -1567,13 +1722,16 @@ class _ExperienceTile extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text('${item.role} — ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold)),
+                      child: Text(
+                        '${item.role} \u2014 ',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    Text(item.period, style: const TextStyle(color: Colors.white70)),
+                    Text(item.period,
+                        style: const TextStyle(color: Colors.white70)),
                   ],
                 ),
                 const SizedBox(height: 2),
@@ -1588,16 +1746,16 @@ class _ExperienceTile extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('•  '),
+                            const Text('\u2022  '),
                             Expanded(child: Text(b)),
                           ],
                         ),
                       ),
                   ],
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -1628,7 +1786,6 @@ class _TimelineDot extends StatelessWidget {
   }
 }
 
-
 class CertsSection extends StatelessWidget {
   const CertsSection({super.key});
 
@@ -1636,7 +1793,11 @@ class CertsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final certs = ProfileConfig.certs;
     final w = MediaQuery.of(context).size.width;
-    final cross = w > 1000 ? 3 : w > 700 ? 2 : 1;
+    final cross = w > 1000
+        ? 3
+        : w > 700
+            ? 2
+            : 1;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1680,9 +1841,11 @@ class _CertCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(c.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text(c.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Text('${c.issuer} · ${c.year}', style: const TextStyle(color: Colors.white70)),
+                Text('${c.issuer} · ${c.year}',
+                    style: const TextStyle(color: Colors.white70)),
               ],
             ),
           ),
@@ -1692,41 +1855,52 @@ class _CertCard extends StatelessWidget {
   }
 }
 
-
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-              builder: (context, c) {
-            final isWide = c.maxWidth > 880;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SectionTitle(I18n.t('contact_title')),
-                const SizedBox(height: 8),
-                Text('Email me or send a message — I’ll respond quickly.',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white70)),
-                const SizedBox(height: 16),
-                Flex(
-                  direction: isWide ? Axis.horizontal : Axis.vertical,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: _ContactForm(),
-                    ),
-                    SizedBox(width: isWide ? 20 : 0, height: isWide ? 0 : 20),
-                    Expanded(
-                      child: _ContactSidebar(),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
+      builder: (context, c) {
+        final isWide = c.maxWidth > 880;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SectionTitle(I18n.t('contact_title')),
+            const SizedBox(height: 8),
+            Text('Email me or send a message — I’ll respond quickly.',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Colors.white70)),
+            const SizedBox(height: 16),
+            if (isWide)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: _ContactForm(),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: _ContactSidebar(),
+                  ),
+                ],
+              )
+            else
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _ContactForm(),
+                  const SizedBox(height: 20),
+                  _ContactSidebar(),
+                ],
+              ),
+          ],
         );
+      },
+    );
   }
 }
 
@@ -1740,14 +1914,14 @@ class Footer extends StatelessWidget {
         children: [
           const Divider(color: Colors.white12),
           const SizedBox(height: 12),
-          Text('© ${DateTime.now().year} ${ProfileConfig.name}. All rights reserved.',
+          Text(
+              '© ${DateTime.now().year} ${ProfileConfig.name}. All rights reserved.',
               style: const TextStyle(color: Colors.white70)),
         ],
       ),
     );
   }
 }
-
 
 Future<void> _launch(String url) async {
   final parsed = Uri.tryParse(url);
@@ -1758,176 +1932,198 @@ Future<void> _launch(String url) async {
   }
 }
 
-
 class _ContactSidebar extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Colors.white12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () => _launch('mailto:${ProfileConfig.email}'),
-              icon: const Icon(Icons.mail_outline),
-              label: const Text('Email'),
-            ),
-            const SizedBox(height: 8),
-            OutlinedButton.icon(
-              onPressed: () => _launch(ProfileConfig.linkedin),
-              icon: const Icon(Icons.link),
-              label: const Text('LinkedIn'),
-            ),
-            const SizedBox(height: 8),
-            OutlinedButton.icon(
-              onPressed: () => _launch(ProfileConfig.github),
-              icon: const Icon(Icons.code),
-              label: const Text('GitHub'),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                const Icon(Icons.place, size: 18, color: Colors.white70),
-                const SizedBox(width: 6),
-                Expanded(child: Text(ProfileConfig.location, style: const TextStyle(color: Colors.white70))),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.phone, size: 18, color: Colors.white70),
-                const SizedBox(width: 6),
-                Expanded(child: Text(ProfileConfig.phone, style: const TextStyle(color: Colors.white70))),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ElevatedButton.icon(
+            onPressed: () => _launch('mailto:${ProfileConfig.email}'),
+            icon: const Icon(Icons.mail_outline),
+            label: const Text('Email'),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: () => _launch(ProfileConfig.linkedin),
+            icon: const Icon(Icons.link),
+            label: const Text('LinkedIn'),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: () => _launch(ProfileConfig.github),
+            icon: const Icon(Icons.code),
+            label: const Text('GitHub'),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              const Icon(Icons.place, size: 18, color: Colors.white70),
+              const SizedBox(width: 6),
+              Expanded(
+                  child: Text(ProfileConfig.location,
+                      style: const TextStyle(color: Colors.white70))),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              const Icon(Icons.phone, size: 18, color: Colors.white70),
+              const SizedBox(width: 6),
+              Expanded(
+                  child: Text(ProfileConfig.phone,
+                      style: const TextStyle(color: Colors.white70))),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _ContactForm extends StatefulWidget {
-    @override
-    State<_ContactForm> createState() => _ContactFormState();
-  }
+  @override
+  State<_ContactForm> createState() => _ContactFormState();
+}
 
 class _ContactFormState extends State<_ContactForm> {
-    final _formKey = GlobalKey<FormState>();
-    final _name = TextEditingController();
-    final _email = TextEditingController();
-    final _subject = TextEditingController();
-    final _message = TextEditingController();
-    bool _sending = false;
-    final _website = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _name = TextEditingController();
+  final _email = TextEditingController();
+  final _subject = TextEditingController();
+  final _message = TextEditingController();
+  bool _sending = false;
+  final _website = TextEditingController();
 
-    @override
-    void dispose() {
-      _name.dispose();
-      _email.dispose();
-      _subject.dispose();
-      _message.dispose();
-      _website.dispose();
-      super.dispose();
+  @override
+  void dispose() {
+    _name.dispose();
+    _email.dispose();
+    _subject.dispose();
+    _message.dispose();
+    _website.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    if (_website.text.trim().isNotEmpty) {
+      return;
     }
-
-    Future<void> _submit() async {
-      if (!_formKey.currentState!.validate()) return;
-      if (_website.text.trim().isNotEmpty) {
-        return;
-      }
-      if (ProfileConfig.contactEndpoint.contains('REPLACE_ME')) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Set ProfileConfig.contactEndpoint to your Formspree URL.')),
-        );
-        return;
-      }
-      setState(() => _sending = true);
-      try {
-        final resp = await http.post(Uri.parse(ProfileConfig.contactEndpoint), headers: {
-         'Accept': 'application/json',
-        }, body: {
-          'name': _name.text.trim(),
-          'email': _email.text.trim(),
-          'subject': _subject.text.trim(),
-          'message': _message.text.trim(),
-        });
-        if (resp.statusCode >= 200 && resp.statusCode < 300) {
-          _formKey.currentState?.reset();
-          _name.clear(); _email.clear(); _subject.clear(); _message.clear();
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Message sent ✅')));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Send failed (${resp.statusCode})')));
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
-      } finally {
-        if (mounted) setState(() => _sending = false);
-      }
-    }
-
-    @override
-    Widget build(BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Colors.white12),
-        ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Offstage(
-                offstage: true,
-                child: TextFormField(
-                  controller: _website,
-                  decoration: const InputDecoration(labelText: 'Website'),
-                ),
-              ),
-              TextFormField(
-                controller: _name,
-                decoration: const InputDecoration(labelText: 'Your name'),
-                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _email,
-                decoration: const InputDecoration(labelText: 'Your email'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (v) => v != null && v.contains('@') ? null : 'Valid email required',
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _subject,
-                decoration: const InputDecoration(labelText: 'Subject'),
-                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _message,
-                decoration: const InputDecoration(labelText: 'Message'),
-                maxLines: 5,
-                validator: (v) => v == null || v.trim().length < 10 ? 'Write a bit more (10+ chars)' : null,
-              ),
-              const SizedBox(height: 12),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: FilledButton.icon(
-                  onPressed: _sending ? null : _submit,
-                  icon: _sending ? const SizedBox(width:16,height:16,child:CircularProgressIndicator(strokeWidth:2)) : const Icon(Icons.send),
-                  label: Text(_sending ? 'Sending…' : 'Send Message'),
-                ),
-              )
-            ],
-          ),
-        ),
+    if (ProfileConfig.contactEndpoint.contains('REPLACE_ME')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text(
+                'Set ProfileConfig.contactEndpoint to your Formspree URL.')),
       );
+      return;
     }
+    setState(() => _sending = true);
+    try {
+      final resp =
+          await http.post(Uri.parse(ProfileConfig.contactEndpoint), headers: {
+        'Accept': 'application/json',
+      }, body: {
+        'name': _name.text.trim(),
+        'email': _email.text.trim(),
+        'subject': _subject.text.trim(),
+        'message': _message.text.trim(),
+      });
+      if (resp.statusCode >= 200 && resp.statusCode < 300) {
+        _formKey.currentState?.reset();
+        _name.clear();
+        _email.clear();
+        _subject.clear();
+        _message.clear();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Message sent ✅')));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Send failed (${resp.statusCode})')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
+    } finally {
+      if (mounted) setState(() => _sending = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Offstage(
+              offstage: true,
+              child: TextFormField(
+                controller: _website,
+                decoration: const InputDecoration(labelText: 'Website'),
+              ),
+            ),
+            TextFormField(
+              controller: _name,
+              decoration: const InputDecoration(labelText: 'Your name'),
+              validator: (v) =>
+                  v == null || v.trim().isEmpty ? 'Required' : null,
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              controller: _email,
+              decoration: const InputDecoration(labelText: 'Your email'),
+              keyboardType: TextInputType.emailAddress,
+              validator: (v) =>
+                  v != null && v.contains('@') ? null : 'Valid email required',
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              controller: _subject,
+              decoration: const InputDecoration(labelText: 'Subject'),
+              validator: (v) =>
+                  v == null || v.trim().isEmpty ? 'Required' : null,
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              controller: _message,
+              decoration: const InputDecoration(labelText: 'Message'),
+              maxLines: 5,
+              validator: (v) => v == null || v.trim().length < 10
+                  ? 'Write a bit more (10+ chars)'
+                  : null,
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton.icon(
+                onPressed: _sending ? null : _submit,
+                icon: _sending
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Icon(Icons.send),
+                label: Text(_sending ? 'Sending…' : 'Send Message'),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class I18n {
@@ -1988,7 +2184,6 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
   late final PageController _page = PageController();
   int _index = 0;
 
-
   @override
   void dispose() {
     _page.dispose();
@@ -1996,7 +2191,8 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
   }
 
   void _openFullscreen(List<String> images, int startIndex) {
-    analytics.trackEvent('Lightbox Open', {'project': widget.project.id, 'index': '$startIndex'});
+    analytics.trackEvent('Lightbox Open',
+        {'project': widget.project.id, 'index': '$startIndex'});
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -2023,13 +2219,13 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
             child: GestureDetector(
               onTap: () => _openFullscreen(images, _index),
               child: PageView.builder(
-              controller: _page,
-              onPageChanged: (i) => setState(() => _index = i),
-              itemCount: images.length,
-              itemBuilder: (_, i) => Container(
-                color: Colors.black12,
-                alignment: Alignment.center,
-                child: _netImage(images[i], fit: BoxFit.contain),
+                controller: _page,
+                onPageChanged: (i) => setState(() => _index = i),
+                itemCount: images.length,
+                itemBuilder: (_, i) => Container(
+                  color: Colors.black12,
+                  alignment: Alignment.center,
+                  child: _netImage(images[i], fit: BoxFit.contain),
                 ),
               ),
             ),
@@ -2041,22 +2237,22 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
             children: List.generate(images.length, (i) {
               final active = i == _index;
               return InkWell(
-                  onTap: () {
-                    _page.animateToPage(i,
+                onTap: () {
+                  _page.animateToPage(i,
                       duration: const Duration(milliseconds: 250),
                       curve: Curves.easeOut);
-                  },
-                  child: Container(
-                    width: active ? 18 : 8,
-                    height: 8,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      color: active
+                },
+                child: Container(
+                  width: active ? 18 : 8,
+                  height: 8,
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: active
                         ? Theme.of(context).colorScheme.primary
                         : Colors.white24,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
+                    borderRadius: BorderRadius.circular(999),
                   ),
+                ),
               );
             }),
           ),
@@ -2073,7 +2269,10 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
                 Expanded(
                   child: Text(
                     p.title,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 IconButton(
@@ -2088,7 +2287,8 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(.06),
                     borderRadius: BorderRadius.circular(999),
@@ -2098,37 +2298,47 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Wrap(
-                  spacing: 10,
-                  runSpacing: 2,
-                  children: p.tags.take(10).map((t) =>
-                      Chip(
-                        label: Text(t),
-                        visualDensity: const VisualDensity(horizontal: -2, vertical: -2),
-                      ),
-                  ).toList(),
-                ),
+                    spacing: 10,
+                    runSpacing: 2,
+                    children: p.tags
+                        .take(10)
+                        .map(
+                          (t) => Chip(
+                            label: Text(t),
+                            visualDensity: const VisualDensity(
+                                horizontal: -2, vertical: -2),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 12),
             Text(p.detail.isNotEmpty ? p.detail : p.summary,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white70)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Colors.white70)),
             const SizedBox(height: 12),
             if (p.highlights.isNotEmpty) ...[
-              Text('Highlights', style: Theme.of(context).textTheme.titleMedium),
+              Text('Highlights',
+                  style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 6),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: p.highlights.map((h) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('•  '),
-                      Expanded(child: Text(h)),
-                    ],
-                  ),
-                )).toList(),
+                children: p.highlights
+                    .map((h) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('•  '),
+                              Expanded(child: Text(h)),
+                            ],
+                          ),
+                        ))
+                    .toList(),
               ),
               const SizedBox(height: 12),
             ],
@@ -2159,25 +2369,32 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
           padding: const EdgeInsets.all(8),
           child: wide
               ? Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(flex: 6, child: ClipRRect(borderRadius: BorderRadius.circular(12), child: gallery)),
-              const SizedBox(width: 16),
-              Expanded(flex: 5, child: content),
-            ],
-          )
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        flex: 6,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: gallery)),
+                    const SizedBox(width: 16),
+                    Expanded(flex: 5, child: content),
+                  ],
+                )
               : Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(borderRadius: BorderRadius.circular(12), child: gallery),
-              content,
-            ],
-          ),
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: gallery),
+                    content,
+                  ],
+                ),
         ),
       );
     });
   }
 }
+
 class _ImageLightbox extends StatefulWidget {
   final List<String> images;
   final int initialIndex;
@@ -2189,7 +2406,7 @@ class _ImageLightbox extends StatefulWidget {
 
 class _ImageLightboxState extends State<_ImageLightbox> {
   late final PageController _controller =
-  PageController(initialPage: widget.initialIndex);
+      PageController(initialPage: widget.initialIndex);
   int _index = 0;
   double _scale = 1.0;
 
@@ -2217,7 +2434,10 @@ class _ImageLightboxState extends State<_ImageLightbox> {
           // Images
           PageView.builder(
             controller: _controller,
-            onPageChanged: (i) => setState(() { _index = i; _scale = 1.0; }),
+            onPageChanged: (i) => setState(() {
+              _index = i;
+              _scale = 1.0;
+            }),
             itemCount: imgs.length,
             itemBuilder: (_, i) => Center(
               child: InteractiveViewer(
@@ -2301,6 +2521,7 @@ class _ImageLightboxState extends State<_ImageLightbox> {
     );
   }
 }
+
 Widget _netImage(String url, {BoxFit fit = BoxFit.cover, bool big = false}) {
   if (kIsWeb) {
     return Image.network(
@@ -2327,10 +2548,10 @@ class _ImgError extends StatelessWidget {
   const _ImgError();
   @override
   Widget build(BuildContext context) => Container(
-    color: Colors.black26,
-    alignment: Alignment.center,
-    child: const Icon(Icons.broken_image, size: 40, color: Colors.white54),
-  );
+        color: Colors.black26,
+        alignment: Alignment.center,
+        child: const Icon(Icons.broken_image, size: 40, color: Colors.white54),
+      );
 }
 
 class TestimonialsSection extends StatefulWidget {
@@ -2344,12 +2565,16 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   int _index = 0;
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final items = ProfileConfig.testimonials;
     if (items.isEmpty) return const SizedBox.shrink();
+    final isCompact = MediaQuery.of(context).size.width < 700;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2357,7 +2582,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
         SectionTitle(I18n.t('testimonials_title')),
         const SizedBox(height: 12),
         AspectRatio(
-          aspectRatio: 16/6,
+          aspectRatio: isCompact ? 1.05 : 16 / 6,
           child: PageView.builder(
             controller: _ctrl,
             onPageChanged: (i) => setState(() => _index = i),
@@ -2375,7 +2600,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
               height: 8,
               margin: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
-                color: active ? Theme.of(context).colorScheme.primary : Colors.white24,
+                color: active
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.white24,
                 borderRadius: BorderRadius.circular(999),
               ),
             );
@@ -2392,8 +2619,40 @@ class _TestimonialCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final theme = Theme.of(context);
+    final avatar = Stack(
+      alignment: Alignment.center,
+      children: [
+        CircleAvatar(radius: 36, backgroundColor: Colors.white10),
+        CircleAvatar(radius: 33, backgroundImage: NetworkImage(t.avatar)),
+      ],
+    );
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.format_quote,
+                color: theme.colorScheme.primary.withOpacity(.8), size: 20),
+            const SizedBox(width: 4),
+            Text(
+              'Testimonial',
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(.70),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text('"${t.quote}"',
+            style: theme.textTheme.titleMedium?.copyWith(height: 1.35)),
+        const SizedBox(height: 8),
+        Text('${t.name} - ${t.role}',
+            style: const TextStyle(color: Colors.white70)),
+      ],
+    );
+
     final card = Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       padding: const EdgeInsets.all(18),
@@ -2402,42 +2661,32 @@ class _TestimonialCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(DS.radius),
         border: Border.all(color: DS.divider),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              CircleAvatar(radius: 36, backgroundColor: Colors.white10),
-              CircleAvatar(radius: 33, backgroundImage: NetworkImage(t.avatar)),
-            ],
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
+      child: LayoutBuilder(
+        builder: (context, c) {
+          final compact = c.maxWidth < 420;
+          if (compact) {
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.format_quote, color: theme.colorScheme.primary.withOpacity(.8), size: 20),
-                    const SizedBox(width: 4),
-                    Text('Testimonial', style: theme.textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(.70),
-                    ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text('“${t.quote}”', style: theme.textTheme.titleMedium?.copyWith(height: 1.35)),
-                const SizedBox(height: 8),
-                Text('${t.name} · ${t.role}', style: const TextStyle(color: Colors.white70)),
+                Center(child: avatar),
+                const SizedBox(height: 12),
+                content,
               ],
-            ),
-          ),
-        ],
+            );
+          }
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              avatar,
+              const SizedBox(width: 14),
+              Expanded(child: content),
+            ],
+          );
+        },
       ),
     );
+
     return card.animate().fadeIn(duration: 300.ms).slideY(begin: .1);
   }
 }
@@ -2447,7 +2696,11 @@ class Testimonial {
   final String name;
   final String role;
   final String avatar;
-  const Testimonial({required this.quote, required this.name, required this.role, required this.avatar});
+  const Testimonial(
+      {required this.quote,
+      required this.name,
+      required this.role,
+      required this.avatar});
 }
 
 class BlogPost {
@@ -2490,7 +2743,8 @@ class _BlogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onEnter: (_) {}, onExit: (_) {},
+      onEnter: (_) {},
+      onExit: (_) {},
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),
         padding: const EdgeInsets.all(16),
@@ -2505,7 +2759,8 @@ class _BlogCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(.06),
                     borderRadius: BorderRadius.circular(DS.pill),
@@ -2515,7 +2770,11 @@ class _BlogCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text(post.title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+            Text(post.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
             Text(post.summary, style: const TextStyle(color: Colors.white70)),
             const SizedBox(height: 10),
@@ -2538,25 +2797,24 @@ class DS {
   static const radius = 16.0;
   static const pill = 999.0;
 
-
   static const surfaceGlass = Color(0x0FFFFFFF);
   static const divider = Color(0x1AFFFFFF);
 
   static List<BoxShadow> shadowSoft(BuildContext c) => [
-    BoxShadow(
-      color: Colors.black.withOpacity(0.25),
-      blurRadius: 18,
-      spreadRadius: 0,
-      offset: const Offset(0, 10),
-    ),
-  ];
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          blurRadius: 18,
+          spreadRadius: 0,
+          offset: const Offset(0, 10),
+        ),
+      ];
 }
-
 
 class ParallaxOrbs extends StatelessWidget {
   final ScrollController controller;
   final bool isDark;
-  const ParallaxOrbs({super.key, required this.controller, required this.isDark});
+  const ParallaxOrbs(
+      {super.key, required this.controller, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -2570,7 +2828,6 @@ class ParallaxOrbs extends StatelessWidget {
           animation: controller,
           builder: (_, __) {
             final o = controller.hasClients ? controller.offset : 0.0;
-
 
             final a = o * 0.06;
             final b = o * 0.03;
@@ -2622,7 +2879,6 @@ class ParallaxOrbs extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-
           gradient: RadialGradient(
             colors: [color, color.withOpacity(0.0)],
             stops: const [0.0, 1.0],
@@ -2641,16 +2897,16 @@ class EducationSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SectionTitle(I18n.t('education_title')),
-            const SizedBox(height: 24),
-            Column(
-              children: educationList.map((e) => _EducationTile(e)).toList(),
-            ),
-            const SizedBox(height: 24),
-            const Divider(color: DS.divider, height: 1),
-          ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(I18n.t('education_title')),
+        const SizedBox(height: 24),
+        Column(
+          children: educationList.map((e) => _EducationTile(e)).toList(),
+        ),
+        const SizedBox(height: 24),
+        const Divider(color: DS.divider, height: 1),
+      ],
     );
   }
 }
@@ -2675,8 +2931,8 @@ class _EducationTile extends StatelessWidget {
                 Text(
                   edu.degree,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 Text(
                   "${edu.institution} • ${edu.years}",
