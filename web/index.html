@@ -30,18 +30,37 @@
   <script src="flutter.js"></script>
 </head>
 <body>
-<!-- 2) Start Flutter with no SW and default renderer -->
+<!-- 2) Start Flutter with a mobile-safe fallback -->
 <script>
   window.addEventListener('load', function () {
     if (!window._flutter || !_flutter.loader) { console.error('flutter.js not loaded'); return; }
-    _flutter.loader.loadEntrypoint({
-      serviceWorker: null,                 // hard-disable SW registration
-      entrypointUrl: 'main.dart.js?v=5',   // bust stale caches on mobile
-      onEntrypointLoaded: function (engineInitializer) {
-        engineInitializer.initializeEngine()
-          .then(appRunner => appRunner.runApp());
-      }
-    });
+
+    function boot(options) {
+      return new Promise(function (resolve, reject) {
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: null,
+          entrypointUrl: 'main.dart.js?v=6',
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer.initializeEngine(options)
+              .then(function (appRunner) { appRunner.runApp(); resolve(); })
+              .catch(reject);
+          }
+        });
+      });
+    }
+
+    boot({})
+      .catch(function (err) {
+        console.warn('Default Flutter web boot failed. Retrying with CanvasKit.', err);
+        return boot({ renderer: 'canvaskit' });
+      })
+      .catch(function (err) {
+        console.error('Flutter web failed to start.', err);
+        document.body.innerHTML =
+          '<div style="padding:16px;font-family:sans-serif;color:#b00020;">' +
+          'Failed to start app. Please refresh the page.' +
+          '</div>';
+      });
   });
 </script>
 </body>
