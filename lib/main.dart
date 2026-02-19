@@ -783,11 +783,13 @@ class _PortfolioHomeState extends State<PortfolioHome> {
             body: Stack(
               children: [
                 ParallaxOrbs(controller: _scroll, isDark: widget.isDark),
-                Scrollbar(
-                  controller: _scroll,
-                  thumbVisibility: true,
+                SafeArea(
+                  child: Scrollbar(
+                    controller: _scroll,
+                    thumbVisibility: true,
                   child: SingleChildScrollView(
                     controller: _scroll,
+                    physics: const BouncingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -836,6 +838,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                         const Footer(),
                       ],
                     ),
+                  ),
                   ),
                 ),
               ],
@@ -2077,6 +2080,7 @@ class _ContactFormState extends State<_ContactForm> {
             ),
             TextFormField(
               controller: _name,
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Your name'),
               validator: (v) =>
                   v == null || v.trim().isEmpty ? 'Required' : null,
@@ -2084,6 +2088,7 @@ class _ContactFormState extends State<_ContactForm> {
             const SizedBox(height: 8),
             TextFormField(
               controller: _email,
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Your email'),
               keyboardType: TextInputType.emailAddress,
               validator: (v) =>
@@ -2092,6 +2097,7 @@ class _ContactFormState extends State<_ContactForm> {
             const SizedBox(height: 8),
             TextFormField(
               controller: _subject,
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Subject'),
               validator: (v) =>
                   v == null || v.trim().isEmpty ? 'Required' : null,
@@ -2099,6 +2105,7 @@ class _ContactFormState extends State<_ContactForm> {
             const SizedBox(height: 8),
             TextFormField(
               controller: _message,
+              textInputAction: TextInputAction.done,
               decoration: const InputDecoration(labelText: 'Message'),
               maxLines: 5,
               validator: (v) => v == null || v.trim().length < 10
@@ -2429,7 +2436,8 @@ class _ImageLightboxState extends State<_ImageLightbox> {
     final imgs = widget.images;
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Stack(
+      body: SafeArea(
+        child: Stack(
         children: [
           // Images
           PageView.builder(
@@ -2517,6 +2525,7 @@ class _ImageLightboxState extends State<_ImageLightbox> {
             ),
           ),
         ],
+        ),
       ),
     );
   }
