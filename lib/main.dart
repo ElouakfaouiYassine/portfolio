@@ -7,7 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'web_url_stub.dart' if (dart.library.html) 'web_url_web.dart' as web;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'web_analytics_stub.dart' if (dart.library.html) 'web_analytics_web.dart'
-    as analytics;
+as analytics;
 import 'dart:ui' show ImageFilter;
 import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,9 +35,16 @@ extension _MapIndexed<E> on Iterable<E> {
 
 class _PortfolioAppState extends State<PortfolioApp> {
   ThemeMode _mode = ThemeMode.dark;
+
   void _toggleTheme() {
     setState(() {
       _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
+
+  void _changeLanguage(String lang) {
+    setState(() {
+      I18n.current = lang;
     });
   }
 
@@ -48,23 +55,23 @@ class _PortfolioAppState extends State<PortfolioApp> {
       debugShowCheckedModeBanner: false,
       themeMode: _mode,
       locale: I18n.locale,
-      supportedLocales: const [
+      supportedLocales: const[
         Locale('en'),
         Locale('fr'),
         Locale('ar'),
       ],
       builder: (context, child) => Directionality(
         textDirection:
-            I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+        I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
         child: child!,
       ),
-      localizationsDelegates: const [
+      localizationsDelegates: const   [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       localeResolutionCallback: (device, supported) => supported.firstWhere(
-          (l) => l.languageCode == I18n.current,
+              (l) => l.languageCode == I18n.current,
           orElse: () => const Locale('en')),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
@@ -80,13 +87,13 @@ class _PortfolioAppState extends State<PortfolioApp> {
         colorSchemeSeed: Colors.indigo,
         textTheme: I18n.current == 'ar'
             ? GoogleFonts.cairoTextTheme(
-                Typography.material2021(platform: TargetPlatform.android).black)
+            Typography.material2021(platform: TargetPlatform.android).black)
             : Typography.material2021(platform: TargetPlatform.android)
-                .black
-                .apply(
-                  bodyColor: const Color(0xFF1B1F2A),
-                  displayColor: const Color(0xFF0F1230),
-                ),
+            .black
+            .apply(
+          bodyColor: const Color(0xFF1B1F2A),
+          displayColor: const Color(0xFF0F1230),
+        ),
         cardTheme: CardTheme(
           elevation: 0,
           color: Colors.white,
@@ -110,7 +117,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
         ),
         chipTheme: ChipThemeData(
           shape:
-              StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
+          StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           backgroundColor: const Color(0x0F1B1F2A),
           selectedColor: const Color(0x201B1F2A),
@@ -176,7 +183,10 @@ class _PortfolioAppState extends State<PortfolioApp> {
         ),
       ),
       home: PortfolioHome(
-          onToggleTheme: _toggleTheme, isDark: _mode == ThemeMode.dark),
+        onToggleTheme: _toggleTheme,
+        isDark: _mode == ThemeMode.dark,
+        onLanguageChanged: _changeLanguage,
+      ),
     );
   }
 }
@@ -194,16 +204,16 @@ class ProfileConfig {
   static const resumeUrl = 'assets/resume.pdf';
   static const contactEndpoint = 'https://formspree.io/f/mpwjborw';
 
-  static const mobileSkills = [
-    'Android (Kotlin/Java)',
-    'Python',
-    'Flutter',
-    'Dart',
-    'iOS (Swift basics)',
-    'Design Pattern: MVC, MVP and MVVM',
-    'MongoDB',
-    'SQLite',
-    'Firebase',
+  static const mobileSkills =[
+  'Android (Kotlin/Java)',
+  'Python',
+  'Flutter',
+  'Dart',
+  'iOS (Swift basics)',
+  'Design Pattern: MVC, MVP and MVVM',
+  'MongoDB',
+  'SQLite',
+  'Firebase',
   ];
   static const socSkills = [
     'SOC L1/L2',
@@ -217,16 +227,16 @@ class ProfileConfig {
     'Python Scripting',
   ];
   static const toolSkills = [
-    'Git/GitHub',
-    'Docker',
-    'Postman',
-    'Wireshark',
-    'Burp Suite',
-    'Nmap',
-    'Regex',
-    'YARA',
-    'Sigma Rules',
-    'Sysmon',
+  'Git/GitHub',
+  'Docker',
+  'Postman',
+  'Wireshark',
+  'Burp Suite',
+  'Nmap',
+  'Regex',
+  'YARA',
+  'Sigma Rules',
+  'Sysmon',
   ];
 
   static final projects = <Project>[
@@ -234,8 +244,8 @@ class ProfileConfig {
       title: 'E‑commerce App',
       kind: 'Mobile (Kotlin)',
       summary:
-          'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend).',
-      tags: [
+      'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend).',
+      tags:[
         'Kotlin',
         'PHP',
         'Stripe',
@@ -247,10 +257,10 @@ class ProfileConfig {
       github: 'https://github.com/ElouakfaouiYassine/E-commerce-app',
       demo: '',
       imageUrl:
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/Application%20sTORE.jpg',
+      'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/Application%20sTORE.jpg',
       category: 'mobile',
       detail:
-          'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend), with hybrid database support using SQLite (local) and MongoDB (remote). The app offers complete user experience including authentication, product browsing, cart, admin management, and dark mode.',
+      'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend), with hybrid database support using SQLite (local) and MongoDB (remote). The app offers complete user experience including authentication, product browsing, cart, admin management, and dark mode.',
       images: [
         'https://raw.githubusercontent.com/ElouakfaouiYassine/E-commerce-app/master/screenshots/photo_32_2025-03-26_23-52-47.jpg',
         'assets/images/3.jpg',
@@ -262,7 +272,7 @@ class ProfileConfig {
         'assets/images/9.jpg',
         'assets/images/10.jpg',
       ],
-      highlights: [
+      highlights:[
         'Stripe payments with 3-D Secure.',
         'Clean Architecture + repository pattern.',
       ],
@@ -272,15 +282,15 @@ class ProfileConfig {
       title: 'StopFire App',
       kind: 'Mobile (Kotlin)',
       summary:
-          'Created a real-time alert app that detects charging-related fire risks. Implemented instant notifications to warn users of potential hazards.',
-      tags: ['kotlin', 'MVVM', 'Notification'],
+      'Created a real-time alert app that detects charging-related fire risks. Implemented instant notifications to warn users of potential hazards.',
+      tags:['kotlin', 'MVVM', 'Notification'],
       github: 'https://github.com/ElouakfaouiYassine/Protect-Your-House-App',
       demo: '',
       imageUrl:
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Feature%20graphic.png',
+      'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Feature%20graphic.png',
       category: 'mobile',
       detail:
-          'Protect Your House App is a mobile application built with Kotlin to strengthen home safety against fire risks caused by charging devices. It continuously monitors charging conditions, detects anomalies in real-time, and provides instant notifications to alert users. The app is designed with an MVVM architecture to ensure scalability, clean code, and maintainability.',
+      'Protect Your House App is a mobile application built with Kotlin to strengthen home safety against fire risks caused by charging devices. It continuously monitors charging conditions, detects anomalies in real-time, and provides instant notifications to alert users. The app is designed with an MVVM architecture to ensure scalability, clean code, and maintainability.',
       images: [
         'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/2.png',
         'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/Screenshot_20250704_224606.png',
@@ -289,7 +299,7 @@ class ProfileConfig {
         'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr1.png',
         'https://raw.githubusercontent.com/ElouakfaouiYassine/Protect-Your-House-App/main/app/screenshots/headr2.png',
       ],
-      highlights: [
+      highlights:[
         'Built with Kotlin and MVVM architecture for clean and maintainable code.',
         'Real-time monitoring of charging devices to prevent fire hazards.',
         'Instant notifications and alerts to warn users of risks.',
@@ -302,17 +312,17 @@ class ProfileConfig {
       title: 'Chat App',
       kind: 'Mobile',
       summary:
-          'E2EE chat with offline cache, message reactions, and push notifications.',
+      'E2EE chat with offline cache, message reactions, and push notifications.',
       tags: ['Kotlin', 'Spring Boot', 'MongoDB', 'PGP', 'WebSocket'],
       github:
-          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
       demo: '',
       imageUrl:
-          'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
+      'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
       category: 'mobile',
       detail:
-          'Realtime chat app with E2EE, offline cache, typing indicators and push notifications.',
-      images: [
+      'Realtime chat app with E2EE, offline cache, typing indicators and push notifications.',
+      images:[
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/2.png',
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/3.jpg',
@@ -323,7 +333,7 @@ class ProfileConfig {
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/8.png',
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/9.jpg'
       ],
-      highlights: [
+      highlights:[
         'End-to-end encryption with key rotation.',
         'Message queue + optimistic UI.',
       ],
@@ -333,55 +343,56 @@ class ProfileConfig {
       title: 'BlueTeam NetFlow Hunt',
       kind: 'Security (Threat Hunting)',
       summary:
-          'Python + Zeek pipeline to flag C2 beacons and rare destinations using rolling z‑scores.',
-      tags: ['Python', 'Zeek', 'NetFlow'],
+      'Python + Zeek pipeline to flag C2 beacons and rare destinations using rolling z‑scores.',
+      tags:['Python', 'Zeek', 'NetFlow'],
       github:
-          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
       demo: '',
       imageUrl:
-          'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       category: 'security',
       detail:
-          'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
-      images: [
+      'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
+      images:[
         'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format'
       ],
       highlights: [
-        'Rolling z-scores & rarity analysis.',
-        'Python ETL into dashboards.',
+      'Rolling z-scores & rarity analysis.',
+      'Python ETL into dashboards.',
       ],
       id: 'blueteam',
     ),
   ];
+
   static final testimonials = <Testimonial>[
     Testimonial(
       quote:
-          "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
+      "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
       name: "Anas B.",
       role: "Senior Android Engineer",
       avatar: "https://i.pravatar.cc/120?img=12",
-    ),
-    Testimonial(
+      ),
+      Testimonial(
       quote:
-          "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
+      "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
       name: "Sara M.",
       role: "SOC Team Lead",
       avatar: "https://i.pravatar.cc/120?img=32",
-    ),
-    Testimonial(
+      ),
+      Testimonial(
       quote:
-          "Our Kotlin app’s checkout went from flaky to rock-solid after his refactor and Stripe integration.",
+      "Our Kotlin app’s checkout went from flaky to rock-solid after his refactor and Stripe integration.",
       name: "Ismail K.",
       role: "Product Manager",
       avatar: "https://i.pravatar.cc/120?img=8",
-    ),
+      ),
   ];
 
   static final educationList = <Education>[
     Education(
       degree: "Bachelor’s Degree in Computer Security and Networks",
       institution:
-          "EST – École Supérieure de Technologie Guelmim, Ibn Zohr University",
+      "EST – École Supérieure de Technologie Guelmim, Ibn Zohr University",
       years: "2024 – 2025",
     ),
     Education(
@@ -395,31 +406,32 @@ class ProfileConfig {
     BlogPost(
       title: "Building a Secure Kotlin Checkout Flow",
       summary:
-          "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
+      "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
       date: "Mar 2025",
       url: "https://medium.com/@yassine/secure-kotlin-checkout",
     ),
     BlogPost(
       title: "SOC Analyst Playbook: Reducing Alert Fatigue",
       summary:
-          "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
+      "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
       date: "Feb 2025",
       url: "https://medium.com/@yassine/soc-analyst-playbook",
     ),
     BlogPost(
       title: "From PHP to MongoDB Hybrid Backends",
       summary:
-          "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
+      "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
       date: "Jan 2025",
       url: "https://medium.com/@yassine/hybrid-backends",
     ),
   ];
+
   static final experience = <ExperienceItem>[
     ExperienceItem(
       role: 'Back-End Developer',
       org: 'E-ContactMessage',
       period: '1 Month',
-      bullets: [
+      bullets:[
         'Developed REST APIs using PHP and MySQL',
         'Designed scalable database schemas',
         'Supported improvements in system security and performance',
@@ -429,7 +441,7 @@ class ProfileConfig {
       role: 'Mobile Developer',
       org: 'E-ContactMessage',
       period: '3 Month',
-      bullets: [
+      bullets:[
         'Built using Android SDK components: Activities, RecyclerViews, Layouts,SQLite, etc.',
         'Integrated SQLite for offline storage and remote DB sync.',
         'Applied user feedback to improve UX and navigation.',
@@ -468,7 +480,7 @@ class Project {
     required this.category,
     required this.detail,
     this.images = const [],
-    this.highlights = const [],
+    this.highlights = const[],
     required this.id,
   });
 }
@@ -496,8 +508,14 @@ class Certification {
 class PortfolioHome extends StatefulWidget {
   final VoidCallback onToggleTheme;
   final bool isDark;
-  const PortfolioHome(
-      {super.key, required this.onToggleTheme, required this.isDark});
+  final ValueChanged<String> onLanguageChanged;
+
+  const PortfolioHome({
+    super.key,
+    required this.onToggleTheme,
+    required this.isDark,
+    required this.onLanguageChanged,
+  });
 
   @override
   State<PortfolioHome> createState() => _PortfolioHomeState();
@@ -527,7 +545,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     );
   }
 
-  late final List<MapEntry<String, GlobalKey>> _sections = [
+  late final List<MapEntry<String, GlobalKey>> _sections =[
     MapEntry('About', _aboutKey),
     MapEntry('Skills', _skillsKey),
     MapEntry('Projects', _projectsKey),
@@ -570,7 +588,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     if (hash.startsWith('project=')) {
       final id = hash.split('=').last;
       final match = ProfileConfig.projects.firstWhere(
-        (p) => p.id == id,
+            (p) => p.id == id,
         orElse: () => ProfileConfig.projects.first,
       );
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -632,9 +650,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
             final label = HardwareKeyboard.instance.logicalKeysPressed
                 .map((k) => k.keyLabel)
                 .firstWhere(
-                  (l) => RegExp(r'^[1-8]$').hasMatch(l),
-                  orElse: () => '',
-                );
+                  (l) => RegExp(r'^$').hasMatch(l),
+              orElse: () => '',
+            );
             if (label.isEmpty) return null;
             final idx = int.parse(label) - 1;
             if (idx >= 0 && idx < _sections.length) {
@@ -651,56 +669,67 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               backgroundColor: Colors.transparent,
               surfaceTintColor: Colors.transparent,
               title: Text(ProfileConfig.name),
-              flexibleSpace: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: (widget.isDark ? Colors.black : Colors.white)
-                          .withOpacity(0.20),
-                      border: const Border(
-                        bottom: BorderSide(color: Color(0x22FFFFFF), width: 1),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              actions: MediaQuery.of(context).size.width >= 980
-                  ? [
-                      ..._sections.mapIndexed((i, entry) => _navItemButton(
-                            label: entry.key,
-                            onTap: () => _scrollTo(entry.value),
-                            active: _active == i,
-                          )),
-                      const SizedBox(width: 8),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: FilledButton.icon(
-                          onPressed: _downloadResume,
-                          icon: const Icon(Icons.file_download),
-                          label: const Text('Resume'),
+              flexibleSpace: isWide
+                  ? ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: (widget.isDark ? Colors.black : Colors.white)
+                                .withOpacity(0.20),
+                            border: const Border(
+                              bottom: BorderSide(
+                                  color: Color(0x22FFFFFF), width: 1),
+                            ),
+                          ),
                         ),
                       ),
-                      IconButton(
-                        tooltip: 'Toggle theme',
-                        onPressed: widget.onToggleTheme,
-                        icon: Icon(widget.isDark
-                            ? Icons.wb_sunny_outlined
-                            : Icons.nightlight_round),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: widget.isDark
+                            ? const Color(0xE00B0D13)
+                            : Colors.white.withOpacity(0.95),
+                        border: const Border(
+                          bottom:
+                              BorderSide(color: Color(0x22FFFFFF), width: 1),
+                        ),
                       ),
-                      PopupMenuButton<String>(
-                        tooltip: 'Language',
-                        icon: const Icon(Icons.language),
-                        onSelected: (lang) => setState(() {
-                          I18n.current = lang;
-                        }),
-                        itemBuilder: (_) => const [
-                          PopupMenuItem(value: 'en', child: Text('English')),
-                          PopupMenuItem(value: 'fr', child: Text('Français')),
-                          PopupMenuItem(value: 'ar', child: Text('العربية')),
-                        ],
-                      ),
-                    ]
+                    ),
+              actions: MediaQuery.of(context).size.width >= 980
+                  ?[
+                ..._sections.mapIndexed((i, entry) => _navItemButton(
+                  label: entry.key,
+                  onTap: () => _scrollTo(entry.value),
+                  active: _active == i,
+                )),
+                const SizedBox(width: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: FilledButton.icon(
+                    onPressed: _downloadResume,
+                    icon: const Icon(Icons.file_download),
+                    label: const Text('Resume'),
+                  ),
+                ),
+                IconButton(
+                  tooltip: 'Toggle theme',
+                  onPressed: widget.onToggleTheme,
+                  icon: Icon(widget.isDark
+                      ? Icons.wb_sunny_outlined
+                      : Icons.nightlight_round),
+                ),
+                PopupMenuButton<String>(
+                  tooltip: 'Language',
+                  icon: const Icon(Icons.language),
+                  onSelected: widget.onLanguageChanged,
+                  itemBuilder: (_) => const[
+                    PopupMenuItem(value: 'en', child: Text('English')),
+                    PopupMenuItem(value: 'fr', child: Text('Français')),
+                    PopupMenuItem(value: 'ar', child: Text('العربية')),
+                  ],
+                ),
+              ]
                   : null,
             ),
             floatingActionButton: AnimatedBuilder(
@@ -726,119 +755,119 @@ class _PortfolioHomeState extends State<PortfolioHome> {
             drawer: isWide
                 ? null
                 : Drawer(
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: [
-                        DrawerHeader(
-                          decoration: const BoxDecoration(color: Colors.indigo),
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Text(ProfileConfig.title,
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        _drawerItem('About', _aboutKey),
-                        _drawerItem('Skills', _skillsKey),
-                        _drawerItem('Projects', _projectsKey),
-                        _drawerItem('Experience', _experienceKey),
-                        _drawerItem('Education', _educationKey),
-                        _drawerItem('Certs', _certsKey),
-                        _drawerItem('Contact', _contactKey),
-                        _drawerItem('Testimonials', _testimonialsKey),
-                        _drawerItem('Blog', _blogKey),
-                        ListTile(
-                          leading: const Icon(Icons.description),
-                          title: const Text('Resume'),
-                          onTap: _downloadResume,
-                        ),
-                        const Divider(),
-                        const ListTile(title: Text('Language')),
-                        ListTile(
-                            title: const Text('English'),
-                            onTap: () {
-                              setState(() {
-                                I18n.current = 'en';
-                              });
-                              Navigator.pop(context);
-                            }),
-                        ListTile(
-                            title: const Text('Français'),
-                            onTap: () {
-                              setState(() {
-                                I18n.current = 'fr';
-                              });
-                              Navigator.pop(context);
-                            }),
-                        ListTile(
-                            title: const Text('العربية'),
-                            onTap: () {
-                              I18n.current = 'ar';
-                              setState(() {});
-                              Navigator.pop(context);
-                            }),
-                      ],
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children:[
+                  DrawerHeader(
+                    decoration: const BoxDecoration(color: Colors.indigo),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(ProfileConfig.title,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
+                  _drawerItem('About', _aboutKey),
+                  _drawerItem('Skills', _skillsKey),
+                  _drawerItem('Projects', _projectsKey),
+                  _drawerItem('Experience', _experienceKey),
+                  _drawerItem('Education', _educationKey),
+                  _drawerItem('Certs', _certsKey),
+                  _drawerItem('Contact', _contactKey),
+                  _drawerItem('Testimonials', _testimonialsKey),
+                  _drawerItem('Blog', _blogKey),
+                  ListTile(
+                    leading: const Icon(Icons.description),
+                    title: const Text('Resume'),
+                    onTap: _downloadResume,
+                  ),
+                  const Divider(),
+                  const ListTile(title: Text('Language')),
+                  ListTile(
+                      title: const Text('English'),
+                      onTap: () {
+                        setState(() {
+                          I18n.current = 'en';
+                        });
+                        Navigator.pop(context);
+                      }),
+                  ListTile(
+                      title: const Text('Français'),
+                      onTap: () {
+                        setState(() {
+                          I18n.current = 'fr';
+                        });
+                        Navigator.pop(context);
+                      }),
+                  ListTile(
+                      title: const Text('العربية'),
+                      onTap: () {
+                        I18n.current = 'ar';
+                        setState(() {});
+                        Navigator.pop(context);
+                      }),
+                ],
+              ),
+            ),
             body: Stack(
-              children: [
+              children:[
                 ParallaxOrbs(controller: _scroll, isDark: widget.isDark),
                 SafeArea(
                   child: Scrollbar(
                     controller: _scroll,
                     thumbVisibility: true,
-                  child: SingleChildScrollView(
-                    controller: _scroll,
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Section(
-                            key: _homeKey,
-                            child: const HeroSection(),
-                            altBackground: false),
-                        Section(
-                            key: _aboutKey,
-                            child: const AboutSection(),
-                            altBackground: true),
-                        Section(
-                            key: _skillsKey,
-                            child: const SkillsSection(),
-                            altBackground: false),
-                        Section(
-                            key: _projectsKey,
-                            child: const ProjectsSection(),
-                            altBackground: true),
-                        Section(
-                            key: _experienceKey,
-                            child: const ExperienceSection(),
-                            altBackground: false),
-                        Section(
-                          key: _educationKey,
-                          child: EducationSection(
-                              educationList: ProfileConfig.educationList),
-                          altBackground: true,
-                        ),
-                        Section(
-                            key: _certsKey,
-                            child: const CertsSection(),
-                            altBackground: false),
-                        Section(
-                            key: _testimonialsKey,
-                            child: const TestimonialsSection(),
-                            altBackground: true),
-                        Section(
-                            key: _blogKey,
-                            child: const BlogSection(),
-                            altBackground: false),
-                        Section(
-                            key: _contactKey,
-                            child: const ContactSection(),
-                            altBackground: true),
-                        const Footer(),
-                      ],
+                    child: SingleChildScrollView(
+                      controller: _scroll,
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children:[
+                          Section(
+                              key: _homeKey,
+                              child: const HeroSection(),
+                              altBackground: false),
+                          Section(
+                              key: _aboutKey,
+                              child: const AboutSection(),
+                              altBackground: true),
+                          Section(
+                              key: _skillsKey,
+                              child: const SkillsSection(),
+                              altBackground: false),
+                          Section(
+                              key: _projectsKey,
+                              child: const ProjectsSection(),
+                              altBackground: true),
+                          Section(
+                              key: _experienceKey,
+                              child: const ExperienceSection(),
+                              altBackground: false),
+                          Section(
+                            key: _educationKey,
+                            child: EducationSection(
+                                educationList: ProfileConfig.educationList),
+                            altBackground: true,
+                          ),
+                          Section(
+                              key: _certsKey,
+                              child: const CertsSection(),
+                              altBackground: false),
+                          Section(
+                              key: _testimonialsKey,
+                              child: const TestimonialsSection(),
+                              altBackground: true),
+                          Section(
+                              key: _blogKey,
+                              child: const BlogSection(),
+                              altBackground: false),
+                          Section(
+                              key: _contactKey,
+                              child: const ContactSection(),
+                              altBackground: true),
+                          const Footer(),
+                        ],
+                      ),
                     ),
-                  ),
                   ),
                 ),
               ],
@@ -851,8 +880,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
 
   Widget _navItemButton(
       {required String label,
-      required VoidCallback onTap,
-      required bool active}) {
+        required VoidCallback onTap,
+        required bool active}) {
     final theme = Theme.of(context);
     final bg = active
         ? theme.colorScheme.primary.withOpacity(0.16)
@@ -869,11 +898,11 @@ class _PortfolioHomeState extends State<PortfolioHome> {
           foregroundColor: fg,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           backgroundColor: bg,
         ),
         child: Row(
-          children: [
+          children:[
             Text(label),
             if (active)
               Container(
@@ -882,7 +911,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                 width: 20,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
+                    colors:[
                       Theme.of(context).colorScheme.primary.withOpacity(.0),
                       Theme.of(context).colorScheme.primary,
                     ],
@@ -896,30 +925,14 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     );
   }
 
-  Widget _navBtn(String label, VoidCallback onTap) => TextButton(
-        onPressed: onTap,
-        child: Text(label),
-      );
-
   Widget _drawerItem(String label, GlobalKey key) => ListTile(
-        title: Text(label),
-        onTap: () {
-          Navigator.of(context).maybePop();
-          Future.delayed(
-              const Duration(milliseconds: 180), () => _scrollTo(key));
-        },
-      );
-
-  Widget _glow(double size, Color color) => IgnorePointer(
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: RadialGradient(colors: [color, Colors.transparent]),
-          ),
-        ),
-      );
+    title: Text(label),
+    onTap: () {
+      Navigator.of(context).maybePop();
+      Future.delayed(
+          const Duration(milliseconds: 180), () => _scrollTo(key));
+    },
+  );
 }
 
 class Section extends StatelessWidget {
@@ -938,8 +951,8 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     final bg = altBackground
         ? Theme.of(context).brightness == Brightness.dark
-            ? Colors.white.withOpacity(0.02)
-            : Colors.black.withOpacity(0.03)
+        ? Colors.white.withOpacity(0.02)
+        : Colors.black.withOpacity(0.03)
         : Colors.transparent;
 
     return Container(
@@ -964,7 +977,7 @@ class Section extends StatelessWidget {
 }
 
 class _GradientDivider extends StatefulWidget {
-  const _GradientDivider();
+  const _GradientDivider({super.key});
 
   @override
   State<_GradientDivider> createState() => _GradientDividerState();
@@ -994,12 +1007,12 @@ class _GradientDividerState extends State<_GradientDivider>
             gradient: LinearGradient(
               begin: Alignment(-1.0 + _c.value * 2, 0),
               end: Alignment(1.0 + _c.value * 2, 0),
-              colors: const [
+              colors: const[
                 Colors.transparent,
                 Color(0x66FFFFFF),
                 Colors.transparent,
               ],
-              stops: const [0.2, 0.5, 0.8],
+              stops: const[0.2, 0.5, 0.8],
             ),
           ),
         );
@@ -1014,19 +1027,19 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final onSurfaceMuted =
-        Theme.of(context).colorScheme.onSurface.withOpacity(.70);
+    Theme.of(context).colorScheme.onSurface.withOpacity(.70);
     final theme = Theme.of(context);
     return LayoutBuilder(builder: (context, c) {
       final isWide = c.maxWidth > 900;
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children:[
           Expanded(
             flex: isWide ? 6 : 10,
             child: Column(
               crossAxisAlignment:
-                  isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-              children: [
+              isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+              children:[
                 Container(
                   padding: const EdgeInsetsDirectional.symmetric(
                       horizontal: 12, vertical: 6),
@@ -1037,7 +1050,7 @@ class HeroSection extends StatelessWidget {
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children:[
                       Icon(Icons.bolt, size: 16),
                       SizedBox(width: 6),
                       Text('Open to Work',
@@ -1087,8 +1100,8 @@ class HeroSection extends StatelessWidget {
                   spacing: 12,
                   runSpacing: 8,
                   alignment:
-                      isWide ? WrapAlignment.start : WrapAlignment.center,
-                  children: [
+                  isWide ? WrapAlignment.start : WrapAlignment.center,
+                  children:[
                     FilledButton.icon(
                       onPressed: () => _launch('mailto:${ProfileConfig.email}'),
                       icon: const Icon(Icons.mail_outline),
@@ -1113,9 +1126,9 @@ class HeroSection extends StatelessWidget {
                   spacing: 18,
                   runSpacing: 8,
                   alignment:
-                      isWide ? WrapAlignment.start : WrapAlignment.center,
+                  isWide ? WrapAlignment.start : WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
+                  children:[
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -1131,7 +1144,7 @@ class HeroSection extends StatelessWidget {
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children:[
                         const Icon(Icons.phone,
                             size: 16, color: Colors.white70),
                         const SizedBox(width: 6),
@@ -1151,7 +1164,7 @@ class HeroSection extends StatelessWidget {
           if (isWide)
             Expanded(
               flex: 5,
-              child: _HeroVisual().animate().fadeIn(duration: 800.ms),
+              child: const _HeroVisual().animate().fadeIn(duration: 800.ms),
             ),
         ],
       );
@@ -1160,6 +1173,7 @@ class HeroSection extends StatelessWidget {
 }
 
 class _HeroVisual extends StatefulWidget {
+  const _HeroVisual({super.key});
   @override
   State<_HeroVisual> createState() => _HeroVisualState();
 }
@@ -1167,8 +1181,8 @@ class _HeroVisual extends StatefulWidget {
 class _HeroVisualState extends State<_HeroVisual>
     with TickerProviderStateMixin {
   late final AnimationController _c =
-      AnimationController(vsync: this, duration: const Duration(seconds: 6))
-        ..repeat(reverse: true);
+  AnimationController(vsync: this, duration: const Duration(seconds: 6))
+    ..repeat(reverse: true);
 
   @override
   void dispose() {
@@ -1185,7 +1199,7 @@ class _HeroVisualState extends State<_HeroVisual>
         return AspectRatio(
           aspectRatio: 4 / 3,
           child: Stack(
-            children: [
+            children:[
               _tile(icon: Icons.smartphone, x: .05 + .02 * t, y: .06),
               _tile(icon: Icons.security, x: .62, y: .02 + .02 * -t),
               _tile(icon: Icons.code, x: .82 + .02 * -t, y: .24),
@@ -1201,7 +1215,7 @@ class _HeroVisualState extends State<_HeroVisual>
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: Colors.white10),
                     gradient: LinearGradient(
-                      colors: [
+                      colors:[
                         Colors.white.withOpacity(.06),
                         Colors.white.withOpacity(.02),
                       ],
@@ -1212,7 +1226,7 @@ class _HeroVisualState extends State<_HeroVisual>
                   child: const Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children:[
                       Text(
                           'Combining Mobile Development Expertise with Cybersecurity Skills',
                           style: TextStyle(fontWeight: FontWeight.bold)),
@@ -1256,11 +1270,9 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onSurfaceMuted =
-        Theme.of(context).colorScheme.onSurface.withOpacity(.70);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children:[
         SectionTitle(I18n.t('about_title')),
         const SizedBox(height: 8),
         Text(
@@ -1295,7 +1307,7 @@ class AboutSection extends StatelessWidget {
 class _Pill extends StatelessWidget {
   final IconData icon;
   final String text;
-  const _Pill({required this.icon, required this.text});
+  const _Pill({super.key, required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -1308,7 +1320,7 @@ class _Pill extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children:[
           Icon(icon, size: 16),
           const SizedBox(width: 8),
           Text(text),
@@ -1327,7 +1339,7 @@ class SectionTitle extends StatelessWidget {
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children:[
         Text(
           text,
           style: theme.textTheme.headlineSmall?.copyWith(
@@ -1341,7 +1353,7 @@ class SectionTitle extends StatelessWidget {
           width: 64,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(999),
-            gradient: LinearGradient(colors: [
+            gradient: LinearGradient(colors:[
               theme.colorScheme.primary,
               theme.colorScheme.primary.withOpacity(.3),
             ]),
@@ -1368,14 +1380,14 @@ class _SkillsSectionState extends State<SkillsSection>
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children:[
         SectionTitle(I18n.t('skills_title')),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
           alignment: WrapAlignment.start,
-          children: [
+          children:[
             ChoiceChip(
               label: const Text('Mobile'),
               selected: _index == 0,
@@ -1416,7 +1428,7 @@ class _SkillsSectionState extends State<SkillsSection>
   }
 
   Widget _buildChips(int i) {
-    final list = [
+    final list =[
       ProfileConfig.mobileSkills,
       ProfileConfig.socSkills,
       ProfileConfig.toolSkills,
@@ -1426,7 +1438,7 @@ class _SkillsSectionState extends State<SkillsSection>
       spacing: 8,
       runSpacing: 8,
       alignment: WrapAlignment.start,
-      children: [
+      children:[
         for (final s in list)
           Chip(
             label: Text(s),
@@ -1452,13 +1464,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     final cross = w >= 1200
         ? 3
         : w >= 800
-            ? 2
-            : 1;
+        ? 2
+        : 1;
     final ratio = w >= 1200
         ? 1.05
         : w >= 800
-            ? 0.90
-            : 0.78;
+        ? 0.90
+        : 0.78;
 
     final projects = _filter == 'all'
         ? ProfileConfig.projects
@@ -1466,7 +1478,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children:[
         SectionTitle(I18n.t('projects_title')),
         const SizedBox(height: 8),
         Text(
@@ -1478,7 +1490,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         const SizedBox(height: 16),
         Wrap(
           spacing: 10,
-          children: [
+          children:[
             ChoiceChip(
                 label: const Text('All'),
                 selected: _filter == 'all',
@@ -1529,12 +1541,12 @@ class _ProjectCardState extends State<ProjectCard> {
       onExit: (_) => setState(() => _hover = false),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children:[
           AspectRatio(
             aspectRatio: 16 / 9,
             child: Stack(
               fit: StackFit.expand,
-              children: [
+              children:[
                 _netImage(widget.project.imageUrl, fit: BoxFit.cover),
                 Positioned(
                   left: 0,
@@ -1546,7 +1558,7 @@ class _ProjectCardState extends State<ProjectCard> {
                       gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
-                        colors: [Color(0xAA000000), Color(0x00000000)],
+                        colors:[Color(0xAA000000), Color(0x00000000)],
                       ),
                     ),
                   ),
@@ -1569,7 +1581,7 @@ class _ProjectCardState extends State<ProjectCard> {
                         ),
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children:[
                             Icon(Icons.visibility,
                                 size: 16, color: Colors.white70),
                             SizedBox(width: 6),
@@ -1590,7 +1602,7 @@ class _ProjectCardState extends State<ProjectCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
+                  Row(children:[
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 6),
@@ -1608,13 +1620,13 @@ class _ProjectCardState extends State<ProjectCard> {
                         children: widget.project.tags
                             .take(3)
                             .map((t) => Padding(
-                                  padding: const EdgeInsets.only(left: 6),
-                                  child: Chip(
-                                    label: Text(t),
-                                    visualDensity: const VisualDensity(
-                                        horizontal: -2, vertical: -2),
-                                  ),
-                                ))
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Chip(
+                            label: Text(t),
+                            visualDensity: const VisualDensity(
+                                horizontal: -2, vertical: -2),
+                          ),
+                        ))
                             .toList(),
                       ),
                     ),
@@ -1637,7 +1649,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     style: const TextStyle(color: Colors.white70),
                   ),
                   const Spacer(),
-                  Row(children: [
+                  Row(children:[
                     if (widget.project.github.isNotEmpty)
                       TextButton.icon(
                         onPressed: () => _launch(widget.project.github),
@@ -1694,15 +1706,15 @@ class ExperienceSection extends StatelessWidget {
           children: [
             for (final e in ProfileConfig.experience) _ExperienceTile(item: e),
           ],
-        )
-      ],
+    )
+    ],
     );
   }
 }
 
 class _ExperienceTile extends StatelessWidget {
   final ExperienceItem item;
-  const _ExperienceTile({required this.item});
+  const _ExperienceTile({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -1715,15 +1727,15 @@ class _ExperienceTile extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children:[
           const _TimelineDot(),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children:[
                 Row(
-                  children: [
+                  children:[
                     Expanded(
                       child: Text(
                         '${item.role} \u2014 ',
@@ -1742,13 +1754,13 @@ class _ExperienceTile extends StatelessWidget {
                 const SizedBox(height: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children:[
                     for (final b in item.bullets)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 2),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children:[
                             const Text('\u2022  '),
                             Expanded(child: Text(b)),
                           ],
@@ -1766,11 +1778,12 @@ class _ExperienceTile extends StatelessWidget {
 }
 
 class _TimelineDot extends StatelessWidget {
-  const _TimelineDot();
+  const _TimelineDot({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children:[
         Container(
           width: 14,
           height: 14,
@@ -1799,33 +1812,33 @@ class CertsSection extends StatelessWidget {
     final cross = w > 1000
         ? 3
         : w > 700
-            ? 2
-            : 1;
+        ? 2
+        : 1;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(I18n.t('certs_title')),
-        const SizedBox(height: 16),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: cross,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 2.8,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[
+          SectionTitle(I18n.t('certs_title')),
+          const SizedBox(height: 16),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: cross,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 2.8,
+            ),
+            itemCount: certs.length,
+            itemBuilder: (context, i) => _CertCard(c: certs[i]),
           ),
-          itemCount: certs.length,
-          itemBuilder: (context, i) => _CertCard(c: certs[i]),
-        ),
-      ],
+    ],
     );
   }
 }
 
 class _CertCard extends StatelessWidget {
   final Certification c;
-  const _CertCard({required this.c});
+  const _CertCard({super.key, required this.c});
 
   @override
   Widget build(BuildContext context) {
@@ -1836,14 +1849,14 @@ class _CertCard extends StatelessWidget {
         border: Border.all(color: Colors.white12),
       ),
       child: Row(
-        children: [
+        children:[
           const Icon(Icons.verified, color: Colors.indigo),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children:[
                 Text(c.name,
                     style: const TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
@@ -1868,7 +1881,7 @@ class ContactSection extends StatelessWidget {
         final isWide = c.maxWidth > 880;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children:[
             SectionTitle(I18n.t('contact_title')),
             const SizedBox(height: 8),
             Text('Email me or send a message — I’ll respond quickly.',
@@ -1880,7 +1893,7 @@ class ContactSection extends StatelessWidget {
             if (isWide)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children:[
                   Expanded(
                     flex: 2,
                     child: _ContactForm(),
@@ -1892,9 +1905,9 @@ class ContactSection extends StatelessWidget {
                 ],
               )
             else
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+                children:[
                   _ContactForm(),
                   const SizedBox(height: 20),
                   _ContactSidebar(),
@@ -1914,7 +1927,7 @@ class Footer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
-        children: [
+        children:[
           const Divider(color: Colors.white12),
           const SizedBox(height: 12),
           Text(
@@ -1936,6 +1949,8 @@ Future<void> _launch(String url) async {
 }
 
 class _ContactSidebar extends StatelessWidget {
+  const _ContactSidebar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -1946,7 +1961,7 @@ class _ContactSidebar extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children:[
           ElevatedButton.icon(
             onPressed: () => _launch('mailto:${ProfileConfig.email}'),
             icon: const Icon(Icons.mail_outline),
@@ -1966,7 +1981,7 @@ class _ContactSidebar extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Row(
-            children: [
+            children:[
               const Icon(Icons.place, size: 18, color: Colors.white70),
               const SizedBox(width: 6),
               Expanded(
@@ -1976,7 +1991,7 @@ class _ContactSidebar extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Row(
-            children: [
+            children:[
               const Icon(Icons.phone, size: 18, color: Colors.white70),
               const SizedBox(width: 6),
               Expanded(
@@ -1991,6 +2006,8 @@ class _ContactSidebar extends StatelessWidget {
 }
 
 class _ContactForm extends StatefulWidget {
+  const _ContactForm({super.key});
+
   @override
   State<_ContactForm> createState() => _ContactFormState();
 }
@@ -2030,7 +2047,7 @@ class _ContactFormState extends State<_ContactForm> {
     setState(() => _sending = true);
     try {
       final resp =
-          await http.post(Uri.parse(ProfileConfig.contactEndpoint), headers: {
+      await http.post(Uri.parse(ProfileConfig.contactEndpoint), headers: {
         'Accept': 'application/json',
       }, body: {
         'name': _name.text.trim(),
@@ -2070,7 +2087,7 @@ class _ContactFormState extends State<_ContactForm> {
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children:[
             Offstage(
               offstage: true,
               child: TextFormField(
@@ -2083,7 +2100,7 @@ class _ContactFormState extends State<_ContactForm> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Your name'),
               validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Required' : null,
+              v == null || v.trim().isEmpty ? 'Required' : null,
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -2092,7 +2109,7 @@ class _ContactFormState extends State<_ContactForm> {
               decoration: const InputDecoration(labelText: 'Your email'),
               keyboardType: TextInputType.emailAddress,
               validator: (v) =>
-                  v != null && v.contains('@') ? null : 'Valid email required',
+              v != null && v.contains('@') ? null : 'Valid email required',
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -2100,7 +2117,7 @@ class _ContactFormState extends State<_ContactForm> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Subject'),
               validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Required' : null,
+              v == null || v.trim().isEmpty ? 'Required' : null,
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -2119,9 +2136,9 @@ class _ContactFormState extends State<_ContactForm> {
                 onPressed: _sending ? null : _submit,
                 icon: _sending
                     ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2))
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2))
                     : const Icon(Icons.send),
                 label: Text(_sending ? 'Sending…' : 'Send Message'),
               ),
@@ -2181,7 +2198,7 @@ class I18n {
 
 class _ProjectDetails extends StatefulWidget {
   final Project project;
-  const _ProjectDetails({required this.project});
+  const _ProjectDetails({super.key, required this.project});
 
   @override
   State<_ProjectDetails> createState() => _ProjectDetailsState();
@@ -2215,197 +2232,197 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
   @override
   Widget build(BuildContext context) {
     final p = widget.project;
-    final images = (p.images.isNotEmpty) ? p.images : [p.imageUrl];
+    final images = (p.images.isNotEmpty) ? p.images :[p.imageUrl];
 
     return LayoutBuilder(builder: (context, c) {
       final wide = c.maxWidth > 860;
       final gallery = Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 4 / 3,
-            child: GestureDetector(
-              onTap: () => _openFullscreen(images, _index),
-              child: PageView.builder(
-                controller: _page,
-                onPageChanged: (i) => setState(() => _index = i),
-                itemCount: images.length,
-                itemBuilder: (_, i) => Container(
-                  color: Colors.black12,
-                  alignment: Alignment.center,
-                  child: _netImage(images[i], fit: BoxFit.contain),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          // page dots
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(images.length, (i) {
-              final active = i == _index;
-              return InkWell(
-                onTap: () {
-                  _page.animateToPage(i,
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeOut);
-                },
-                child: Container(
-                  width: active ? 18 : 8,
-                  height: 8,
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    color: active
-                        ? Theme.of(context).colorScheme.primary
-                        : Colors.white24,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ],
+          children:[
+            AspectRatio(
+              aspectRatio: 4 / 3,
+              child: GestureDetector(
+                onTap: () => _openFullscreen(images, _index),
+                child: PageView.builder(
+                  controller: _page,
+                  onPageChanged: (i) => setState(() => _index = i),
+                  itemCount: images.length,
+                  itemBuilder: (_, i) => Container(
+                    color: Colors.black12,
+                    alignment: Alignment.center,
+                    child: _netImage(images[i], fit: BoxFit.contain),
+      ),
+      ),
+      ),
+      ),
+      const SizedBox(height: 8),
+      // page dots
+      Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(images.length, (i) {
+      final active = i == _index;
+      return InkWell(
+      onTap: () {
+      _page.animateToPage(i,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut);
+      },
+      child: Container(
+      width: active ? 18 : 8,
+      height: 8,
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+      color: active
+      ? Theme.of(context).colorScheme.primary
+          : Colors.white24,
+      borderRadius: BorderRadius.circular(999),
+      ),
+      ),
+      );
+      }),
+      ),
+      ],
       );
 
       final content = SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    p.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                IconButton(
-                  tooltip: 'Close',
-                  onPressed: () => Navigator.of(context).maybePop(),
-                  icon: const Icon(Icons.close),
-                )
-              ],
-            ),
-            const SizedBox(height: 6),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.06),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(p.kind, style: const TextStyle(fontSize: 12)),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 2,
-                    children: p.tags
-                        .take(10)
-                        .map(
-                          (t) => Chip(
-                            label: Text(t),
-                            visualDensity: const VisualDensity(
-                                horizontal: -2, vertical: -2),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(p.detail.isNotEmpty ? p.detail : p.summary,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: Colors.white70)),
-            const SizedBox(height: 12),
-            if (p.highlights.isNotEmpty) ...[
-              Text('Highlights',
-                  style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 6),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: p.highlights
-                    .map((h) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('•  '),
-                              Expanded(child: Text(h)),
-                            ],
-                          ),
-                        ))
-                    .toList(),
-              ),
-              const SizedBox(height: 12),
-            ],
-            Wrap(
-              spacing: 10,
-              children: [
-                if (p.github.isNotEmpty)
-                  FilledButton.icon(
-                    onPressed: () => _launch(p.github),
-                    icon: const Icon(Icons.code),
-                    label: const Text('Code'),
-                  ),
-                if (p.demo.isNotEmpty)
-                  OutlinedButton.icon(
-                    onPressed: () => _launch(p.demo),
-                    icon: const Icon(Icons.open_in_new),
-                    label: const Text('Live Demo'),
-                  ),
-              ],
-            ),
-          ],
+      padding: const EdgeInsets.all(16),
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+      Row(
+      children:[
+        Expanded(
+          child: Text(
+            p.title,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
+        IconButton(
+          tooltip: 'Close',
+          onPressed: () => Navigator.of(context).maybePop(),
+          icon: const Icon(Icons.close),
+        )
+      ],
+      ),
+      const SizedBox(height: 6),
+      Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:[
+        Container(
+          padding:
+          const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(.06),
+            borderRadius: BorderRadius.circular(999),
+          ),
+          child: Text(p.kind, style: const TextStyle(fontSize: 12)),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Wrap(
+            spacing: 10,
+            runSpacing: 2,
+            children: p.tags
+                .take(10)
+                .map(
+                  (t) => Chip(
+                label: Text(t),
+                visualDensity: const VisualDensity(
+                    horizontal: -2, vertical: -2),
+              ),
+            )
+                .toList(),
+          ),
+        ),
+      ],
+      ),
+      const SizedBox(height: 12),
+      Text(p.detail.isNotEmpty ? p.detail : p.summary,
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium
+          ?.copyWith(color: Colors.white70)),
+      const SizedBox(height: 12),
+      if (p.highlights.isNotEmpty) ...[
+      Text('Highlights',
+      style: Theme.of(context).textTheme.titleMedium),
+      const SizedBox(height: 6),
+      Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: p.highlights
+          .map((h) => Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:[
+        const Text('•  '),
+        Expanded(child: Text(h)),
+      ],
+      ),
+      ))
+          .toList(),
+      ),
+      const SizedBox(height: 12),
+      ],
+      Wrap(
+      spacing: 10,
+      children: [
+        if (p.github.isNotEmpty)
+          FilledButton.icon(
+            onPressed: () => _launch(p.github),
+            icon: const Icon(Icons.code),
+            label: const Text('Code'),
+          ),
+        if (p.demo.isNotEmpty)
+          OutlinedButton.icon(
+            onPressed: () => _launch(p.demo),
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('Live Demo'),
+          ),
+      ],
+      ),
+      ],
+      ),
       );
 
       return SizedBox(
-        width: c.maxWidth,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: wide
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                        flex: 6,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: gallery)),
-                    const SizedBox(width: 16),
-                    Expanded(flex: 5, child: content),
-                  ],
-                )
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: gallery),
-                    content,
-                  ],
-                ),
-        ),
+      width: c.maxWidth,
+      child: Padding(
+      padding: const EdgeInsets.all(8),
+      child: wide
+      ? Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:[
+        Expanded(
+            flex: 6,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: gallery)),
+        const SizedBox(width: 16),
+        Expanded(flex: 5, child: content),
+      ],
+      )
+          : Column(
+      mainAxisSize: MainAxisSize.min,
+      children:[
+        ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: gallery),
+        content,
+      ],
+      ),
+      ),
       );
-    });
+      });
   }
 }
 
 class _ImageLightbox extends StatefulWidget {
   final List<String> images;
   final int initialIndex;
-  const _ImageLightbox({required this.images, this.initialIndex = 0});
+  const _ImageLightbox({super.key, required this.images, this.initialIndex = 0});
 
   @override
   State<_ImageLightbox> createState() => _ImageLightboxState();
@@ -2413,7 +2430,7 @@ class _ImageLightbox extends StatefulWidget {
 
 class _ImageLightboxState extends State<_ImageLightbox> {
   late final PageController _controller =
-      PageController(initialPage: widget.initialIndex);
+  PageController(initialPage: widget.initialIndex);
   int _index = 0;
   double _scale = 1.0;
 
@@ -2438,95 +2455,95 @@ class _ImageLightboxState extends State<_ImageLightbox> {
       backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Stack(
-        children: [
-          // Images
-          PageView.builder(
-            controller: _controller,
-            onPageChanged: (i) => setState(() {
-              _index = i;
-              _scale = 1.0;
-            }),
-            itemCount: imgs.length,
-            itemBuilder: (_, i) => Center(
-              child: InteractiveViewer(
-                boundaryMargin: const EdgeInsets.all(40),
-                minScale: 1,
-                maxScale: 4,
-                onInteractionEnd: (_) => setState(() {}),
-                child: _netImage(imgs[i], fit: BoxFit.contain, big: true),
-              ),
-            ),
-          ),
+            children:[
+              // Images
+              PageView.builder(
+                controller: _controller,
+                onPageChanged: (i) => setState(() {
+                  _index = i;
+                  _scale = 1.0;
+                }),
+                itemCount: imgs.length,
+                itemBuilder: (_, i) => Center(
+                  child: InteractiveViewer(
+                    boundaryMargin: const EdgeInsets.all(40),
+                    minScale: 1,
+                    maxScale: 4,
+                    onInteractionEnd: (_) => setState(() {}),
+                    child: _netImage(imgs[i], fit: BoxFit.contain, big: true),
+      ),
+    ),
+    ),
 
-          Positioned(
-            top: 24,
-            right: 24,
-            child: IconButton(
-              iconSize: 28,
-              style: IconButton.styleFrom(backgroundColor: Colors.black45),
-              onPressed: _close,
-              icon: const Icon(Icons.close, color: Colors.white),
-              tooltip: 'Close',
-            ),
-          ),
+    Positioned(
+    top: 24,
+    right: 24,
+    child: IconButton(
+    iconSize: 28,
+    style: IconButton.styleFrom(backgroundColor: Colors.black45),
+    onPressed: _close,
+    icon: const Icon(Icons.close, color: Colors.white),
+    tooltip: 'Close',
+    ),
+    ),
 
-          Positioned.fill(
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      final p = (_index - 1).clamp(0, imgs.length - 1);
-                      _controller.animateToPage(p,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeOut);
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      final n = (_index + 1).clamp(0, imgs.length - 1);
-                      _controller.animateToPage(n,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeOut);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Dots
-          Positioned(
-            bottom: 24,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(imgs.length, (i) {
-                final active = i == _index;
-                return InkWell(
-                  onTap: () => _controller.animateToPage(i,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeOut),
-                  child: Container(
-                    width: active ? 18 : 8,
-                    height: 8,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      color: active ? Colors.white : Colors.white38,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ),
-        ],
+    Positioned.fill(
+    child: Row(
+    children:[
+      Expanded(
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            final p = (_index - 1).clamp(0, imgs.length - 1);
+            _controller.animateToPage(p,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut);
+          },
         ),
       ),
+      Expanded(
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            final n = (_index + 1).clamp(0, imgs.length - 1);
+            _controller.animateToPage(n,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut);
+          },
+        ),
+      ),
+    ],
+    ),
+    ),
+    // Dots
+    Positioned(
+    bottom: 24,
+    left: 0,
+    right: 0,
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: List.generate(imgs.length, (i) {
+    final active = i == _index;
+    return InkWell(
+    onTap: () => _controller.animateToPage(i,
+    duration: const Duration(milliseconds: 200),
+    curve: Curves.easeOut),
+    child: Container(
+    width: active ? 18 : 8,
+    height: 8,
+    margin: const EdgeInsets.symmetric(horizontal: 4),
+    decoration: BoxDecoration(
+    color: active ? Colors.white : Colors.white38,
+    borderRadius: BorderRadius.circular(999),
+    ),
+    ),
+    );
+    }),
+    ),
+    ),
+    ],
+    ),
+    ),
     );
   }
 }
@@ -2554,13 +2571,13 @@ Widget _netImage(String url, {BoxFit fit = BoxFit.cover, bool big = false}) {
 }
 
 class _ImgError extends StatelessWidget {
-  const _ImgError();
+  const _ImgError({super.key});
   @override
   Widget build(BuildContext context) => Container(
-        color: Colors.black26,
-        alignment: Alignment.center,
-        child: const Icon(Icons.broken_image, size: 40, color: Colors.white54),
-      );
+    color: Colors.black26,
+    alignment: Alignment.center,
+    child: const Icon(Icons.broken_image, size: 40, color: Colors.white54),
+  );
 }
 
 class TestimonialsSection extends StatefulWidget {
@@ -2586,52 +2603,52 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     final isCompact = MediaQuery.of(context).size.width < 700;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(I18n.t('testimonials_title')),
-        const SizedBox(height: 12),
-        AspectRatio(
-          aspectRatio: isCompact ? 1.05 : 16 / 6,
-          child: PageView.builder(
-            controller: _ctrl,
-            onPageChanged: (i) => setState(() => _index = i),
-            itemCount: items.length,
-            itemBuilder: (_, i) => _TestimonialCard(t: items[i]),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(items.length, (i) {
-            final active = i == _index;
-            return Container(
-              width: active ? 18 : 8,
-              height: 8,
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              decoration: BoxDecoration(
-                color: active
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.white24,
-                borderRadius: BorderRadius.circular(999),
-              ),
-            );
-          }),
-        )
-      ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(I18n.t('testimonials_title')),
+          const SizedBox(height: 12),
+          AspectRatio(
+            aspectRatio: isCompact ? 1.05 : 16 / 6,
+            child: PageView.builder(
+              controller: _ctrl,
+              onPageChanged: (i) => setState(() => _index = i),
+              itemCount: items.length,
+              itemBuilder: (_, i) => _TestimonialCard(t: items[i]),
+    ),
+    ),
+    const SizedBox(height: 10),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: List.generate(items.length, (i) {
+    final active = i == _index;
+    return Container(
+    width: active ? 18 : 8,
+    height: 8,
+    margin: const EdgeInsets.symmetric(horizontal: 4),
+    decoration: BoxDecoration(
+    color: active
+    ? Theme.of(context).colorScheme.primary
+        : Colors.white24,
+    borderRadius: BorderRadius.circular(999),
+    ),
+    );
+    }),
+    )
+    ],
     );
   }
 }
 
 class _TestimonialCard extends StatelessWidget {
   final Testimonial t;
-  const _TestimonialCard({required this.t});
+  const _TestimonialCard({super.key, required this.t});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final avatar = Stack(
       alignment: Alignment.center,
-      children: [
+      children:[
         CircleAvatar(radius: 36, backgroundColor: Colors.white10),
         CircleAvatar(radius: 33, backgroundImage: NetworkImage(t.avatar)),
       ],
@@ -2676,7 +2693,7 @@ class _TestimonialCard extends StatelessWidget {
           if (compact) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children:[
                 Center(child: avatar),
                 const SizedBox(height: 12),
                 content,
@@ -2686,7 +2703,7 @@ class _TestimonialCard extends StatelessWidget {
 
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children:[
               avatar,
               const SizedBox(width: 14),
               Expanded(child: content),
@@ -2707,9 +2724,9 @@ class Testimonial {
   final String avatar;
   const Testimonial(
       {required this.quote,
-      required this.name,
-      required this.role,
-      required this.avatar});
+        required this.name,
+        required this.role,
+        required this.avatar});
 }
 
 class BlogPost {
@@ -2735,7 +2752,7 @@ class BlogSection extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children:[
         SectionTitle(I18n.t('blog_title')),
         const SizedBox(height: 16),
         Column(
@@ -2748,7 +2765,7 @@ class BlogSection extends StatelessWidget {
 
 class _BlogCard extends StatelessWidget {
   final BlogPost post;
-  const _BlogCard({required this.post});
+  const _BlogCard({super.key, required this.post});
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
@@ -2766,10 +2783,10 @@ class _BlogCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: [
+              children:[
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(.06),
                     borderRadius: BorderRadius.circular(DS.pill),
@@ -2810,13 +2827,13 @@ class DS {
   static const divider = Color(0x1AFFFFFF);
 
   static List<BoxShadow> shadowSoft(BuildContext c) => [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.25),
-          blurRadius: 18,
-          spreadRadius: 0,
-          offset: const Offset(0, 10),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withOpacity(0.25),
+      blurRadius: 18,
+      spreadRadius: 0,
+      offset: const Offset(0, 10),
+    ),
+  ];
 }
 
 class ParallaxOrbs extends StatelessWidget {
@@ -2843,7 +2860,7 @@ class ParallaxOrbs extends StatelessWidget {
             final c = o * 0.045;
 
             return Stack(
-              children: [
+              children:[
                 _orb(
                   left: -140 + b,
                   top: -120 + b * 0.5,
@@ -2889,7 +2906,7 @@ class ParallaxOrbs extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: RadialGradient(
-            colors: [color, color.withOpacity(0.0)],
+            colors:[color, color.withOpacity(0.0)],
             stops: const [0.0, 1.0],
           ),
         ),
@@ -2922,7 +2939,7 @@ class EducationSection extends StatelessWidget {
 
 class _EducationTile extends StatelessWidget {
   final Education edu;
-  const _EducationTile(this.edu);
+  const _EducationTile(this.edu, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -2930,7 +2947,7 @@ class _EducationTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children:[
           const Icon(Icons.school, color: Colors.white70, size: 28),
           const SizedBox(width: 12),
           Expanded(
@@ -2940,8 +2957,8 @@ class _EducationTile extends StatelessWidget {
                 Text(
                   edu.degree,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   "${edu.institution} • ${edu.years}",

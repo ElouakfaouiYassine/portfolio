@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Let Flutter inject the correct base path during build -->
-  <base href="./">
+  <!-- Flutter replaces $FLUTTER_BASE_HREF at build time (--base-href flag) -->
+  <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -22,21 +22,28 @@
   <title>Yassine Elouakfaoui - Portfolio</title>
 
   <style>
-    html,
-    body {
+    html, body {
       width: 100%;
       min-height: 100%;
       margin: 0;
       padding: 0;
       background-color: #0b0d13;
     }
-
     body {
       overscroll-behavior-y: none;
       -webkit-text-size-adjust: 100%;
       touch-action: manipulation;
     }
   </style>
+
+  <!-- Kill any stale service workers so old caches never block a deploy -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then(function(rs) { rs.forEach(function(r) { r.unregister(); }); })
+        .catch(function() {});
+    }
+  </script>
 
   <script src="flutter.js" defer></script>
 </head>
@@ -46,8 +53,7 @@
     function showBootError(message) {
       document.body.innerHTML =
         '<pre style="white-space:pre-wrap;padding:16px;font-family:monospace;color:#b00020;">' +
-        message +
-        '</pre>';
+        message + '</pre>';
     }
 
     window.addEventListener('error', function (e) {
@@ -66,10 +72,7 @@
 
       _flutter.loader
         .loadEntrypoint({
-          serviceWorker: {
-            serviceWorkerUrl: 'flutter_service_worker.js',
-            timeoutMillis: 4000,
-          },
+          serviceWorker: null,
           onEntrypointLoaded: function (engineInitializer) {
             engineInitializer
               .initializeEngine()

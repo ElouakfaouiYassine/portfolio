@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Let Flutter inject the correct base path during build -->
   <base href="/portfolio/">
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yassine Elouakfaoui — Portfolio</title>
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Yassine Elouakfaoui portfolio - mobile developer and SOC analyst.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <!-- Optional: comment out PWA hints while debugging iOS caching -->
-  <!-- <link rel="manifest" href="manifest.json"> -->
-  <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
-  <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
-  <!-- <meta name="apple-mobile-web-app-title" content="Portfolio"> -->
-  <!-- <link rel="apple-touch-icon" href="icons/Icon-192.png"> -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Yassine Portfolio">
+  <meta name="theme-color" content="#0B0D13">
 
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="icon" href="favicon.ico">
 
-  <!-- 0) Kill any old service workers ASAP -->
+  <title>Yassine Elouakfaoui - Portfolio</title>
+
+  <style>
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #0b0d13;
+    }
+    body {
+      overscroll-behavior-y: none;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+  </style>
+
+  <!-- Kill any stale service workers so old caches never block a deploy -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations()
-        .then(rs => rs.forEach(r => r.unregister()))
-        .catch(()=>{});
+        .then(function(rs) { rs.forEach(function(r) { r.unregister(); }); })
+        .catch(function() {});
     }
   </script>
 
-  <!-- 1) Load the Flutter loader -->
-  <script src="flutter.js"></script>
+  <script src="flutter.js" defer></script>
 </head>
 <body>
-<!-- 2) Start Flutter with robust error reporting -->
 <script>
   (function () {
     function showBootError(message) {
       document.body.innerHTML =
         '<pre style="white-space:pre-wrap;padding:16px;font-family:monospace;color:#b00020;">' +
-        message +
-        '</pre>';
+        message + '</pre>';
     }
 
     window.addEventListener('error', function (e) {
@@ -57,13 +72,13 @@
       _flutter.loader
         .loadEntrypoint({
           serviceWorker: null,
-          entrypointUrl: 'main.dart.js?v=7'
-        })
-        .then(function (engineInitializer) {
-          return engineInitializer.initializeEngine();
-        })
-        .then(function (appRunner) {
-          return appRunner.runApp();
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer
+              .initializeEngine()
+              .then(function (appRunner) {
+                appRunner.runApp();
+              });
+          }
         })
         .catch(function (err) {
           showBootError('Flutter start failed: ' + err);
