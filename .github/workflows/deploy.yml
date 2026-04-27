@@ -38,7 +38,7 @@ jobs:
         run: flutter pub get
 
       - name: Build web
-        run: flutter build web --release --web-renderer html --pwa-strategy none --base-href /portfolio/
+        run: flutter build web --release --pwa-strategy none --base-href /portfolio/
 
       - name: Move build to docs
         run: |
