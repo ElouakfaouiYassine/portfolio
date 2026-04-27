@@ -29,13 +29,14 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"          # or set flutter-version: "3.22.x" if you want a fixed one
+          flutter-version: "3.24.x"
+          channel: "stable"
 
       - name: Flutter version
         run: flutter --version
 
       - name: Get packages
-        run: flutter pub get
+        run: flutter pub upgrade
 
       - name: Build web
         run: flutter build web --release --pwa-strategy none --base-href /portfolio/
