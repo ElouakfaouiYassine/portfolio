@@ -9,6 +9,7 @@ on:
       - "assets/**"
       - "pubspec.yaml"
       - "pubspec.lock"
+      - ".github/workflows/deploy.yml"
       - "!docs/**"          # ignore docs changes so we don't infinite-loop
   workflow_dispatch:        # allow manual runs from Actions tab
 

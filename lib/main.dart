@@ -696,41 +696,63 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                         ),
                       ),
                     ),
-              actions: MediaQuery.of(context).size.width >= 980
-                  ?[
-                ..._sections.mapIndexed((i, entry) => _navItemButton(
-                  label: entry.key,
-                  onTap: () => _scrollTo(entry.value),
-                  active: _active == i,
-                )),
-                const SizedBox(width: 8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: FilledButton.icon(
-                    onPressed: _downloadResume,
-                    icon: const Icon(Icons.file_download),
-                    label: const Text('Resume'),
-                  ),
-                ),
-                IconButton(
-                  tooltip: 'Toggle theme',
-                  onPressed: widget.onToggleTheme,
-                  icon: Icon(widget.isDark
-                      ? Icons.wb_sunny_outlined
-                      : Icons.nightlight_round),
-                ),
-                PopupMenuButton<String>(
-                  tooltip: 'Language',
-                  icon: const Icon(Icons.language),
-                  onSelected: widget.onLanguageChanged,
-                  itemBuilder: (_) => const[
-                    PopupMenuItem(value: 'en', child: Text('English')),
-                    PopupMenuItem(value: 'fr', child: Text('Français')),
-                    PopupMenuItem(value: 'ar', child: Text('العربية')),
-                  ],
-                ),
-              ]
-                  : null,
+              actions: isWide
+                  ? [
+                      ..._sections.mapIndexed((i, entry) => _navItemButton(
+                            label: entry.key,
+                            onTap: () => _scrollTo(entry.value),
+                            active: _active == i,
+                          )),
+                      const SizedBox(width: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: FilledButton.icon(
+                          onPressed: _downloadResume,
+                          icon: const Icon(Icons.file_download),
+                          label: const Text('Resume'),
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: 'Toggle theme',
+                        onPressed: widget.onToggleTheme,
+                        icon: Icon(widget.isDark
+                            ? Icons.wb_sunny_outlined
+                            : Icons.nightlight_round),
+                      ),
+                      PopupMenuButton<String>(
+                        tooltip: 'Language',
+                        icon: const Icon(Icons.language),
+                        onSelected: widget.onLanguageChanged,
+                        itemBuilder: (_) => const [
+                          PopupMenuItem(value: 'en', child: Text('English')),
+                          PopupMenuItem(
+                              value: 'fr', child: Text('Français')),
+                          PopupMenuItem(
+                              value: 'ar', child: Text('العربية')),
+                        ],
+                      ),
+                    ]
+                  : [
+                      IconButton(
+                        tooltip: 'Toggle theme',
+                        onPressed: widget.onToggleTheme,
+                        icon: Icon(widget.isDark
+                            ? Icons.wb_sunny_outlined
+                            : Icons.nightlight_round),
+                      ),
+                      PopupMenuButton<String>(
+                        tooltip: 'Language',
+                        icon: const Icon(Icons.language),
+                        onSelected: widget.onLanguageChanged,
+                        itemBuilder: (_) => const [
+                          PopupMenuItem(value: 'en', child: Text('English')),
+                          PopupMenuItem(
+                              value: 'fr', child: Text('Français')),
+                          PopupMenuItem(
+                              value: 'ar', child: Text('العربية')),
+                        ],
+                      ),
+                    ],
             ),
             floatingActionButton: AnimatedBuilder(
               animation: _scroll,
