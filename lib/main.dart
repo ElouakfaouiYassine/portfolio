@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'web_url_stub.dart' if (dart.library.html) 'web_url_web.dart' as web;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'web_analytics_stub.dart'
-    if (dart.library.html) 'web_analytics_web.dart' as analytics;
+import 'web_analytics_stub.dart' if (dart.library.html) 'web_analytics_web.dart'
+    as analytics;
 import 'dart:ui' show ImageFilter;
 import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,27 +39,35 @@ extension _MapIndexed<E> on Iterable<E> {
 class _PortfolioAppState extends State<PortfolioApp> {
   ThemeMode _mode = ThemeMode.dark;
 
-  void _toggleTheme() =>
-      setState(() => _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
+  void _toggleTheme() => setState(
+      () => _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
 
   void _changeLanguage(String lang) => setState(() => I18n.current = lang);
 
   TextTheme _headingTheme(TextTheme base) => base.copyWith(
-        displayLarge: GoogleFonts.spaceGrotesk(textStyle: base.displayLarge, fontWeight: FontWeight.w800),
-        displayMedium: GoogleFonts.spaceGrotesk(textStyle: base.displayMedium, fontWeight: FontWeight.w800),
-        displaySmall: GoogleFonts.spaceGrotesk(textStyle: base.displaySmall, fontWeight: FontWeight.w700),
-        headlineLarge: GoogleFonts.spaceGrotesk(textStyle: base.headlineLarge, fontWeight: FontWeight.w700),
-        headlineMedium: GoogleFonts.spaceGrotesk(textStyle: base.headlineMedium, fontWeight: FontWeight.w700),
-        headlineSmall: GoogleFonts.spaceGrotesk(textStyle: base.headlineSmall, fontWeight: FontWeight.w800),
-        titleLarge: GoogleFonts.spaceGrotesk(textStyle: base.titleLarge, fontWeight: FontWeight.w600),
+        displayLarge: GoogleFonts.spaceGrotesk(
+            textStyle: base.displayLarge, fontWeight: FontWeight.w800),
+        displayMedium: GoogleFonts.spaceGrotesk(
+            textStyle: base.displayMedium, fontWeight: FontWeight.w800),
+        displaySmall: GoogleFonts.spaceGrotesk(
+            textStyle: base.displaySmall, fontWeight: FontWeight.w700),
+        headlineLarge: GoogleFonts.spaceGrotesk(
+            textStyle: base.headlineLarge, fontWeight: FontWeight.w700),
+        headlineMedium: GoogleFonts.spaceGrotesk(
+            textStyle: base.headlineMedium, fontWeight: FontWeight.w700),
+        headlineSmall: GoogleFonts.spaceGrotesk(
+            textStyle: base.headlineSmall, fontWeight: FontWeight.w800),
+        titleLarge: GoogleFonts.spaceGrotesk(
+            textStyle: base.titleLarge, fontWeight: FontWeight.w600),
       );
 
   @override
   Widget build(BuildContext context) {
-    final baseLight = Typography.material2021(platform: TargetPlatform.android).black.apply(
-          bodyColor: const Color(0xFF1B1F2A),
-          displayColor: const Color(0xFF0F1230),
-        );
+    final baseLight =
+        Typography.material2021(platform: TargetPlatform.android).black.apply(
+              bodyColor: const Color(0xFF1B1F2A),
+              displayColor: const Color(0xFF0F1230),
+            );
     final baseDark = Typography.whiteCupertino;
 
     return MaterialApp(
@@ -69,7 +77,8 @@ class _PortfolioAppState extends State<PortfolioApp> {
       locale: I18n.locale,
       supportedLocales: const [Locale('en'), Locale('fr'), Locale('ar')],
       builder: (context, child) => Directionality(
-        textDirection: I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+        textDirection:
+            I18n.current == 'ar' ? TextDirection.rtl : TextDirection.ltr,
         child: child!,
       ),
       localizationsDelegates: const [
@@ -98,23 +107,27 @@ class _PortfolioAppState extends State<PortfolioApp> {
         cardTheme: CardTheme(
           elevation: 0,
           color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.radius)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(DS.radius)),
         ),
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
             side: const BorderSide(color: Color(0x331B1F2A)),
           ),
         ),
         chipTheme: ChipThemeData(
-          shape: StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
+          shape:
+              StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           backgroundColor: const Color(0x0F1B1F2A),
           selectedColor: const Color(0x201B1F2A),
@@ -136,18 +149,21 @@ class _PortfolioAppState extends State<PortfolioApp> {
         cardTheme: CardTheme(
           elevation: 0,
           color: const Color(0x66121623),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.radius)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(DS.radius)),
         ),
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(DS.pill)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(DS.pill)),
             side: const BorderSide(color: Color(0x33FFFFFF)),
             foregroundColor: Colors.white,
           ),
@@ -190,7 +206,8 @@ class _PortfolioAppState extends State<PortfolioApp> {
 class ProfileConfig {
   static const name = 'Elouakfaoui Yassine';
   static const title = 'Mobile Developer & SOC Analyst';
-  static const tagline = 'From Code to Cyber Defense: Crafting Apps and Protecting Systems';
+  static const tagline =
+      'From Code to Cyber Defense: Crafting Apps and Protecting Systems';
   static const location = 'Meknes, Morocco';
   static const email = 'elouakfaouiyassine@gmail.com';
   static const phone = '+212 777539454';
@@ -231,8 +248,17 @@ class ProfileConfig {
     Project(
       title: 'E‑commerce App',
       kind: 'Mobile (Kotlin)',
-      summary: 'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend).',
-      tags: ['Kotlin', 'PHP', 'Stripe', 'MVVM', 'Clean Architecture', 'SQLite', 'MongoDB'],
+      summary:
+          'A full-stack e-commerce mobile app built using Kotlin (Android), PHP (backend).',
+      tags: [
+        'Kotlin',
+        'PHP',
+        'Stripe',
+        'MVVM',
+        'Clean Architecture',
+        'SQLite',
+        'MongoDB'
+      ],
       github: 'https://github.com/ElouakfaouiYassine/E-commerce-app',
       demo: '',
       imageUrl:
@@ -260,7 +286,8 @@ class ProfileConfig {
     Project(
       title: 'StopFire App',
       kind: 'Mobile (Kotlin)',
-      summary: 'Created a real-time alert app that detects charging-related fire risks.',
+      summary:
+          'Created a real-time alert app that detects charging-related fire risks.',
       tags: ['kotlin', 'MVVM', 'Notification'],
       github: 'https://github.com/ElouakfaouiYassine/Protect-Your-House-App',
       demo: '',
@@ -288,14 +315,17 @@ class ProfileConfig {
     Project(
       title: 'Chat App',
       kind: 'Mobile',
-      summary: 'E2EE chat with offline cache, message reactions, and push notifications.',
+      summary:
+          'E2EE chat with offline cache, message reactions, and push notifications.',
       tags: ['Kotlin', 'Spring Boot', 'MongoDB', 'PGP', 'WebSocket'],
-      github: 'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      github:
+          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
       demo: '',
       imageUrl:
           'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
       category: 'mobile',
-      detail: 'Realtime chat app with E2EE, offline cache, typing indicators and push notifications.',
+      detail:
+          'Realtime chat app with E2EE, offline cache, typing indicators and push notifications.',
       images: [
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/1.jpg',
         'https://raw.githubusercontent.com/ElouakfaouiYassine/SecureChatApp/main/app/Screenshots/2.png',
@@ -316,14 +346,17 @@ class ProfileConfig {
     Project(
       title: 'BlueTeam NetFlow Hunt',
       kind: 'Security (Threat Hunting)',
-      summary: 'Python + Zeek pipeline to flag C2 beacons and rare destinations.',
+      summary:
+          'Python + Zeek pipeline to flag C2 beacons and rare destinations.',
       tags: ['Python', 'Zeek', 'NetFlow'],
-      github: 'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      github:
+          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
       demo: '',
       imageUrl:
           'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop',
       category: 'security',
-      detail: 'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
+      detail:
+          'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
       images: [
         'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format',
       ],
@@ -337,19 +370,22 @@ class ProfileConfig {
 
   static final testimonials = <Testimonial>[
     Testimonial(
-      quote: "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
+      quote:
+          "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
       name: "Anas B.",
       role: "Senior Android Engineer",
       avatar: "https://i.pravatar.cc/120?img=12",
     ),
     Testimonial(
-      quote: "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
+      quote:
+          "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
       name: "Sara M.",
       role: "SOC Team Lead",
       avatar: "https://i.pravatar.cc/120?img=32",
     ),
     Testimonial(
-      quote: "Our Kotlin app's checkout went from flaky to rock-solid after his refactor and Stripe integration.",
+      quote:
+          "Our Kotlin app's checkout went from flaky to rock-solid after his refactor and Stripe integration.",
       name: "Ismail K.",
       role: "Product Manager",
       avatar: "https://i.pravatar.cc/120?img=8",
@@ -359,7 +395,8 @@ class ProfileConfig {
   static final educationList = <Education>[
     Education(
       degree: "Bachelor's Degree in Computer Security and Networks",
-      institution: "EST – École Supérieure de Technologie Guelmim, Ibn Zohr University",
+      institution:
+          "EST – École Supérieure de Technologie Guelmim, Ibn Zohr University",
       years: "2024 – 2025",
     ),
     Education(
@@ -372,19 +409,22 @@ class ProfileConfig {
   static final posts = <BlogPost>[
     BlogPost(
       title: "Building a Secure Kotlin Checkout Flow",
-      summary: "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
+      summary:
+          "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
       date: "Mar 2025",
       url: "https://medium.com/@yassine/secure-kotlin-checkout",
     ),
     BlogPost(
       title: "SOC Analyst Playbook: Reducing Alert Fatigue",
-      summary: "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
+      summary:
+          "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
       date: "Feb 2025",
       url: "https://medium.com/@yassine/soc-analyst-playbook",
     ),
     BlogPost(
       title: "From PHP to MongoDB Hybrid Backends",
-      summary: "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
+      summary:
+          "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
       date: "Jan 2025",
       url: "https://medium.com/@yassine/hybrid-backends",
     ),
@@ -427,7 +467,15 @@ class _Skill {
 }
 
 class Project {
-  final String title, kind, summary, github, demo, imageUrl, category, detail, id;
+  final String title,
+      kind,
+      summary,
+      github,
+      demo,
+      imageUrl,
+      category,
+      detail,
+      id;
   final List<String> tags, images, highlights;
   const Project({
     required this.title,
@@ -448,7 +496,11 @@ class Project {
 class ExperienceItem {
   final String role, org, period;
   final List<String> bullets;
-  const ExperienceItem({required this.role, required this.org, required this.period, required this.bullets});
+  const ExperienceItem(
+      {required this.role,
+      required this.org,
+      required this.period,
+      required this.bullets});
 }
 
 class Certification {
@@ -462,7 +514,11 @@ class PortfolioHome extends StatefulWidget {
   final VoidCallback onToggleTheme;
   final bool isDark;
   final ValueChanged<String> onLanguageChanged;
-  const PortfolioHome({super.key, required this.onToggleTheme, required this.isDark, required this.onLanguageChanged});
+  const PortfolioHome(
+      {super.key,
+      required this.onToggleTheme,
+      required this.isDark,
+      required this.onLanguageChanged});
   @override
   State<PortfolioHome> createState() => _PortfolioHomeState();
 }
@@ -483,7 +539,10 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   void _scrollTo(GlobalKey key) {
     final ctx = key.currentContext;
     if (ctx == null) return;
-    Scrollable.ensureVisible(ctx, duration: const Duration(milliseconds: 700), curve: Curves.easeInOutCubic, alignment: 0.05);
+    Scrollable.ensureVisible(ctx,
+        duration: const Duration(milliseconds: 700),
+        curve: Curves.easeInOutCubic,
+        alignment: 0.05);
   }
 
   late final List<MapEntry<String, GlobalKey>> _sections = [
@@ -556,7 +615,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
 
   void _downloadResume() async {
     analytics.trackEvent('Resume Click');
-    final url = ProfileConfig.resumeUrl.isEmpty ? '/assets/resume.pdf' : ProfileConfig.resumeUrl;
+    final url = ProfileConfig.resumeUrl.isEmpty
+        ? '/assets/resume.pdf'
+        : ProfileConfig.resumeUrl;
     await _launch(url);
   }
 
@@ -580,10 +641,12 @@ class _PortfolioHomeState extends State<PortfolioHome> {
           ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (intent) {
             final label = HardwareKeyboard.instance.logicalKeysPressed
                 .map((k) => k.keyLabel)
-                .firstWhere((l) => RegExp(r'^\d$').hasMatch(l), orElse: () => '');
+                .firstWhere((l) => RegExp(r'^\d$').hasMatch(l),
+                    orElse: () => '');
             if (label.isEmpty) return null;
             final idx = int.parse(label) - 1;
-            if (idx >= 0 && idx < _sections.length) _scrollTo(_sections[idx].value);
+            if (idx >= 0 && idx < _sections.length)
+              _scrollTo(_sections[idx].value);
             return null;
           }),
         },
@@ -595,23 +658,31 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               backgroundColor: Colors.transparent,
               surfaceTintColor: Colors.transparent,
               title: Text(ProfileConfig.name,
-                  style: GoogleFonts.spaceGrotesk(fontWeight: FontWeight.w700, fontSize: 17)),
+                  style: GoogleFonts.spaceGrotesk(
+                      fontWeight: FontWeight.w700, fontSize: 17)),
               flexibleSpace: isWide
                   ? ClipRect(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: (widget.isDark ? Colors.black : Colors.white).withOpacity(0.18),
-                            border: const Border(bottom: BorderSide(color: Color(0x22FFFFFF), width: 1)),
+                            color: (widget.isDark ? Colors.black : Colors.white)
+                                .withOpacity(0.18),
+                            border: const Border(
+                                bottom: BorderSide(
+                                    color: Color(0x22FFFFFF), width: 1)),
                           ),
                         ),
                       ),
                     )
                   : Container(
                       decoration: BoxDecoration(
-                        color: widget.isDark ? const Color(0xE00B0D13) : Colors.white.withOpacity(0.95),
-                        border: const Border(bottom: BorderSide(color: Color(0x22FFFFFF), width: 1)),
+                        color: widget.isDark
+                            ? const Color(0xE00B0D13)
+                            : Colors.white.withOpacity(0.95),
+                        border: const Border(
+                            bottom:
+                                BorderSide(color: Color(0x22FFFFFF), width: 1)),
                       ),
                     ),
               actions: isWide
@@ -633,7 +704,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                       IconButton(
                         tooltip: 'Toggle theme',
                         onPressed: widget.onToggleTheme,
-                        icon: Icon(widget.isDark ? Icons.wb_sunny_outlined : Icons.nightlight_round),
+                        icon: Icon(widget.isDark
+                            ? Icons.wb_sunny_outlined
+                            : Icons.nightlight_round),
                       ),
                       _langButton(),
                     ]
@@ -641,7 +714,9 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                       IconButton(
                         tooltip: 'Toggle theme',
                         onPressed: widget.onToggleTheme,
-                        icon: Icon(widget.isDark ? Icons.wb_sunny_outlined : Icons.nightlight_round),
+                        icon: Icon(widget.isDark
+                            ? Icons.wb_sunny_outlined
+                            : Icons.nightlight_round),
                       ),
                       _langButton(),
                     ],
@@ -658,7 +733,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                     opacity: show ? 1 : 0,
                     child: FloatingActionButton.small(
                       onPressed: () => _scroll.animateTo(0,
-                          duration: const Duration(milliseconds: 450), curve: Curves.easeOut),
+                          duration: const Duration(milliseconds: 450),
+                          curve: Curves.easeOut),
                       child: const Icon(Icons.arrow_upward),
                     ),
                   ),
@@ -696,10 +772,13 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                                 SizedBox(height: 10),
                                 Text(ProfileConfig.name,
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
                                 SizedBox(height: 2),
                                 Text(ProfileConfig.title,
-                                    style: TextStyle(color: Colors.white70, fontSize: 11)),
+                                    style: TextStyle(
+                                        color: Colors.white70, fontSize: 11)),
                               ],
                             ),
                           ),
@@ -722,7 +801,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                         const Divider(),
                         // ── Language ───────────────────────────────────────
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 4),
                           child: Text('Language',
                               style: TextStyle(
                                   fontSize: 12,
@@ -749,14 +829,29 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Section(key: _homeKey, child: const HeroSection(), showDivider: true),
-                          Section(key: _aboutKey, child: const AboutSection(), altBackground: true),
-                          Section(key: _skillsKey, child: const SkillsSection()),
-                          Section(key: _projectsKey, child: const ProjectsSection(), altBackground: true),
-                          Section(key: _experienceKey, child: const ExperienceSection()),
+                          Section(
+                            key: _homeKey,
+                            child: HeroSection(
+                                onHireMe: () => _scrollTo(_contactKey)),
+                            showDivider: true,
+                          ),
+                          Section(
+                              key: _aboutKey,
+                              child: const AboutSection(),
+                              altBackground: true),
+                          Section(
+                              key: _skillsKey, child: const SkillsSection()),
+                          Section(
+                              key: _projectsKey,
+                              child: const ProjectsSection(),
+                              altBackground: true),
+                          Section(
+                              key: _experienceKey,
+                              child: const ExperienceSection()),
                           Section(
                             key: _educationKey,
-                            child: EducationSection(educationList: ProfileConfig.educationList),
+                            child: EducationSection(
+                                educationList: ProfileConfig.educationList),
                             altBackground: true,
                           ),
                           Section(key: _certsKey, child: const CertsSection()),
@@ -786,7 +881,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   Widget _langButton() => PopupMenuButton<String>(
         tooltip: 'Language',
         icon: const Icon(Icons.language),
-        onSelected: widget.onLanguageChanged, // ← fix: goes to _PortfolioAppState
+        onSelected:
+            widget.onLanguageChanged, // ← fix: goes to _PortfolioAppState
         itemBuilder: (_) => const [
           PopupMenuItem(value: 'en', child: Text('English')),
           PopupMenuItem(value: 'fr', child: Text('Français')),
@@ -799,19 +895,26 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     return ListTile(
       dense: true,
       leading: active
-          ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary, size: 18)
+          ? Icon(Icons.check_circle,
+              color: Theme.of(context).colorScheme.primary, size: 18)
           : const SizedBox(width: 18),
       title: Text(label),
       onTap: () {
-        widget.onLanguageChanged(code); // ← fix: rebuilds MaterialApp locale + Directionality
+        widget.onLanguageChanged(
+            code); // ← fix: rebuilds MaterialApp locale + Directionality
         Navigator.pop(context);
       },
     );
   }
 
-  Widget _navItemButton({required String label, required VoidCallback onTap, required bool active}) {
+  Widget _navItemButton(
+      {required String label,
+      required VoidCallback onTap,
+      required bool active}) {
     final theme = Theme.of(context);
-    final fg = active ? theme.colorScheme.primary : theme.textTheme.labelLarge?.color ?? Colors.white;
+    final fg = active
+        ? theme.colorScheme.primary
+        : theme.textTheme.labelLarge?.color ?? Colors.white;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: TextButton(
@@ -819,12 +922,16 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         style: TextButton.styleFrom(
           foregroundColor: fg,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          backgroundColor: active ? theme.colorScheme.primary.withOpacity(0.12) : Colors.transparent,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: active
+              ? theme.colorScheme.primary.withOpacity(0.12)
+              : Colors.transparent,
         ),
         child: Text(label,
             style: TextStyle(
-                fontWeight: active ? FontWeight.w700 : FontWeight.w500, fontSize: 13)),
+                fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+                fontSize: 13)),
       ),
     );
   }
@@ -847,33 +954,48 @@ class Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final width = MediaQuery.sizeOf(context).width;
+    final horizontal = width < 420
+        ? 10.0
+        : width < 700
+            ? 12.0
+            : width >= 1400
+                ? 12.0
+                : width >= 1100
+                    ? 16.0
+                    : 20.0;
+    final vertical = width < 700 ? 16.0 : 24.0;
     final bg = altBackground
         ? isDark
             ? Colors.white.withOpacity(0.02)
             : Colors.black.withOpacity(0.03)
         : Colors.transparent;
 
+    final sectionContent = Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          child,
+          if (showDivider) ...[
+            const SizedBox(height: 16),
+            const _GradientDivider(),
+          ],
+        ],
+      ),
+    );
+
     return Container(
       color: bg,
       width: double.infinity,
       child: Align(
         alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                child,
-                if (showDivider) ...[
-                  const SizedBox(height: 32),
-                  const _GradientDivider(),
-                ],
-              ],
-            ),
-          ),
-        ),
+        child: width >= 900
+            ? ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1360),
+                child: sectionContent,
+              )
+            : sectionContent,
       ),
     );
   }
@@ -921,7 +1043,7 @@ class SectionTitle extends StatelessWidget {
         Text(text,
             style: GoogleFonts.spaceGrotesk(
                 fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: -.5)),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         Row(
           children: [
             Container(
@@ -929,7 +1051,8 @@ class SectionTitle extends StatelessWidget {
               width: 44,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
-                gradient: LinearGradient(colors: [primary, primary.withOpacity(0)]),
+                gradient:
+                    LinearGradient(colors: [primary, primary.withOpacity(0)]),
               ),
             ),
             const SizedBox(width: 6),
@@ -951,7 +1074,8 @@ class SectionTitle extends StatelessWidget {
 // ─── Hero ───────────────────────────────────────────────────────────────────
 
 class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
+  final VoidCallback onHireMe;
+  const HeroSection({super.key, required this.onHireMe});
 
   @override
   Widget build(BuildContext context) {
@@ -969,8 +1093,9 @@ class HeroSection extends StatelessWidget {
               Expanded(
                 flex: isWide ? 6 : 10,
                 child: Column(
-                  crossAxisAlignment:
-                      isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                  crossAxisAlignment: isWide
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.center,
                   children: [
                     // ── Gradient name ──────────────────────────────────────
                     ShaderMask(
@@ -1015,10 +1140,11 @@ class HeroSection extends StatelessWidget {
                     Wrap(
                       spacing: 12,
                       runSpacing: 10,
-                      alignment: isWide ? WrapAlignment.start : WrapAlignment.center,
+                      alignment:
+                          isWide ? WrapAlignment.start : WrapAlignment.center,
                       children: [
                         FilledButton.icon(
-                          onPressed: () => _launch('mailto:${ProfileConfig.email}'),
+                          onPressed: onHireMe,
                           icon: const Icon(Icons.mail_outline, size: 18),
                           label: const Text('Hire Me'),
                         ),
@@ -1125,10 +1251,13 @@ class _TypewriterTextState extends State<_TypewriterText> {
             width: 2,
             height: (widget.style?.fontSize ?? 16) + 2,
             decoration: BoxDecoration(
-              color: widget.style?.color ?? Theme.of(context).colorScheme.primary,
+              color:
+                  widget.style?.color ?? Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(1),
             ),
-          ).animate(onPlay: (c) => c.repeat(reverse: true)).fade(duration: 500.ms),
+          )
+              .animate(onPlay: (c) => c.repeat(reverse: true))
+              .fade(duration: 500.ms),
         ),
       ],
     );
@@ -1173,10 +1302,13 @@ class _StatsStrip extends StatelessWidget {
               children: [
                 Text(item.$1,
                     style: GoogleFonts.spaceGrotesk(
-                        fontSize: 26, fontWeight: FontWeight.w900, color: primary)),
+                        fontSize: 26,
+                        fontWeight: FontWeight.w900,
+                        color: primary)),
                 const SizedBox(height: 2),
                 Text(item.$2,
-                    style: const TextStyle(fontSize: 12, color: Colors.white60)),
+                    style:
+                        const TextStyle(fontSize: 12, color: Colors.white60)),
               ],
             ),
           );
@@ -1194,9 +1326,11 @@ class _AuroraVisual extends StatefulWidget {
   State<_AuroraVisual> createState() => _AuroraVisualState();
 }
 
-class _AuroraVisualState extends State<_AuroraVisual> with SingleTickerProviderStateMixin {
+class _AuroraVisualState extends State<_AuroraVisual>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _c =
-      AnimationController(vsync: this, duration: const Duration(seconds: 9))..repeat(reverse: true);
+      AnimationController(vsync: this, duration: const Duration(seconds: 9))
+        ..repeat(reverse: true);
 
   @override
   void dispose() {
@@ -1291,7 +1425,8 @@ class _AuroraVisualState extends State<_AuroraVisual> with SingleTickerProviderS
     );
   }
 
-  Widget _chip(IconData icon, double ax, double ay, String label, double drift) =>
+  Widget _chip(
+          IconData icon, double ax, double ay, String label, double drift) =>
       Align(
         alignment: Alignment(ax + drift, ay + drift * .6),
         child: Container(
@@ -1308,7 +1443,9 @@ class _AuroraVisualState extends State<_AuroraVisual> with SingleTickerProviderS
               const SizedBox(width: 6),
               Text(label,
                   style: const TextStyle(
-                      color: Colors.white60, fontSize: 11, fontWeight: FontWeight.w500)),
+                      color: Colors.white60,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500)),
             ],
           ),
         ).animate().fadeIn(duration: 600.ms),
@@ -1350,17 +1487,26 @@ class AboutSection extends StatelessWidget {
         const SizedBox(height: 16),
         Text(
           "Motivated Mobile Developer and SOC Analyst passionate about Blue Team cybersecurity and building secure, user-friendly mobile applications. Skilled in mobile app development and security fundamentals, with a strong interest in defending networks against threats. Actively seeking a job opportunity to apply my skills and grow in both development and cybersecurity fields.",
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.7, color: Colors.white70),
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(height: 1.7, color: Colors.white70),
         ),
         const SizedBox(height: 20),
         Wrap(
           spacing: 10,
           runSpacing: 10,
           children: const [
-            _Pill(icon: Icons.integration_instructions, text: 'Clean, testable app architectures'),
-            _Pill(icon: Icons.dataset, text: 'Data‑driven detections & dashboards'),
+            _Pill(
+                icon: Icons.integration_instructions,
+                text: 'Clean, testable app architectures'),
+            _Pill(
+                icon: Icons.dataset,
+                text: 'Data‑driven detections & dashboards'),
             _Pill(icon: Icons.device_hub, text: 'Network & endpoint triage'),
-            _Pill(icon: Icons.lock_outline, text: 'Privacy by Design / Secure SDLC'),
+            _Pill(
+                icon: Icons.lock_outline,
+                text: 'Privacy by Design / Secure SDLC'),
           ],
         ),
       ],
@@ -1402,7 +1548,8 @@ class SkillsSection extends StatefulWidget {
   State<SkillsSection> createState() => _SkillsSectionState();
 }
 
-class _SkillsSectionState extends State<SkillsSection> with SingleTickerProviderStateMixin {
+class _SkillsSectionState extends State<SkillsSection>
+    with SingleTickerProviderStateMixin {
   int _index = 0;
 
   @override
@@ -1411,27 +1558,35 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(I18n.t('skills_title'), kicker: '02 / Skills'),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
           children: [
             ChoiceChip(
-                label: const Text('Mobile'), selected: _index == 0, onSelected: (_) => setState(() => _index = 0)),
+                label: const Text('Mobile'),
+                selected: _index == 0,
+                onSelected: (_) => setState(() => _index = 0)),
             ChoiceChip(
-                label: const Text('SOC'), selected: _index == 1, onSelected: (_) => setState(() => _index = 1)),
+                label: const Text('SOC'),
+                selected: _index == 1,
+                onSelected: (_) => setState(() => _index = 1)),
             ChoiceChip(
-                label: const Text('Tools'), selected: _index == 2, onSelected: (_) => setState(() => _index = 2)),
+                label: const Text('Tools'),
+                selected: _index == 2,
+                onSelected: (_) => setState(() => _index = 2)),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 14),
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           switchInCurve: Curves.easeOut,
           switchOutCurve: Curves.easeIn,
           transitionBuilder: (child, anim) => FadeTransition(
-              opacity: anim, child: SizeTransition(sizeFactor: anim, axisAlignment: -1, child: child)),
-          child: _SkillBars(
+              opacity: anim,
+              child: SizeTransition(
+                  sizeFactor: anim, axisAlignment: -1, child: child)),
+          child: _SkillCards(
             key: ValueKey(_index),
             skills: [
               ProfileConfig.mobileSkills,
@@ -1445,75 +1600,44 @@ class _SkillsSectionState extends State<SkillsSection> with SingleTickerProvider
   }
 }
 
-class _SkillBars extends StatefulWidget {
+class _SkillCards extends StatelessWidget {
   final List<_Skill> skills;
-  const _SkillBars({super.key, required this.skills});
-  @override
-  State<_SkillBars> createState() => _SkillBarsState();
-}
-
-class _SkillBarsState extends State<_SkillBars> with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 900))..forward();
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
+  const _SkillCards({super.key, required this.skills});
 
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
-    return AnimatedBuilder(
-      animation: _ctrl,
-      builder: (_, __) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: widget.skills.map((s) {
-            final fraction = (_ctrl.value * s.level / 100).clamp(0.0, 1.0);
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(s.name, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-                      Text('${s.level}%',
-                          style: TextStyle(fontSize: 12, color: primary, fontWeight: FontWeight.w600)),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
-                    child: Stack(
-                      children: [
-                        Container(height: 6, decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(999))),
-                        FractionallySizedBox(
-                          widthFactor: fraction,
-                          child: Container(
-                            height: 6,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(999),
-                              gradient: LinearGradient(colors: [primary, const Color(0xFF00E5FF)]),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        );
-      },
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      children: skills.mapIndexed((i, s) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: primary.withOpacity(.35),
+              width: 1.2,
+            ),
+            color: isDark
+                ? Colors.white.withOpacity(.04)
+                : Colors.black.withOpacity(.04),
+          ),
+          child: Text(
+            s.name,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: isDark ? Colors.white.withOpacity(.88) : Colors.black87,
+              letterSpacing: .2,
+            ),
+          ),
+        )
+            .animate(delay: Duration(milliseconds: 40 * i))
+            .fadeIn(duration: 260.ms)
+            .scale(begin: const Offset(.92, .92), duration: 260.ms);
+      }).toList(),
     );
   }
 }
@@ -1532,8 +1656,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
-    final cross = w >= 1100 ? 3 : w >= 700 ? 2 : 1;
-    final ratio = w >= 1100 ? 1.05 : w >= 700 ? 0.90 : 0.78;
+    final cross = w >= 1100
+        ? 3
+        : w >= 700
+            ? 2
+            : 1;
+    final ratio = w >= 1100
+        ? 1.05
+        : w >= 700
+            ? 0.90
+            : 0.78;
 
     final projects = _filter == 'all'
         ? ProfileConfig.projects
@@ -1545,7 +1677,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         SectionTitle(I18n.t('projects_title'), kicker: '03 / Projects'),
         const SizedBox(height: 8),
         Text('A mix of mobile apps and blue-team security work.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white60)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Colors.white60)),
         const SizedBox(height: 16),
         Wrap(
           spacing: 10,
@@ -1604,7 +1739,12 @@ class _ProjectCardState extends State<ProjectCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(DS.radius),
           boxShadow: _hover
-              ? [BoxShadow(color: primary.withOpacity(.35), blurRadius: 22, spreadRadius: -4)]
+              ? [
+                  BoxShadow(
+                      color: primary.withOpacity(.35),
+                      blurRadius: 22,
+                      spreadRadius: -4)
+                ]
               : [],
           border: Border.all(
             color: _hover ? primary.withOpacity(.4) : Colors.transparent,
@@ -1629,7 +1769,8 @@ class _ProjectCardState extends State<ProjectCard> {
                         scale: _hover ? 1.06 : 1.0,
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.easeOut,
-                        child: _netImage(widget.project.imageUrl, fit: BoxFit.cover),
+                        child: _netImage(widget.project.imageUrl,
+                            fit: BoxFit.cover),
                       ),
                       Positioned(
                         left: 0,
@@ -1655,7 +1796,8 @@ class _ProjectCardState extends State<ProjectCard> {
                             borderRadius: BorderRadius.circular(DS.pill),
                             onTap: () => _openDetails(context, widget.project),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
                                 color: Colors.black.withOpacity(.55),
                                 borderRadius: BorderRadius.circular(DS.pill),
@@ -1664,9 +1806,11 @@ class _ProjectCardState extends State<ProjectCard> {
                               child: const Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.visibility, size: 16, color: Colors.white70),
+                                  Icon(Icons.visibility,
+                                      size: 16, color: Colors.white70),
                                   SizedBox(width: 6),
-                                  Text('View', style: TextStyle(color: Colors.white70)),
+                                  Text('View',
+                                      style: TextStyle(color: Colors.white70)),
                                 ],
                               ),
                             ),
@@ -1685,12 +1829,14 @@ class _ProjectCardState extends State<ProjectCard> {
                       children: [
                         Row(children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(.06),
                               borderRadius: BorderRadius.circular(999),
                             ),
-                            child: Text(widget.project.kind, style: const TextStyle(fontSize: 11)),
+                            child: Text(widget.project.kind,
+                                style: const TextStyle(fontSize: 11)),
                           ),
                           const Spacer(),
                           SingleChildScrollView(
@@ -1702,7 +1848,8 @@ class _ProjectCardState extends State<ProjectCard> {
                                         padding: const EdgeInsets.only(left: 6),
                                         child: Chip(
                                             label: Text(t),
-                                            visualDensity: const VisualDensity(horizontal: -2, vertical: -2)),
+                                            visualDensity: const VisualDensity(
+                                                horizontal: -2, vertical: -2)),
                                       ))
                                   .toList(),
                             ),
@@ -1724,7 +1871,8 @@ class _ProjectCardState extends State<ProjectCard> {
                             widget.project.summary,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(color: Colors.white60, fontSize: 13),
+                            style: const TextStyle(
+                                color: Colors.white60, fontSize: 13),
                           ),
                         ),
                         Row(children: [
@@ -1815,7 +1963,9 @@ class _TimelineItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: primary,
-                    boxShadow: [BoxShadow(color: primary.withOpacity(.4), blurRadius: 6)],
+                    boxShadow: [
+                      BoxShadow(color: primary.withOpacity(.4), blurRadius: 6)
+                    ],
                   ),
                 ),
                 if (!isLast)
@@ -1828,7 +1978,10 @@ class _TimelineItem extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [primary.withOpacity(.5), primary.withOpacity(.05)],
+                          colors: [
+                            primary.withOpacity(.5),
+                            primary.withOpacity(.05)
+                          ],
                         ),
                       ),
                     ),
@@ -1861,13 +2014,17 @@ class _TimelineItem extends StatelessWidget {
                                   ?.copyWith(fontWeight: FontWeight.bold)),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
                             color: primary.withOpacity(.12),
                             borderRadius: BorderRadius.circular(999),
                           ),
                           child: Text(item.period,
-                              style: TextStyle(fontSize: 12, color: primary, fontWeight: FontWeight.w600)),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: primary,
+                                  fontWeight: FontWeight.w600)),
                         ),
                       ],
                     ),
@@ -1880,7 +2037,9 @@ class _TimelineItem extends StatelessWidget {
                           children: [
                             Text('• ', style: TextStyle(color: primary)),
                             Expanded(
-                                child: Text(b, style: const TextStyle(color: Colors.white70, height: 1.5))),
+                                child: Text(b,
+                                    style: const TextStyle(
+                                        color: Colors.white70, height: 1.5))),
                           ],
                         ),
                       ),
@@ -1909,7 +2068,8 @@ class EducationSection extends StatelessWidget {
         SectionTitle(I18n.t('education_title'), kicker: '06 / Education'),
         const SizedBox(height: 24),
         for (int i = 0; i < educationList.length; i++) ...[
-          _EduTimelineItem(edu: educationList[i], isLast: i == educationList.length - 1),
+          _EduTimelineItem(
+              edu: educationList[i], isLast: i == educationList.length - 1),
         ],
       ],
     );
@@ -1951,7 +2111,10 @@ class _EduTimelineItem extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [primary.withOpacity(.4), primary.withOpacity(.05)],
+                          colors: [
+                            primary.withOpacity(.4),
+                            primary.withOpacity(.05)
+                          ],
                         ),
                       ),
                     ),
@@ -1973,9 +2136,11 @@ class _EduTimelineItem extends StatelessWidget {
                           ?.copyWith(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
                   Text('${edu.institution} · ${edu.years}',
-                      style: const TextStyle(color: Colors.white60, height: 1.5)),
+                      style:
+                          const TextStyle(color: Colors.white60, height: 1.5)),
                   if (edu.details != null)
-                    Text(edu.details!, style: const TextStyle(color: Colors.white38)),
+                    Text(edu.details!,
+                        style: const TextStyle(color: Colors.white38)),
                 ],
               ),
             ),
@@ -1989,7 +2154,11 @@ class _EduTimelineItem extends StatelessWidget {
 class Education {
   final String degree, institution, years;
   final String? details;
-  Education({required this.degree, required this.institution, required this.years, this.details});
+  Education(
+      {required this.degree,
+      required this.institution,
+      required this.years,
+      this.details});
 }
 
 // ─── Certs ────────────────────────────────────────────────────────────────────
@@ -2001,7 +2170,11 @@ class CertsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final certs = ProfileConfig.certs;
     final w = MediaQuery.of(context).size.width;
-    final cross = w > 1000 ? 3 : w > 700 ? 2 : 1;
+    final cross = w > 1000
+        ? 3
+        : w > 700
+            ? 2
+            : 1;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -2051,9 +2224,13 @@ class _CertCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(c.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                Text(c.name,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 13)),
                 const SizedBox(height: 3),
-                Text('${c.issuer} · ${c.year}', style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                Text('${c.issuer} · ${c.year}',
+                    style:
+                        const TextStyle(color: Colors.white60, fontSize: 12)),
               ],
             ),
           ),
@@ -2078,7 +2255,10 @@ class ContactSection extends StatelessWidget {
           SectionTitle(I18n.t('contact_title'), kicker: '09 / Contact'),
           const SizedBox(height: 8),
           Text("Email me or send a message — I'll respond quickly.",
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white60)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.white60)),
           const SizedBox(height: 16),
           if (isWide)
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -2089,7 +2269,11 @@ class ContactSection extends StatelessWidget {
           else
             const Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [_ContactForm(), SizedBox(height: 20), _ContactSidebar()],
+              children: [
+                _ContactForm(),
+                SizedBox(height: 20),
+                _ContactSidebar()
+              ],
             ),
         ],
       );
@@ -2153,7 +2337,8 @@ class _SocialBtn extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-  const _SocialBtn({required this.icon, required this.label, required this.onTap});
+  const _SocialBtn(
+      {required this.icon, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -2207,14 +2392,16 @@ class _ContactSidebar extends StatelessWidget {
             const Icon(Icons.place, size: 18, color: Colors.white60),
             const SizedBox(width: 6),
             Expanded(
-                child: Text(ProfileConfig.location, style: const TextStyle(color: Colors.white60))),
+                child: Text(ProfileConfig.location,
+                    style: const TextStyle(color: Colors.white60))),
           ]),
           const SizedBox(height: 8),
           Row(children: [
             const Icon(Icons.phone, size: 18, color: Colors.white60),
             const SizedBox(width: 6),
             Expanded(
-                child: Text(ProfileConfig.phone, style: const TextStyle(color: Colors.white60))),
+                child: Text(ProfileConfig.phone,
+                    style: const TextStyle(color: Colors.white60))),
           ]),
         ],
       ),
@@ -2252,13 +2439,16 @@ class _ContactFormState extends State<_ContactForm> {
     if (_website.text.trim().isNotEmpty) return;
     if (ProfileConfig.contactEndpoint.contains('REPLACE_ME')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Set ProfileConfig.contactEndpoint to your Formspree URL.')),
+        const SnackBar(
+            content: Text(
+                'Set ProfileConfig.contactEndpoint to your Formspree URL.')),
       );
       return;
     }
     setState(() => _sending = true);
     try {
-      final resp = await http.post(Uri.parse(ProfileConfig.contactEndpoint), headers: {
+      final resp =
+          await http.post(Uri.parse(ProfileConfig.contactEndpoint), headers: {
         'Accept': 'application/json',
       }, body: {
         'name': _name.text.trim(),
@@ -2277,13 +2467,14 @@ class _ContactFormState extends State<_ContactForm> {
         }
       } else {
         if (mounted) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Send failed (${resp.statusCode})')));
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Send failed (${resp.statusCode})')));
         }
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     } finally {
       if (mounted) setState(() => _sending = false);
@@ -2305,13 +2496,16 @@ class _ContactFormState extends State<_ContactForm> {
           children: [
             Offstage(
               offstage: true,
-              child: TextFormField(controller: _website, decoration: const InputDecoration(labelText: 'Website')),
+              child: TextFormField(
+                  controller: _website,
+                  decoration: const InputDecoration(labelText: 'Website')),
             ),
             TextFormField(
               controller: _name,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Your name'),
-              validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+              validator: (v) =>
+                  v == null || v.trim().isEmpty ? 'Required' : null,
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -2319,14 +2513,16 @@ class _ContactFormState extends State<_ContactForm> {
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Your email'),
               keyboardType: TextInputType.emailAddress,
-              validator: (v) => v != null && v.contains('@') ? null : 'Valid email required',
+              validator: (v) =>
+                  v != null && v.contains('@') ? null : 'Valid email required',
             ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _subject,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Subject'),
-              validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
+              validator: (v) =>
+                  v == null || v.trim().isEmpty ? 'Required' : null,
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -2334,8 +2530,9 @@ class _ContactFormState extends State<_ContactForm> {
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(labelText: 'Message'),
               maxLines: 5,
-              validator: (v) =>
-                  v == null || v.trim().length < 10 ? 'Write a bit more (10+ chars)' : null,
+              validator: (v) => v == null || v.trim().length < 10
+                  ? 'Write a bit more (10+ chars)'
+                  : null,
             ),
             const SizedBox(height: 12),
             Align(
@@ -2423,13 +2620,15 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
   }
 
   void _openFullscreen(List<String> images, int startIndex) {
-    analytics.trackEvent('Lightbox Open', {'project': widget.project.id, 'index': '$startIndex'});
+    analytics.trackEvent('Lightbox Open',
+        {'project': widget.project.id, 'index': '$startIndex'});
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
       barrierLabel: 'close',
       barrierColor: Colors.black87,
-      pageBuilder: (_, __, ___) => _ImageLightbox(images: images, initialIndex: startIndex),
+      pageBuilder: (_, __, ___) =>
+          _ImageLightbox(images: images, initialIndex: startIndex),
     );
   }
 
@@ -2464,13 +2663,16 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
             final active = i == _index;
             return InkWell(
               onTap: () => _page.animateToPage(i,
-                  duration: const Duration(milliseconds: 250), curve: Curves.easeOut),
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut),
               child: Container(
                 width: active ? 18 : 8,
                 height: 8,
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
-                  color: active ? Theme.of(context).colorScheme.primary : Colors.white24,
+                  color: active
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.white24,
                   borderRadius: BorderRadius.circular(999),
                 ),
               ),
@@ -2501,7 +2703,8 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.06), borderRadius: BorderRadius.circular(999)),
+                  color: Colors.white.withOpacity(.06),
+                  borderRadius: BorderRadius.circular(999)),
               child: Text(p.kind, style: const TextStyle(fontSize: 12)),
             ),
             const SizedBox(width: 12),
@@ -2513,7 +2716,8 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
                     .take(10)
                     .map((t) => Chip(
                           label: Text(t),
-                          visualDensity: const VisualDensity(horizontal: -2, vertical: -2),
+                          visualDensity:
+                              const VisualDensity(horizontal: -2, vertical: -2),
                         ))
                     .toList(),
               ),
@@ -2531,10 +2735,14 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
             const SizedBox(height: 6),
             ...p.highlights.map((h) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('• ', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-                    Expanded(child: Text(h)),
-                  ]),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('• ',
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary)),
+                        Expanded(child: Text(h)),
+                      ]),
                 )),
             const SizedBox(height: 12),
           ],
@@ -2561,12 +2769,15 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
               ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Expanded(
                       flex: 6,
-                      child: ClipRRect(borderRadius: BorderRadius.circular(12), child: gallery)),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: gallery)),
                   const SizedBox(width: 16),
                   Expanded(flex: 5, child: content),
                 ])
               : Column(mainAxisSize: MainAxisSize.min, children: [
-                  ClipRRect(borderRadius: BorderRadius.circular(12), child: gallery),
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(12), child: gallery),
                   content,
                 ]),
         ),
@@ -2580,13 +2791,15 @@ class _ProjectDetailsState extends State<_ProjectDetails> {
 class _ImageLightbox extends StatefulWidget {
   final List<String> images;
   final int initialIndex;
-  const _ImageLightbox({super.key, required this.images, this.initialIndex = 0});
+  const _ImageLightbox(
+      {super.key, required this.images, this.initialIndex = 0});
   @override
   State<_ImageLightbox> createState() => _ImageLightboxState();
 }
 
 class _ImageLightboxState extends State<_ImageLightbox> {
-  late final PageController _controller = PageController(initialPage: widget.initialIndex);
+  late final PageController _controller =
+      PageController(initialPage: widget.initialIndex);
   int _index = 0;
 
   @override
@@ -2665,7 +2878,8 @@ class _ImageLightboxState extends State<_ImageLightbox> {
                 final active = i == _index;
                 return InkWell(
                   onTap: () => _controller.animateToPage(i,
-                      duration: const Duration(milliseconds: 200), curve: Curves.easeOut),
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOut),
                   child: Container(
                     width: active ? 18 : 8,
                     height: 8,
@@ -2694,7 +2908,7 @@ class TestimonialsSection extends StatefulWidget {
 }
 
 class _TestimonialsSectionState extends State<TestimonialsSection> {
-  final _ctrl = PageController(viewportFraction: .86);
+  final _ctrl = PageController(viewportFraction: 1.0);
   int _index = 0;
 
   @override
@@ -2707,13 +2921,18 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   Widget build(BuildContext context) {
     final items = ProfileConfig.testimonials;
     if (items.isEmpty) return const SizedBox.shrink();
-    final isCompact = MediaQuery.of(context).size.width < 700;
+    final width = MediaQuery.of(context).size.width;
+    final cardHeight = width < 700
+        ? 320.0
+        : width < 1100
+            ? 300.0
+            : 280.0;
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SectionTitle(I18n.t('testimonials_title'), kicker: '08 / Testimonials'),
       const SizedBox(height: 12),
-      AspectRatio(
-        aspectRatio: isCompact ? 1.05 : 16 / 6,
+      SizedBox(
+        height: cardHeight,
         child: PageView.builder(
           controller: _ctrl,
           onPageChanged: (i) => setState(() => _index = i),
@@ -2731,7 +2950,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
             height: 8,
             margin: const EdgeInsets.symmetric(horizontal: 4),
             decoration: BoxDecoration(
-              color: active ? Theme.of(context).colorScheme.primary : Colors.white24,
+              color: active
+                  ? Theme.of(context).colorScheme.primary
+                  : Colors.white24,
               borderRadius: BorderRadius.circular(999),
             ),
           );
@@ -2757,7 +2978,8 @@ class _TestimonialCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(children: [
-          Icon(Icons.format_quote, color: theme.colorScheme.primary.withOpacity(.8), size: 20),
+          Icon(Icons.format_quote,
+              color: theme.colorScheme.primary.withOpacity(.8), size: 20),
           const SizedBox(width: 4),
           Text('Testimonial',
               style: theme.textTheme.titleLarge?.copyWith(
@@ -2767,11 +2989,12 @@ class _TestimonialCard extends StatelessWidget {
         Text('"${t.quote}"',
             style: theme.textTheme.bodyLarge?.copyWith(height: 1.45)),
         const SizedBox(height: 8),
-        Text('${t.name} — ${t.role}', style: const TextStyle(color: Colors.white60)),
+        Text('${t.name} — ${t.role}',
+            style: const TextStyle(color: Colors.white60)),
       ],
     );
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 2),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: theme.cardColor,
@@ -2781,11 +3004,13 @@ class _TestimonialCard extends StatelessWidget {
       child: LayoutBuilder(builder: (context, c) {
         final compact = c.maxWidth < 420;
         if (compact) {
-          return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Center(child: avatar),
-            const SizedBox(height: 12),
-            content,
-          ]);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(child: avatar),
+                const SizedBox(height: 12),
+                content,
+              ]);
         }
         return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           avatar,
@@ -2799,14 +3024,22 @@ class _TestimonialCard extends StatelessWidget {
 
 class Testimonial {
   final String quote, name, role, avatar;
-  const Testimonial({required this.quote, required this.name, required this.role, required this.avatar});
+  const Testimonial(
+      {required this.quote,
+      required this.name,
+      required this.role,
+      required this.avatar});
 }
 
 // ─── Blog ─────────────────────────────────────────────────────────────────────
 
 class BlogPost {
   final String title, summary, date, url;
-  const BlogPost({required this.title, required this.summary, required this.date, required this.url});
+  const BlogPost(
+      {required this.title,
+      required this.summary,
+      required this.date,
+      required this.url});
 }
 
 class BlogSection extends StatelessWidget {
@@ -2842,12 +3075,16 @@ class _BlogCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.06), borderRadius: BorderRadius.circular(DS.pill)),
+              color: Colors.white.withOpacity(.06),
+              borderRadius: BorderRadius.circular(DS.pill)),
           child: Text(post.date, style: const TextStyle(fontSize: 12)),
         ),
         const SizedBox(height: 10),
         Text(post.title,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 6),
         Text(post.summary, style: const TextStyle(color: Colors.white60)),
         const SizedBox(height: 10),
@@ -2871,7 +3108,10 @@ class DS {
   static const pill = 999.0;
   static const divider = Color(0x1AFFFFFF);
   static List<BoxShadow> shadowSoft(BuildContext c) => [
-        BoxShadow(color: Colors.black.withOpacity(.25), blurRadius: 18, offset: const Offset(0, 10)),
+        BoxShadow(
+            color: Colors.black.withOpacity(.25),
+            blurRadius: 18,
+            offset: const Offset(0, 10)),
       ];
 }
 
@@ -2880,7 +3120,8 @@ class DS {
 class ParallaxOrbs extends StatelessWidget {
   final ScrollController controller;
   final bool isDark;
-  const ParallaxOrbs({super.key, required this.controller, required this.isDark});
+  const ParallaxOrbs(
+      {super.key, required this.controller, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -2895,9 +3136,21 @@ class ParallaxOrbs extends StatelessWidget {
           builder: (_, __) {
             final o = controller.hasClients ? controller.offset : 0.0;
             return Stack(children: [
-              _orb(left: -140 + o * .03, top: -120 + o * .015, size: 360, color: baseA.withOpacity(.22)),
-              _orb(right: -120 - o * .06, top: 220 - o * .048, size: 300, color: baseB.withOpacity(.18)),
-              _orb(left: -80 + o * .045 * .6, bottom: -100 + o * .045, size: 420, color: baseC.withOpacity(.16)),
+              _orb(
+                  left: -140 + o * .03,
+                  top: -120 + o * .015,
+                  size: 360,
+                  color: baseA.withOpacity(.22)),
+              _orb(
+                  right: -120 - o * .06,
+                  top: 220 - o * .048,
+                  size: 300,
+                  color: baseB.withOpacity(.18)),
+              _orb(
+                  left: -80 + o * .045 * .6,
+                  bottom: -100 + o * .045,
+                  size: 420,
+                  color: baseC.withOpacity(.16)),
             ]);
           },
         ),
@@ -2905,7 +3158,13 @@ class ParallaxOrbs extends StatelessWidget {
     );
   }
 
-  Widget _orb({double? left, double? right, double? top, double? bottom, required double size, required Color color}) {
+  Widget _orb(
+      {double? left,
+      double? right,
+      double? top,
+      double? bottom,
+      required double size,
+      required Color color}) {
     return Positioned(
       left: left,
       right: right,
@@ -2928,14 +3187,36 @@ class ParallaxOrbs extends StatelessWidget {
 Future<void> _launch(String url) async {
   final parsed = Uri.tryParse(url);
   if (parsed == null) return;
-  if (!await launchUrl(parsed, mode: LaunchMode.externalApplication)) {
+  final scheme = parsed.scheme.toLowerCase();
+  final isMailOrPhone =
+      scheme == 'mailto' || scheme == 'tel' || scheme == 'sms';
+  final isHttp = scheme == 'http' || scheme == 'https';
+
+  if (isMailOrPhone) {
+    await launchUrl(parsed,
+        mode: LaunchMode.platformDefault, webOnlyWindowName: '_self');
+    return;
+  }
+
+  if (kIsWeb) {
+    if (!await launchUrl(parsed,
+        mode: LaunchMode.platformDefault, webOnlyWindowName: '_blank')) {
+      await launchUrl(parsed,
+          mode: LaunchMode.platformDefault, webOnlyWindowName: '_self');
+    }
+    return;
+  }
+
+  if (!await launchUrl(parsed, mode: LaunchMode.externalApplication) &&
+      isHttp) {
     await launchUrl(parsed, mode: LaunchMode.inAppWebView);
   }
 }
 
 Widget _netImage(String url, {BoxFit fit = BoxFit.cover, bool big = false}) {
   if (kIsWeb) {
-    return Image.network(url, fit: fit, errorBuilder: (_, __, ___) => const _ImgError());
+    return Image.network(url,
+        fit: fit, errorBuilder: (_, __, ___) => const _ImgError());
   }
   return CachedNetworkImage(
     imageUrl: url,
