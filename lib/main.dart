@@ -205,9 +205,9 @@ class _PortfolioAppState extends State<PortfolioApp> {
 
 class ProfileConfig {
   static const name = 'Elouakfaoui Yassine';
-  static const title = 'Mobile Developer & SOC Analyst';
+  static const title = 'Junior Cybersecurity Analyst | Mobile Developer';
   static const tagline =
-      'From Code to Cyber Defense: Crafting Apps and Protecting Systems';
+      'Top 2% on TryHackMe · CompTIA Security+ Certified · CTF Player';
   static const location = 'Meknes, Morocco';
   static const email = 'elouakfaouiyassine@gmail.com';
   static const phone = '+212 777539454';
@@ -316,7 +316,7 @@ class ProfileConfig {
       title: 'Chat App',
       kind: 'Mobile',
       summary:
-          'E2EE chat with offline cache, message reactions, and push notifications.',
+          'Chat with offline cache, message reactions, and push notifications.',
       tags: ['Kotlin', 'Spring Boot', 'MongoDB', 'PGP', 'WebSocket'],
       github:
           'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
@@ -1165,7 +1165,7 @@ class HeroSection extends StatelessWidget {
             ],
           ),
           // ── Stats strip ─────────────────────────────────────────────────
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           const _StatsStrip(),
         ],
       );
@@ -1345,7 +1345,7 @@ class _AuroraVisualState extends State<_AuroraVisual>
       builder: (_, __) {
         final t = _c.value;
         return AspectRatio(
-          aspectRatio: 4 / 3,
+          aspectRatio: 16 / 9,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
             child: Stack(
@@ -1478,39 +1478,63 @@ class _GridPainter extends CustomPainter {
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
+  static const _bio =
+      "Junior cybersecurity analyst with a development background, currently pursuing a Master's in AI & Cybersecurity. "
+      "I spent 3 years building Android and Flutter apps across two internships, then pivoted to cybersecurity. "
+      "I've earned CompTIA Security+, ranked top 2% on TryHackMe (175+ rooms), and competed in MACC 2026. "
+      "My dev background gives me an edge in application security — I understand code from the inside.";
+
+  static const _pills = [
+    _Pill(icon: Icons.integration_instructions, text: 'Clean, testable app architectures'),
+    _Pill(icon: Icons.dataset,                  text: 'Data‑driven detections & dashboards'),
+    _Pill(icon: Icons.device_hub,               text: 'Network & endpoint triage'),
+    _Pill(icon: Icons.lock_outline,             text: 'Privacy by Design / Secure SDLC'),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(I18n.t('about_title'), kicker: '01 / About'),
-        const SizedBox(height: 16),
-        Text(
-          "Motivated Mobile Developer and SOC Analyst passionate about Blue Team cybersecurity and building secure, user-friendly mobile applications. Skilled in mobile app development and security fundamentals, with a strong interest in defending networks against threats. Actively seeking a job opportunity to apply my skills and grow in both development and cybersecurity fields.",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(height: 1.7, color: Colors.white70),
-        ),
-        const SizedBox(height: 20),
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: const [
-            _Pill(
-                icon: Icons.integration_instructions,
-                text: 'Clean, testable app architectures'),
-            _Pill(
-                icon: Icons.dataset,
-                text: 'Data‑driven detections & dashboards'),
-            _Pill(icon: Icons.device_hub, text: 'Network & endpoint triage'),
-            _Pill(
-                icon: Icons.lock_outline,
-                text: 'Privacy by Design / Secure SDLC'),
+    return LayoutBuilder(builder: (context, c) {
+      final wide = c.maxWidth > 700;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(I18n.t('about_title'), kicker: '01 / About'),
+          const SizedBox(height: 14),
+          if (wide)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: Text(
+                    _bio,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(height: 1.7, color: Colors.white70),
+                  ),
+                ),
+                const SizedBox(width: 32),
+                Expanded(
+                  flex: 4,
+                  child: Wrap(spacing: 8, runSpacing: 8, children: _pills),
+                ),
+              ],
+            )
+          else ...[
+            Text(
+              _bio,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(height: 1.7, color: Colors.white70),
+            ),
+            const SizedBox(height: 14),
+            const Wrap(spacing: 8, runSpacing: 8, children: _pills),
           ],
-        ),
-      ],
-    ).animate().fadeIn(duration: 500.ms);
+        ],
+      ).animate().fadeIn(duration: 500.ms);
+    });
   }
 }
 
