@@ -964,7 +964,7 @@ class Section extends StatelessWidget {
                 : width >= 1100
                     ? 16.0
                     : 20.0;
-    final vertical = width < 700 ? 16.0 : 24.0;
+    final vertical = width < 700 ? 10.0 : 16.0;
     final bg = altBackground
         ? isDark
             ? Colors.white.withOpacity(0.02)
@@ -978,7 +978,7 @@ class Section extends StatelessWidget {
         children: [
           child,
           if (showDivider) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             const _GradientDivider(),
           ],
         ],
@@ -1038,12 +1038,12 @@ class SectionTitle extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: primary,
                   letterSpacing: 2.5)),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
         ],
         Text(text,
             style: GoogleFonts.spaceGrotesk(
-                fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: -.5)),
-        const SizedBox(height: 8),
+                fontSize: 24, fontWeight: FontWeight.w800, letterSpacing: -.5)),
+        const SizedBox(height: 6),
         Row(
           children: [
             Container(
@@ -1114,7 +1114,7 @@ class HeroSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     // ── Typewriter roles ───────────────────────────────────
                     _TypewriterText(
                       texts: const [
@@ -1129,13 +1129,13 @@ class HeroSection extends StatelessWidget {
                         color: primary,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     Text(
                       ProfileConfig.tagline,
                       textAlign: isWide ? TextAlign.start : TextAlign.center,
                       style: TextStyle(color: muted, height: 1.5),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 14),
                     // ── CTA buttons ────────────────────────────────────────
                     Wrap(
                       spacing: 12,
@@ -1159,13 +1159,13 @@ class HeroSection extends StatelessWidget {
                 ),
               ),
               if (isWide) ...[
-                const SizedBox(width: 32),
+                const SizedBox(width: 20),
                 Expanded(flex: 4, child: const _AuroraVisual()),
               ],
             ],
           ),
           // ── Stats strip ─────────────────────────────────────────────────
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
           const _StatsStrip(),
         ],
       );
@@ -1282,15 +1282,15 @@ class _StatsStrip extends StatelessWidget {
     return LayoutBuilder(builder: (_, c) {
       final narrow = c.maxWidth < 500;
       return Wrap(
-        spacing: 16,
-        runSpacing: 12,
+        spacing: 10,
+        runSpacing: 8,
         alignment: WrapAlignment.start,
         children: items.map((item) {
           return Container(
-            constraints: BoxConstraints(minWidth: narrow ? 120 : 140),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            constraints: BoxConstraints(minWidth: narrow ? 100 : 120),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(color: primary.withOpacity(.25)),
               gradient: LinearGradient(
                 colors: [primary.withOpacity(.07), primary.withOpacity(.02)],
@@ -1302,13 +1302,13 @@ class _StatsStrip extends StatelessWidget {
               children: [
                 Text(item.$1,
                     style: GoogleFonts.spaceGrotesk(
-                        fontSize: 26,
+                        fontSize: 22,
                         fontWeight: FontWeight.w900,
                         color: primary)),
                 const SizedBox(height: 2),
                 Text(item.$2,
                     style:
-                        const TextStyle(fontSize: 12, color: Colors.white60)),
+                        const TextStyle(fontSize: 11, color: Colors.white60)),
               ],
             ),
           );
@@ -1478,63 +1478,39 @@ class _GridPainter extends CustomPainter {
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
-  static const _bio =
-      "Junior cybersecurity analyst with a development background, currently pursuing a Master's in AI & Cybersecurity. "
-      "I spent 3 years building Android and Flutter apps across two internships, then pivoted to cybersecurity. "
-      "I've earned CompTIA Security+, ranked top 2% on TryHackMe (175+ rooms), and competed in MACC 2026. "
-      "My dev background gives me an edge in application security — I understand code from the inside.";
-
-  static const _pills = [
-    _Pill(icon: Icons.integration_instructions, text: 'Clean, testable app architectures'),
-    _Pill(icon: Icons.dataset,                  text: 'Data‑driven detections & dashboards'),
-    _Pill(icon: Icons.device_hub,               text: 'Network & endpoint triage'),
-    _Pill(icon: Icons.lock_outline,             text: 'Privacy by Design / Secure SDLC'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, c) {
-      final wide = c.maxWidth > 700;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionTitle(I18n.t('about_title'), kicker: '01 / About'),
-          const SizedBox(height: 14),
-          if (wide)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: Text(
-                    _bio,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(height: 1.7, color: Colors.white70),
-                  ),
-                ),
-                const SizedBox(width: 32),
-                Expanded(
-                  flex: 4,
-                  child: Wrap(spacing: 8, runSpacing: 8, children: _pills),
-                ),
-              ],
-            )
-          else ...[
-            Text(
-              _bio,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(height: 1.7, color: Colors.white70),
-            ),
-            const SizedBox(height: 14),
-            const Wrap(spacing: 8, runSpacing: 8, children: _pills),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(I18n.t('about_title'), kicker: '01 / About'),
+        const SizedBox(height: 16),
+        Text(
+          "Junior cybersecurity analyst with a development background, currently pursuing a Master's in AI & Cybersecurity. I started my journey in mobile development — I spent 3 years learning Android (Kotlin, Java, Flutter) and completed two internships building mobile apps and backend services. Along the way, I realized my real interest was in cybersecurity: understanding how systems break, how to defend them, and the constant intellectual challenge of the field. Since transitioning, I've earned my CompTIA Security+ certification, completed 175+ TryHackMe rooms (currently ranked in the top 2% globally), finished the Cyber Security 101 and SOC Level 1 paths, and competed in 1st edition of the Moroccan Academia Cyber Competition (MACC 2026), organized by the Direction Générale de la DGSSI - Direction Générale de la Sécurité des Systèmes d'Information a national inter-university cybersecurity competition. My development background gives me an edge in application security — I understand code from the inside, which helps when reviewing applications for vulnerabilities or analyzing how exploits work. Seeking entry-level freelance opportunities to apply my skills.",
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(height: 1.7, color: Colors.white70),
+        ),
+        const SizedBox(height: 20),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: const [
+            _Pill(
+                icon: Icons.integration_instructions,
+                text: 'Clean, testable app architectures'),
+            _Pill(
+                icon: Icons.dataset,
+                text: 'Data‑driven detections & dashboards'),
+            _Pill(icon: Icons.device_hub, text: 'Network & endpoint triage'),
+            _Pill(
+                icon: Icons.lock_outline,
+                text: 'Privacy by Design / Secure SDLC'),
           ],
-        ],
-      ).animate().fadeIn(duration: 500.ms);
-    });
+        ),
+      ],
+    ).animate().fadeIn(duration: 500.ms);
   }
 }
 
