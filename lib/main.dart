@@ -955,19 +955,12 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.sizeOf(context).width;
-    final horizontal = width < 420
-        ? 10.0
-        : width < 700
-            ? 12.0
-            : width >= 1400
-                ? 12.0
-                : width >= 1100
-                    ? 16.0
-                    : 20.0;
-    final vertical = width < 700 ? 10.0 : 16.0;
+    // Edge padding: just enough to breathe on mobile, minimal on desktop
+    final horizontal = width < 600 ? 16.0 : 28.0;
+    final vertical = width < 700 ? 20.0 : 32.0;
     final bg = altBackground
         ? isDark
-            ? Colors.white.withOpacity(0.02)
+            ? Colors.white.withOpacity(0.025)
             : Colors.black.withOpacity(0.03)
         : Colors.transparent;
 
@@ -978,7 +971,7 @@ class Section extends StatelessWidget {
         children: [
           child,
           if (showDivider) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             const _GradientDivider(),
           ],
         ],
@@ -990,12 +983,10 @@ class Section extends StatelessWidget {
       width: double.infinity,
       child: Align(
         alignment: Alignment.topCenter,
-        child: width >= 900
-            ? ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1360),
-                child: sectionContent,
-              )
-            : sectionContent,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: sectionContent,
+        ),
       ),
     );
   }
@@ -1084,88 +1075,123 @@ class HeroSection extends StatelessWidget {
 
     return LayoutBuilder(builder: (context, c) {
       final isWide = c.maxWidth > 760;
+      final vh = MediaQuery.sizeOf(context).height;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: isWide ? 6 : 10,
-                child: Column(
-                  crossAxisAlignment: isWide
-                      ? CrossAxisAlignment.start
-                      : CrossAxisAlignment.center,
-                  children: [
-                    // ── Gradient name ──────────────────────────────────────
-                    ShaderMask(
-                      shaderCallback: (bounds) => LinearGradient(
-                        colors: [primary, const Color(0xFF00E5FF)],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ).createShader(bounds),
-                      child: Text(
-                        ProfileConfig.name,
+          // Hero fills most of the viewport height
+          SizedBox(
+            height: isWide ? (vh * .78).clamp(480, 720) : null,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: isWide ? 55 : 10,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: isWide
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.center,
+                    children: [
+                      // ── Badge ──────────────────────────────────────────
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: primary.withOpacity(.12),
+                          border: Border.all(color: primary.withOpacity(.35)),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Text(
+                          'Available for hire',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: primary,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // ── Gradient name ──────────────────────────────────
+                      ShaderMask(
+                        shaderCallback: (bounds) => LinearGradient(
+                          colors: [primary, const Color(0xFF00E5FF)],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ).createShader(bounds),
+                        child: Text(
+                          ProfileConfig.name,
+                          style: GoogleFonts.spaceGrotesk(
+                            fontSize: isWide ? 52 : 34,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -1.5,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      // ── Typewriter roles ────────────────────────────────
+                      _TypewriterText(
+                        texts: const [
+                          'Mobile Developer',
+                          'Flutter Developer',
+                          'SOC Analyst',
+                          'Blue Team Engineer',
+                        ],
                         style: GoogleFonts.spaceGrotesk(
-                          fontSize: isWide ? 44 : 32,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -1,
-                          color: Colors.white,
+                          fontSize: isWide ? 22 : 17,
+                          fontWeight: FontWeight.w600,
+                          color: primary,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    // ── Typewriter roles ───────────────────────────────────
-                    _TypewriterText(
-                      texts: const [
-                        'Mobile Developer',
-                        'Flutter Developer',
-                        'SOC Analyst',
-                        'Blue Team Engineer',
-                      ],
-                      style: GoogleFonts.spaceGrotesk(
-                        fontSize: isWide ? 20 : 16,
-                        fontWeight: FontWeight.w600,
-                        color: primary,
+                      const SizedBox(height: 12),
+                      Text(
+                        ProfileConfig.tagline,
+                        textAlign:
+                            isWide ? TextAlign.start : TextAlign.center,
+                        style: TextStyle(
+                            color: muted, height: 1.6, fontSize: 15),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      ProfileConfig.tagline,
-                      textAlign: isWide ? TextAlign.start : TextAlign.center,
-                      style: TextStyle(color: muted, height: 1.5),
-                    ),
-                    const SizedBox(height: 14),
-                    // ── CTA buttons ────────────────────────────────────────
-                    Wrap(
-                      spacing: 12,
-                      runSpacing: 10,
-                      alignment:
-                          isWide ? WrapAlignment.start : WrapAlignment.center,
-                      children: [
-                        FilledButton.icon(
-                          onPressed: onHireMe,
-                          icon: const Icon(Icons.mail_outline, size: 18),
-                          label: const Text('Hire Me'),
-                        ),
-                        OutlinedButton.icon(
-                          onPressed: () => _launch(ProfileConfig.github),
-                          icon: const Icon(Icons.code, size: 18),
-                          label: const Text('GitHub'),
-                        ),
-                      ],
-                    ),
-                  ],
+                      const SizedBox(height: 24),
+                      // ── CTA buttons ─────────────────────────────────────
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 10,
+                        alignment: isWide
+                            ? WrapAlignment.start
+                            : WrapAlignment.center,
+                        children: [
+                          FilledButton.icon(
+                            onPressed: onHireMe,
+                            icon: const Icon(Icons.mail_outline, size: 18),
+                            label: const Text('Hire Me'),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 22, vertical: 14),
+                            ),
+                          ),
+                          OutlinedButton.icon(
+                            onPressed: () => _launch(ProfileConfig.github),
+                            icon: const Icon(Icons.code, size: 18),
+                            label: const Text('GitHub'),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 22, vertical: 14),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              if (isWide) ...[
-                const SizedBox(width: 20),
-                Expanded(flex: 4, child: const _AuroraVisual()),
+                if (isWide) ...[
+                  const SizedBox(width: 32),
+                  Expanded(flex: 45, child: const _AuroraVisual()),
+                ],
               ],
-            ],
+            ),
           ),
           // ── Stats strip ─────────────────────────────────────────────────
-          const SizedBox(height: 40),
+          const SizedBox(height: 16),
           const _StatsStrip(),
         ],
       );
