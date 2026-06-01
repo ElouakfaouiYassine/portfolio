@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -59,6 +60,17 @@ class _PortfolioAppState extends State<PortfolioApp> {
             textStyle: base.headlineSmall, fontWeight: FontWeight.w800),
         titleLarge: GoogleFonts.spaceGrotesk(
             textStyle: base.titleLarge, fontWeight: FontWeight.w600),
+        titleMedium: GoogleFonts.spaceGrotesk(
+            textStyle: base.titleMedium, fontWeight: FontWeight.w700),
+        titleSmall: GoogleFonts.spaceGrotesk(
+            textStyle: base.titleSmall, fontWeight: FontWeight.w700),
+        bodyLarge: GoogleFonts.ibmPlexSans(textStyle: base.bodyLarge),
+        bodyMedium: GoogleFonts.ibmPlexSans(textStyle: base.bodyMedium),
+        bodySmall: GoogleFonts.ibmPlexSans(textStyle: base.bodySmall),
+        labelLarge: GoogleFonts.jetBrainsMono(
+            textStyle: base.labelLarge, fontWeight: FontWeight.w700),
+        labelMedium: GoogleFonts.jetBrainsMono(
+            textStyle: base.labelMedium, fontWeight: FontWeight.w700),
       );
 
   @override
@@ -100,7 +112,13 @@ class _PortfolioAppState extends State<PortfolioApp> {
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
-        colorSchemeSeed: Colors.indigo,
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF007A5A),
+          secondary: Color(0xFF0369A1),
+          surface: Color(0xFFF7FAFC),
+          onSurface: Color(0xFF102522),
+        ),
+        scaffoldBackgroundColor: const Color(0xFFF4F8FA),
         textTheme: I18n.current == 'ar'
             ? GoogleFonts.cairoTextTheme(baseLight)
             : _headingTheme(baseLight),
@@ -122,15 +140,15 @@ class _PortfolioAppState extends State<PortfolioApp> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(DS.pill)),
-            side: const BorderSide(color: Color(0x331B1F2A)),
+            side: const BorderSide(color: Color(0x33102522)),
           ),
         ),
         chipTheme: ChipThemeData(
           shape:
-              StadiumBorder(side: const BorderSide(color: Color(0x221B1F2A))),
-          labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          backgroundColor: const Color(0x0F1B1F2A),
-          selectedColor: const Color(0x201B1F2A),
+              StadiumBorder(side: const BorderSide(color: Color(0x2200D084))),
+          labelStyle: const TextStyle(fontWeight: FontWeight.w700),
+          backgroundColor: const Color(0x0F00D084),
+          selectedColor: const Color(0x2200D084),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -140,9 +158,15 @@ class _PortfolioAppState extends State<PortfolioApp> {
       darkTheme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        colorSchemeSeed: Colors.indigo,
-        scaffoldBackgroundColor: const Color(0xFF0B0D13),
-        cardColor: const Color(0x80121623),
+        colorScheme: const ColorScheme.dark(
+          primary: DS.signal,
+          secondary: DS.cyan,
+          tertiary: DS.amber,
+          surface: DS.surface,
+          onSurface: Color(0xFFE7FFF6),
+        ),
+        scaffoldBackgroundColor: DS.background,
+        cardColor: DS.surface,
         textTheme: I18n.current == 'ar'
             ? GoogleFonts.cairoTextTheme(baseDark)
             : _headingTheme(baseDark),
@@ -188,7 +212,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.4),
+            borderSide: BorderSide(color: DS.signal, width: 1.4),
           ),
         ),
       ),
@@ -217,34 +241,128 @@ class ProfileConfig {
   static const contactEndpoint = 'https://formspree.io/f/mpwjborw';
 
   static const mobileSkills = [
-    _Skill('Flutter', 88),
-    _Skill('Kotlin / Android', 85),
-    _Skill('Dart', 82),
-    _Skill('iOS (Swift basics)', 45),
-    _Skill('Firebase', 75),
-    _Skill('SQLite / MongoDB', 70),
-    _Skill('Design Patterns', 80),
+    _Skill('Flutter'),
+    _Skill('Kotlin'),
+    _Skill(
+      'Dart',
+    ),
+    _Skill(
+      'Swift',
+    ),
+    _Skill(
+      'Firebase',
+    ),
+    _Skill(
+      'SQLite / MongoDB',
+    ),
+    _Skill(
+      'Design Patterns',
+    ),
   ];
-  static const socSkills = [
-    _Skill('SIEM (Splunk / ELK)', 75),
-    _Skill('Incident Response', 72),
-    _Skill('Threat Hunting', 70),
-    _Skill('MITRE ATT&CK', 68),
-    _Skill('Network Forensics', 65),
-    _Skill('OSINT', 70),
-    _Skill('Python Scripting', 78),
+  static const cybersecuritySkills = [
+    _Skill(
+      'OS (Linux / Windows)',
+    ),
+    _Skill(
+      'Networking',
+    ),
+    _Skill(
+      'Cryptography',
+    ),
+    _Skill(
+      'EDR',
+    ),
+    _Skill(
+      'XDR',
+    ),
+    _Skill(
+      'SOAR',
+    ),
+    _Skill(
+      'SIEM (Splunk / ELK)',
+    ),
+    _Skill(
+      'IDS / IPS',
+    ),
+    _Skill(
+      'Incident Response',
+    ),
+    _Skill(
+      'Threat Hunting',
+    ),
+    _Skill(
+      'Metasploit',
+    ),
+    _Skill(
+      'OSINT',
+    ),
+    _Skill(
+      'MITRE ATT&CK',
+    ),
+    _Skill(
+      'Pyramid Of Pain',
+    ),
+    _Skill(
+      'Python Scripting',
+    ),
   ];
   static const toolSkills = [
-    _Skill('Git / GitHub', 88),
-    _Skill('Docker', 65),
-    _Skill('Wireshark', 72),
-    _Skill('Burp Suite', 65),
-    _Skill('Nmap', 72),
-    _Skill('YARA / Sigma', 60),
-    _Skill('Postman', 75),
+    _Skill(
+      'Git / GitHub',
+    ),
+    _Skill(
+      'Nmap',
+    ),
+    _Skill(
+      'Wireshark',
+    ),
+    _Skill(
+      'Burp Suite',
+    ),
+    _Skill(
+      'FlareVM',
+    ),
+    _Skill(
+      'REMnux',
+    ),
+    _Skill(
+      'CAPA',
+    ),
+    _Skill(
+      'Snort',
+    ),
+    _Skill(
+      'YARA / Sigma',
+    ),
+    _Skill(
+      'Postman',
+    ),
   ];
 
   static final projects = <Project>[
+    Project(
+      title: 'BlueTeam NetFlow Hunt',
+      kind: 'Security (Threat Hunting)',
+      summary:
+          'Python + Zeek pipeline to flag C2 beacons and rare destinations.',
+      tags: ['Python', 'Zeek', 'NetFlow'],
+      github:
+          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
+      demo: '',
+      imageUrl:
+          'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop',
+      category: 'cybersecurity',
+      detail:
+          'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
+      images: [
+        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format',
+      ],
+      highlights: [
+        'Rolling z-scores & rarity analysis.',
+        'Python ETL into dashboards.',
+      ],
+      id: 'blueteam',
+    ),
     Project(
       title: 'E‑commerce App',
       kind: 'Mobile (Kotlin)',
@@ -343,53 +461,6 @@ class ProfileConfig {
       ],
       id: 'chatpulse',
     ),
-    Project(
-      title: 'BlueTeam NetFlow Hunt',
-      kind: 'Security (Threat Hunting)',
-      summary:
-          'Python + Zeek pipeline to flag C2 beacons and rare destinations.',
-      tags: ['Python', 'Zeek', 'NetFlow'],
-      github:
-          'https://github.com/ElouakfaouiYassine/Sites-Sweeper?tab=readme-ov-file',
-      demo: '',
-      imageUrl:
-          'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop',
-      category: 'security',
-      detail:
-          'Threat hunting pipeline using NetFlow/Zeek to surface beaconing & rare destinations.',
-      images: [
-        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format',
-      ],
-      highlights: [
-        'Rolling z-scores & rarity analysis.',
-        'Python ETL into dashboards.',
-      ],
-      id: 'blueteam',
-    ),
-  ];
-
-  static final testimonials = <Testimonial>[
-    Testimonial(
-      quote:
-          "Yassine ships fast, writes clean code, and catches security issues early. A rare mix of mobile and blue-team skills.",
-      name: "Anas B.",
-      role: "Senior Android Engineer",
-      avatar: "https://i.pravatar.cc/120?img=12",
-    ),
-    Testimonial(
-      quote:
-          "Great incident triage and thoughtful playbooks. His detections reduced our noisy alerts by ~40%.",
-      name: "Sara M.",
-      role: "SOC Team Lead",
-      avatar: "https://i.pravatar.cc/120?img=32",
-    ),
-    Testimonial(
-      quote:
-          "Our Kotlin app's checkout went from flaky to rock-solid after his refactor and Stripe integration.",
-      name: "Ismail K.",
-      role: "Product Manager",
-      avatar: "https://i.pravatar.cc/120?img=8",
-    ),
   ];
 
   static final educationList = <Education>[
@@ -408,62 +479,71 @@ class ProfileConfig {
 
   static final posts = <BlogPost>[
     BlogPost(
-      title: "Building a Secure Kotlin Checkout Flow",
-      summary:
-          "Lessons learned from integrating Stripe with 3-D Secure in a Kotlin e-commerce app.",
-      date: "Mar 2025",
-      url: "https://medium.com/@yassine/secure-kotlin-checkout",
+      title: "MACC 2026 Write-Up OpenClaw",
+      summary: "Owning an ML Pipeline From an Open MLflow to a Pickle RCE",
+      date: "May 2026",
+      url:
+          "https://medium.com/@elouakfaouiyassine/macc-2026-write-up-openclaw-owning-an-ml-pipeline-from-an-open-mlflow-to-a-pickle-rce-727ede9dedd1",
     ),
     BlogPost(
-      title: "SOC Analyst Playbook: Reducing Alert Fatigue",
-      summary:
-          "How I tuned detections and cut noisy alerts by 40% in a SOC environment.",
-      date: "Feb 2025",
-      url: "https://medium.com/@yassine/soc-analyst-playbook",
+      title: "MACC 2026 Write-Up Lab Teletype",
+      summary: "When a Forgotten Protocol Hands You Root",
+      date: "May 2026",
+      url:
+          "https://medium.com/@elouakfaouiyassine/macc-2026-write-up-1-teletype-when-a-forgotten-protocol-hands-you-root-32b5b96fd261",
     ),
     BlogPost(
-      title: "From PHP to MongoDB Hybrid Backends",
-      summary:
-          "Exploring hybrid persistence models for mobile apps that need offline + online sync.",
-      date: "Jan 2025",
-      url: "https://medium.com/@yassine/hybrid-backends",
+      title: "MACC 2026 Write-Up Compete",
+      summary: "Chaining Four Bugs Into Full Server Compromise",
+      date: "May 2026",
+      url:
+          "https://medium.com/@elouakfaouiyassine/macc-2026-write-up-compete-chaining-four-bugs-into-full-server-compromise-de8a130745e6",
+    ),
+    BlogPost(
+      title: "MACC 2026 Write-Up Nebula",
+      summary: "Breaking an AI Assistant by Talking to the Server Behind It",
+      date: "May 2026",
+      url:
+          "https://medium.com/@elouakfaouiyassine/macc-2026-write-up-nebula-breaking-an-ai-assistant-by-talking-to-the-server-behind-it-9098c1e01693",
     ),
   ];
 
   static final experience = <ExperienceItem>[
     ExperienceItem(
-      role: 'Back-End Developer',
-      org: 'E-ContactMessage',
-      period: '1 Month',
-      bullets: [
-        'Developed REST APIs using PHP and MySQL',
-        'Designed scalable database schemas',
-        'Supported improvements in system security and performance',
-      ],
-    ),
-    ExperienceItem(
       role: 'Mobile Developer',
       org: 'E-ContactMessage',
-      period: '3 Months',
+      period: '5 Months - Internship',
       bullets: [
         'Built using Android SDK: Activities, RecyclerViews, SQLite, etc.',
         'Integrated SQLite for offline storage and remote DB sync.',
         'Applied user feedback to improve UX and navigation.',
       ],
     ),
+    ExperienceItem(
+      role: 'Back-End Developer',
+      org: 'E-ContactMessage',
+      period: '2 Months - Internship',
+      bullets: [
+        'Developed REST APIs using PHP and MySQL',
+        'Designed scalable database schemas',
+        'Supported improvements in system security and performance',
+      ],
+    ),
   ];
 
   static final certs = <Certification>[
-    Certification('Python Programming', 'Cisco', '2023'),
-    Certification('Blue Team Fundamentals (BTF)', 'CyberWarFare Labs', '2025'),
+    Certification('Security+', 'Comptia', '2026'),
+    Certification('Multi-Cloud Blue Team Analyst', 'CyberWarFare Labs', '2026'),
     Certification('Cyber Security Analyst (C3SA)', 'CyberWarFare Labs', '2025'),
+    Certification('Blue Team Fundamentals (BTF)', 'CyberWarFare Labs', '2025'),
+    Certification('Python Programming', 'Cisco', '2023'),
+    Certification('Office Word', 'Microsoft', '2022'),
   ];
 }
 
 class _Skill {
   final String name;
-  final int level; // 0–100
-  const _Skill(this.name, this.level);
+  const _Skill(this.name);
 }
 
 class Project {
@@ -533,7 +613,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   final _educationKey = GlobalKey();
   final _certsKey = GlobalKey();
   final _contactKey = GlobalKey();
-  final _testimonialsKey = GlobalKey();
   final _blogKey = GlobalKey();
 
   void _scrollTo(GlobalKey key) {
@@ -552,7 +631,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     MapEntry('Experience', _experienceKey),
     MapEntry('Education', _educationKey),
     MapEntry('Certs', _certsKey),
-    MapEntry('Testimonials', _testimonialsKey),
     MapEntry('Blog', _blogKey),
     MapEntry('Contact', _contactKey),
   ];
@@ -657,20 +735,51 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               elevation: 0,
               backgroundColor: Colors.transparent,
               surfaceTintColor: Colors.transparent,
-              title: Text(ProfileConfig.name,
-                  style: GoogleFonts.spaceGrotesk(
-                      fontWeight: FontWeight.w700, fontSize: 17)),
+              titleSpacing: 16,
+              title: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      'assets/images/j.png',
+                      width: 34,
+                      height: 34,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(ProfileConfig.name,
+                          style: GoogleFonts.spaceGrotesk(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 15,
+                              letterSpacing: -.2)),
+                      Text('Cybersecurity Portfolio',
+                          style: GoogleFonts.jetBrainsMono(
+                              color: DS.signal,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                ],
+              ),
               flexibleSpace: isWide
                   ? ClipRect(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: (widget.isDark ? Colors.black : Colors.white)
-                                .withOpacity(0.18),
+                            color: (widget.isDark
+                                    ? DS.background
+                                    : const Color(0xFFF7FAFC))
+                                .withOpacity(0.82),
                             border: const Border(
-                                bottom: BorderSide(
-                                    color: Color(0x22FFFFFF), width: 1)),
+                                bottom:
+                                    BorderSide(color: DS.divider, width: 1)),
                           ),
                         ),
                       ),
@@ -678,11 +787,10 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                   : Container(
                       decoration: BoxDecoration(
                         color: widget.isDark
-                            ? const Color(0xE00B0D13)
+                            ? DS.background.withOpacity(.94)
                             : Colors.white.withOpacity(0.95),
                         border: const Border(
-                            bottom:
-                                BorderSide(color: Color(0x22FFFFFF), width: 1)),
+                            bottom: BorderSide(color: DS.divider, width: 1)),
                       ),
                     ),
               actions: isWide
@@ -732,6 +840,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                     duration: const Duration(milliseconds: 200),
                     opacity: show ? 1 : 0,
                     child: FloatingActionButton.small(
+                      backgroundColor: DS.signal,
+                      foregroundColor: DS.background,
                       onPressed: () => _scroll.animateTo(0,
                           duration: const Duration(milliseconds: 450),
                           curve: Curves.easeOut),
@@ -754,7 +864,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [Color(0xFF3949AB), Color(0xFF1A237E)],
+                              colors: [DS.surfaceAlt, DS.background],
                             ),
                           ),
                           child: Padding(
@@ -762,21 +872,22 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
+                              children: [
                                 CircleAvatar(
                                   radius: 28,
-                                  backgroundColor: Color(0xFF3949AB),
-                                  backgroundImage: NetworkImage(
-                                      'https://github.com/ElouakfaouiYassine.png'),
+                                  backgroundColor: DS.signal.withOpacity(.12),
+                                  backgroundImage: const AssetImage(
+                                      'assets/images/logo.png'),
+                                  onBackgroundImageError: (_, __) {},
                                 ),
-                                SizedBox(height: 10),
-                                Text(ProfileConfig.name,
+                                const SizedBox(height: 10),
+                                const Text(ProfileConfig.name,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold)),
-                                SizedBox(height: 2),
-                                Text(ProfileConfig.title,
+                                const SizedBox(height: 2),
+                                const Text(ProfileConfig.title,
                                     style: TextStyle(
                                         color: Colors.white70, fontSize: 11)),
                               ],
@@ -855,10 +966,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                             altBackground: true,
                           ),
                           Section(key: _certsKey, child: const CertsSection()),
-                          Section(
-                              key: _testimonialsKey,
-                              child: const TestimonialsSection(),
-                              altBackground: true),
                           Section(key: _blogKey, child: const BlogSection()),
                           Section(
                               key: _contactKey,
@@ -912,9 +1019,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
       required VoidCallback onTap,
       required bool active}) {
     final theme = Theme.of(context);
-    final fg = active
-        ? theme.colorScheme.primary
-        : theme.textTheme.labelLarge?.color ?? Colors.white;
+    final fg =
+        active ? DS.signal : theme.textTheme.labelLarge?.color ?? Colors.white;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: TextButton(
@@ -924,9 +1030,8 @@ class _PortfolioHomeState extends State<PortfolioHome> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          backgroundColor: active
-              ? theme.colorScheme.primary.withOpacity(0.12)
-              : Colors.transparent,
+          backgroundColor:
+              active ? DS.signal.withOpacity(0.10) : Colors.transparent,
         ),
         child: Text(label,
             style: TextStyle(
@@ -955,13 +1060,12 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.sizeOf(context).width;
-    // Edge padding: just enough to breathe on mobile, minimal on desktop
-    final horizontal = width < 600 ? 16.0 : 28.0;
-    final vertical = width < 700 ? 20.0 : 32.0;
+    final horizontal = width < 600 ? 14.0 : 20.0;
+    final vertical = width < 700 ? 24.0 : 34.0;
     final bg = altBackground
         ? isDark
-            ? Colors.white.withOpacity(0.025)
-            : Colors.black.withOpacity(0.03)
+            ? DS.signal.withOpacity(0.025)
+            : DS.signal.withOpacity(0.055)
         : Colors.transparent;
 
     final sectionContent = Padding(
@@ -984,7 +1088,7 @@ class Section extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1320),
           child: sectionContent,
         ),
       ),
@@ -998,11 +1102,17 @@ class _GradientDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 1.4,
-      decoration: const BoxDecoration(
+      height: 1,
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.transparent, Color(0x55FFFFFF), Colors.transparent],
-          stops: [0.1, 0.5, 0.9],
+          colors: [
+            Colors.transparent,
+            DS.signal.withOpacity(.45),
+            DS.danger.withOpacity(.34),
+            DS.cyan.withOpacity(.22),
+            Colors.transparent
+          ],
+          stops: [0.08, 0.42, 0.58, 0.72, 0.92],
         ),
       ),
     );
@@ -1018,41 +1128,60 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+    final primary = DS.signal;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (kicker != null) ...[
-          Text(kicker!,
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  color: primary,
-                  letterSpacing: 2.5)),
-          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: primary.withOpacity(.08),
+              borderRadius: BorderRadius.circular(DS.pill),
+              border: Border.all(color: primary.withOpacity(.28)),
+            ),
+            child: Text('[ ${kicker!.toUpperCase()} ]',
+                style: GoogleFonts.jetBrainsMono(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: primary,
+                    letterSpacing: 1.5)),
+          ),
+          const SizedBox(height: 8),
         ],
         Text(text,
             style: GoogleFonts.spaceGrotesk(
-                fontSize: 24, fontWeight: FontWeight.w800, letterSpacing: -.5)),
-        const SizedBox(height: 6),
+                color: onSurface,
+                fontSize: 28,
+                fontWeight: FontWeight.w900,
+                letterSpacing: -.8)),
+        const SizedBox(height: 9),
         Row(
           children: [
             Container(
-              height: 3,
-              width: 44,
+              height: 2,
+              width: 72,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
-                gradient:
-                    LinearGradient(colors: [primary, primary.withOpacity(0)]),
+                gradient: LinearGradient(colors: [
+                  primary,
+                  DS.danger.withOpacity(.8),
+                  DS.cyan,
+                  primary.withOpacity(0)
+                ]),
               ),
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: 8),
             Container(
-              height: 3,
-              width: 20,
+              height: 6,
+              width: 6,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
-                color: primary.withOpacity(.2),
+                color: DS.danger,
+                boxShadow: [
+                  BoxShadow(color: DS.danger.withOpacity(.55), blurRadius: 10)
+                ],
               ),
             ),
           ],
@@ -1070,132 +1199,287 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final muted = Theme.of(context).colorScheme.onSurface.withOpacity(.65);
-    final primary = Theme.of(context).colorScheme.primary;
-
     return LayoutBuilder(builder: (context, c) {
-      final isWide = c.maxWidth > 760;
-      final vh = MediaQuery.sizeOf(context).height;
+      final desktop = c.maxWidth >= 960;
+      final tablet = c.maxWidth >= 640 && !desktop;
+      final heroText = _HeroCopy(isWide: desktop, onHireMe: onHireMe);
+      final visual = SizedBox(
+        height: desktop
+            ? 520
+            : tablet
+                ? 360
+                : 300,
+        child: const _AuroraVisual(),
+      );
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Hero fills most of the viewport height
-          SizedBox(
-            height: isWide ? (vh * .78).clamp(480, 720) : null,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  flex: isWide ? 55 : 10,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: isWide
-                        ? CrossAxisAlignment.start
-                        : CrossAxisAlignment.center,
-                    children: [
-                      // ── Badge ──────────────────────────────────────────
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: primary.withOpacity(.12),
-                          border: Border.all(color: primary.withOpacity(.35)),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Text(
-                          'Available for hire',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: primary,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      // ── Gradient name ──────────────────────────────────
-                      ShaderMask(
-                        shaderCallback: (bounds) => LinearGradient(
-                          colors: [primary, const Color(0xFF00E5FF)],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ).createShader(bounds),
-                        child: Text(
-                          ProfileConfig.name,
-                          style: GoogleFonts.spaceGrotesk(
-                            fontSize: isWide ? 52 : 34,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: -1.5,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      // ── Typewriter roles ────────────────────────────────
-                      _TypewriterText(
-                        texts: const [
-                          'Mobile Developer',
-                          'Flutter Developer',
-                          'SOC Analyst',
-                          'Blue Team Engineer',
-                        ],
-                        style: GoogleFonts.spaceGrotesk(
-                          fontSize: isWide ? 22 : 17,
-                          fontWeight: FontWeight.w600,
-                          color: primary,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        ProfileConfig.tagline,
-                        textAlign:
-                            isWide ? TextAlign.start : TextAlign.center,
-                        style: TextStyle(
-                            color: muted, height: 1.6, fontSize: 15),
-                      ),
-                      const SizedBox(height: 24),
-                      // ── CTA buttons ─────────────────────────────────────
-                      Wrap(
-                        spacing: 12,
-                        runSpacing: 10,
-                        alignment: isWide
-                            ? WrapAlignment.start
-                            : WrapAlignment.center,
-                        children: [
-                          FilledButton.icon(
-                            onPressed: onHireMe,
-                            icon: const Icon(Icons.mail_outline, size: 18),
-                            label: const Text('Hire Me'),
-                            style: FilledButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 22, vertical: 14),
-                            ),
-                          ),
-                          OutlinedButton.icon(
-                            onPressed: () => _launch(ProfileConfig.github),
-                            icon: const Icon(Icons.code, size: 18),
-                            label: const Text('GitHub'),
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 22, vertical: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                if (isWide) ...[
-                  const SizedBox(width: 32),
-                  Expanded(flex: 45, child: const _AuroraVisual()),
+          if (desktop)
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(flex: 56, child: heroText),
+                  const SizedBox(width: 18),
+                  Expanded(flex: 44, child: visual),
                 ],
+              ),
+            )
+          else
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                heroText,
+                SizedBox(height: tablet ? 16 : 14),
+                visual,
               ],
             ),
-          ),
-          // ── Stats strip ─────────────────────────────────────────────────
           const SizedBox(height: 16),
           const _StatsStrip(),
         ],
       );
     });
+  }
+}
+
+class _HeroCopy extends StatelessWidget {
+  final bool isWide;
+  final VoidCallback onHireMe;
+  const _HeroCopy({required this.isWide, required this.onHireMe});
+
+  @override
+  Widget build(BuildContext context) {
+    final muted = Colors.white.withOpacity(.74);
+    final headlineSize = isWide ? 54.0 : 36.0;
+
+    return Container(
+      padding: EdgeInsets.all(isWide ? 24 : 18),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: DS.signal.withOpacity(.26)),
+        boxShadow: [
+          BoxShadow(
+            color: DS.signal.withOpacity(.12),
+            blurRadius: 34,
+            spreadRadius: -16,
+            offset: const Offset(0, 18),
+          ),
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            DS.surfaceAlt.withOpacity(.88),
+            DS.surface.withOpacity(.52),
+            DS.danger.withOpacity(.035),
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment:
+            isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+        children: [
+          const _StatusBadge(),
+          const SizedBox(height: 16),
+          Text(
+            'SOC dashboard for code, traffic, and threats.',
+            textAlign: isWide ? TextAlign.start : TextAlign.center,
+            style: GoogleFonts.spaceGrotesk(
+              color: Colors.white,
+              fontSize: headlineSize,
+              height: .96,
+              fontWeight: FontWeight.w900,
+              letterSpacing: -1.8,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ShaderMask(
+            shaderCallback: (bounds) => const LinearGradient(
+              colors: [DS.signal, DS.cyan, DS.danger],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ).createShader(bounds),
+            child: Text(
+              ProfileConfig.name,
+              textAlign: isWide ? TextAlign.start : TextAlign.center,
+              style: GoogleFonts.spaceGrotesk(
+                fontSize: isWide ? 29 : 22,
+                fontWeight: FontWeight.w900,
+                letterSpacing: -.8,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          _TypewriterText(
+            texts: const [
+              'whoami: junior_security_analyst',
+              'nmap scan initialized',
+              'analyzing traffic...',
+              'access granted: bleu team mindset',
+            ],
+            style: GoogleFonts.jetBrainsMono(
+              fontSize: isWide ? 15 : 12.5,
+              fontWeight: FontWeight.w800,
+              color: DS.signal,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'I triage alerts, hunt suspicious patterns, and translate developer experience into sharper application-security decisions.',
+            textAlign: isWide ? TextAlign.start : TextAlign.center,
+            style: TextStyle(color: muted, height: 1.6, fontSize: 15),
+          ),
+          const SizedBox(height: 14),
+          const _MiniTerminal(),
+          const SizedBox(height: 18),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            alignment: isWide ? WrapAlignment.start : WrapAlignment.center,
+            children: [
+              FilledButton.icon(
+                onPressed: onHireMe,
+                icon: const Icon(Icons.radar, size: 18),
+                label: const Text('Initialize Contact'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: DS.signal,
+                  foregroundColor: DS.background,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  shadowColor: DS.signal.withOpacity(.35),
+                  elevation: 4,
+                ),
+              ),
+              OutlinedButton.icon(
+                onPressed: () => _launch(ProfileConfig.github),
+                icon: const Icon(Icons.terminal, size: 18),
+                label: const Text('Open Repository'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: DS.cyan,
+                  side: BorderSide(color: DS.cyan.withOpacity(.42)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ).animate().fadeIn(duration: 520.ms).slideY(begin: .03);
+  }
+}
+
+class _StatusBadge extends StatelessWidget {
+  const _StatusBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+      decoration: BoxDecoration(
+        color: DS.danger.withOpacity(.075),
+        border: Border.all(color: DS.danger.withOpacity(.32)),
+        borderRadius: BorderRadius.circular(DS.pill),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: DS.danger,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(color: DS.danger.withOpacity(.75), blurRadius: 12)
+              ],
+            ),
+          )
+              .animate(onPlay: (c) => c.repeat(reverse: true))
+              .fade(begin: .38, end: 1, duration: 720.ms),
+          const SizedBox(width: 8),
+          Text(
+            'ACCESS GRANTED: AVAILABLE',
+            style: GoogleFonts.jetBrainsMono(
+              color: DS.danger,
+              fontSize: 11,
+              fontWeight: FontWeight.w800,
+              letterSpacing: .7,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MiniTerminal extends StatelessWidget {
+  const _MiniTerminal();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(.28),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: DS.signal.withOpacity(.24)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          _TerminalLine(
+              command: 'whoami', output: 'Security+ / THM top 2% / SOC L1'),
+          SizedBox(height: 7),
+          _TerminalLine(
+              command: 'nmap -sV target',
+              output: 'mobile apps + backend APIs discovered'),
+          SizedBox(height: 7),
+          _TerminalLine(
+              command: 'tail -f alerts.log',
+              output: 'threat detected -> investigate',
+              critical: true),
+        ],
+      ),
+    );
+  }
+}
+
+class _TerminalLine extends StatelessWidget {
+  final String command;
+  final String output;
+  final bool critical;
+  const _TerminalLine(
+      {required this.command, required this.output, this.critical = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        style: GoogleFonts.jetBrainsMono(
+          color: Colors.white.withOpacity(.74),
+          fontSize: 12,
+          height: 1.45,
+        ),
+        children: [
+          const TextSpan(
+              text: r'$ ',
+              style: TextStyle(color: DS.signal, fontWeight: FontWeight.w800)),
+          TextSpan(
+              text: command,
+              style:
+                  const TextStyle(color: DS.cyan, fontWeight: FontWeight.w700)),
+          TextSpan(
+              text: '  ->  $output',
+              style: TextStyle(
+                  color: critical ? DS.danger : null,
+                  fontWeight: critical ? FontWeight.w800 : FontWeight.w500)),
+        ],
+      ),
+    );
   }
 }
 
@@ -1297,45 +1581,71 @@ class _StatsStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
-    final items = [
-      ('4+', 'Projects'),
-      ('3', 'Certifications'),
-      ('2+', 'Years Exp.'),
-      ('3', 'Languages'),
+    const items = [
+      (Icons.flag_outlined, '175+', 'THM rooms', DS.signal),
+      (Icons.workspace_premium_outlined, 'Security+', 'Certified', DS.signal),
+      (Icons.radar_outlined, 'SOC L1', 'Path complete', DS.cyan),
+      (Icons.warning_amber_outlined, 'CTF Player', '2024-present', DS.danger),
     ];
 
     return LayoutBuilder(builder: (_, c) {
-      final narrow = c.maxWidth < 500;
+      final columns = c.maxWidth >= 820
+          ? 4
+          : c.maxWidth >= 460
+              ? 2
+              : 1;
+      final cardWidth = (c.maxWidth - ((columns - 1) * 10)) / columns;
       return Wrap(
         spacing: 10,
-        runSpacing: 8,
+        runSpacing: 10,
         alignment: WrapAlignment.start,
         children: items.map((item) {
-          return Container(
-            constraints: BoxConstraints(minWidth: narrow ? 100 : 120),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: primary.withOpacity(.25)),
-              gradient: LinearGradient(
-                colors: [primary.withOpacity(.07), primary.withOpacity(.02)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          final accent = item.$4;
+          return SizedBox(
+            width: cardWidth,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: accent.withOpacity(.24)),
+                boxShadow: accent == DS.danger ? DS.redGlow() : null,
+                gradient: LinearGradient(
+                  colors: [
+                    accent.withOpacity(.10),
+                    DS.surface.withOpacity(.20),
+                    Colors.transparent
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
-            ),
-            child: Column(
-              children: [
-                Text(item.$1,
-                    style: GoogleFonts.spaceGrotesk(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w900,
-                        color: primary)),
-                const SizedBox(height: 2),
-                Text(item.$2,
-                    style:
-                        const TextStyle(fontSize: 11, color: Colors.white60)),
-              ],
+              child: Row(
+                children: [
+                  Icon(item.$1, color: accent, size: 22),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(item.$2,
+                            style: GoogleFonts.spaceGrotesk(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w900,
+                                color: accent)),
+                        const SizedBox(height: 1),
+                        Text(item.$3,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.jetBrainsMono(
+                                fontSize: 10,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(.62))),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }).toList(),
@@ -1355,8 +1665,8 @@ class _AuroraVisual extends StatefulWidget {
 class _AuroraVisualState extends State<_AuroraVisual>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c =
-      AnimationController(vsync: this, duration: const Duration(seconds: 9))
-        ..repeat(reverse: true);
+      AnimationController(vsync: this, duration: const Duration(seconds: 6))
+        ..repeat();
 
   @override
   void dispose() {
@@ -1366,116 +1676,430 @@ class _AuroraVisualState extends State<_AuroraVisual>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _c,
-      builder: (_, __) {
-        final t = _c.value;
-        return AspectRatio(
-          aspectRatio: 16 / 9,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: Stack(
-              fit: StackFit.expand,
+    return LayoutBuilder(builder: (context, constraints) {
+      final compact = constraints.maxWidth < 430;
+      final height =
+          constraints.maxHeight.isFinite ? constraints.maxHeight : 360;
+      return AnimatedBuilder(
+        animation: _c,
+        builder: (_, __) {
+          final t = _c.value;
+          final scanTop =
+              48.0 + t * (height - 74).clamp(120.0, 520.0).toDouble();
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(26),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: DS.signal.withOpacity(.30)),
+                boxShadow: [
+                  BoxShadow(
+                    color: DS.signal.withOpacity(.14),
+                    blurRadius: 34,
+                    spreadRadius: -14,
+                    offset: const Offset(0, 18),
+                  ),
+                ],
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF020706), Color(0xFF08231B)],
+                ),
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CustomPaint(painter: _GridPainter(opacity: .07)),
+                  Positioned.fill(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          center: Alignment(-.15 + t * .28, -.58),
+                          radius: .85,
+                          colors: [
+                            DS.signal.withOpacity(.18),
+                            DS.danger.withOpacity(.055),
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(compact ? 12 : 16),
+                    child: Column(
+                      children: [
+                        _DashboardHeader(
+                          dotBuilder: _windowDot,
+                          threatPulse: t,
+                        ),
+                        SizedBox(height: compact ? 10 : 12),
+                        Expanded(
+                          child: compact
+                              ? Column(
+                                  children: [
+                                    Expanded(child: _RadarPanel(progress: t)),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      children: const [
+                                        Expanded(
+                                          child: _ThreatTile(
+                                            icon: Icons.warning_amber_outlined,
+                                            label: 'ALERT',
+                                            value: 'credential probe',
+                                            color: DS.danger,
+                                            pulse: true,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8),
+                                        Expanded(
+                                          child: _ThreatTile(
+                                            icon: Icons.hub_outlined,
+                                            label: 'SIEM',
+                                            value: 'correlating',
+                                            color: DS.signal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 6,
+                                      child: _RadarPanel(progress: t),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      flex: 5,
+                                      child: Column(
+                                        children: const [
+                                          Expanded(
+                                            child: _ThreatTile(
+                                              icon:
+                                                  Icons.warning_amber_outlined,
+                                              label: 'THREAT DETECTED',
+                                              value: 'credential probe',
+                                              color: DS.danger,
+                                              pulse: true,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Expanded(
+                                            child: _ThreatTile(
+                                              icon: Icons.hub_outlined,
+                                              label: 'SIEM PIPELINE',
+                                              value: 'events correlated',
+                                              color: DS.signal,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Expanded(
+                                            child: _ThreatTile(
+                                              icon: Icons.travel_explore,
+                                              label: 'OSINT TRACE',
+                                              value: 'source enriched',
+                                              color: DS.cyan,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                        SizedBox(height: compact ? 10 : 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 11, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(.36),
+                            borderRadius: BorderRadius.circular(14),
+                            border:
+                                Border.all(color: DS.signal.withOpacity(.14)),
+                          ),
+                          child: Row(
+                            children: const [
+                              Expanded(
+                                  child: _ConsoleMetric(
+                                      label: 'scan',
+                                      value: 'running',
+                                      color: DS.signal)),
+                              SizedBox(width: 8),
+                              Expanded(
+                                  child: _ConsoleMetric(
+                                      label: 'risk',
+                                      value: 'medium',
+                                      color: DS.danger)),
+                              SizedBox(width: 8),
+                              Expanded(
+                                  child: _ConsoleMetric(
+                                      label: 'access',
+                                      value: 'granted',
+                                      color: DS.cyan)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: scanTop,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 1.5,
+                      decoration: BoxDecoration(
+                        color: DS.signal.withOpacity(.35),
+                        boxShadow: [
+                          BoxShadow(
+                              color: DS.signal.withOpacity(.45), blurRadius: 12)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    });
+  }
+
+  Widget _windowDot(Color color) => Container(
+        width: 9,
+        height: 9,
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      );
+}
+
+class _DashboardHeader extends StatelessWidget {
+  final Widget Function(Color color) dotBuilder;
+  final double threatPulse;
+  const _DashboardHeader({required this.dotBuilder, required this.threatPulse});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        dotBuilder(DS.danger),
+        const SizedBox(width: 6),
+        dotBuilder(DS.amber),
+        const SizedBox(width: 6),
+        dotBuilder(DS.signal),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            'root@soc:~/live-monitor',
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.jetBrainsMono(
+                color: Colors.white70,
+                fontSize: 11,
+                fontWeight: FontWeight.w800),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            color: DS.danger.withOpacity(.08 + threatPulse * .045),
+            borderRadius: BorderRadius.circular(DS.pill),
+            border: Border.all(color: DS.danger.withOpacity(.34)),
+          ),
+          child: Text(
+            'LIVE',
+            style: GoogleFonts.jetBrainsMono(
+                color: DS.danger, fontSize: 9, fontWeight: FontWeight.w900),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RadarPanel extends StatelessWidget {
+  final double progress;
+  const _RadarPanel({required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(.26),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: DS.signal.withOpacity(.18)),
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CustomPaint(painter: _RadarPainter(progress: progress)),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: DS.background.withOpacity(.72),
+                borderRadius: BorderRadius.circular(DS.pill),
+                border: Border.all(color: DS.signal.withOpacity(.24)),
+              ),
+              child: Text(
+                'analyzing traffic...',
+                style: GoogleFonts.jetBrainsMono(
+                    color: DS.signal,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ThreatTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+  final bool pulse;
+  const _ThreatTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+    this.pulse = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tile = Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(.075),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(.24)),
+        boxShadow: pulse ? DS.redGlow() : null,
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 19),
+          const SizedBox(width: 9),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // base
-                const DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFF0D0F1A), Color(0xFF1A1040)],
-                    ),
-                  ),
-                ),
-                // blobs
-                Align(
-                  alignment: Alignment(-0.9 + 0.35 * t, -0.9 + 0.25 * t),
-                  child: FractionallySizedBox(
-                    widthFactor: .75,
-                    heightFactor: .75,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(colors: [
-                          const Color(0xFF6C63FF).withOpacity(.38),
-                          const Color(0xFF6C63FF).withOpacity(0),
-                        ]),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.85 - 0.25 * t, 0.8 - 0.2 * t),
-                  child: FractionallySizedBox(
-                    widthFactor: .6,
-                    heightFactor: .6,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(colors: [
-                          const Color(0xFF00E5FF).withOpacity(.28),
-                          const Color(0xFF00E5FF).withOpacity(0),
-                        ]),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0.1 + 0.15 * t, 0.95 - 0.15 * t),
-                  child: FractionallySizedBox(
-                    widthFactor: .5,
-                    heightFactor: .5,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(colors: [
-                          const Color(0xFFFF2D95).withOpacity(.22),
-                          const Color(0xFFFF2D95).withOpacity(0),
-                        ]),
-                      ),
-                    ),
-                  ),
-                ),
-                // grid
-                CustomPaint(painter: _GridPainter(opacity: .05)),
-                // icon chips
-                _chip(Icons.smartphone, -0.72, -0.72, 'Flutter', 0.07 * t),
-                _chip(Icons.security, 0.62, -0.78, 'SOC', -0.06 * t),
-                _chip(Icons.code, 0.68, 0.50, 'Kotlin', 0.05 * t),
-                _chip(Icons.network_check, -0.58, 0.72, 'SIEM', -0.07 * t),
+                Text(label,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.jetBrainsMono(
+                        color: color,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: .4)),
+                const SizedBox(height: 4),
+                Text(value,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(.76),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700)),
               ],
             ),
           ),
-        );
-      },
+        ],
+      ),
+    );
+
+    if (!pulse) return tile;
+    return tile
+        .animate(onPlay: (c) => c.repeat(reverse: true))
+        .fade(begin: .82, end: 1, duration: 1200.ms)
+        .scale(
+            begin: const Offset(.985, .985),
+            end: const Offset(1, 1),
+            duration: 1200.ms);
+  }
+}
+
+class _ConsoleMetric extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color color;
+  const _ConsoleMetric(
+      {required this.label, required this.value, this.color = DS.signal});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('> $label',
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.jetBrainsMono(
+                color: DS.cyan, fontSize: 10, fontWeight: FontWeight.w700)),
+        const SizedBox(height: 2),
+        Text(value,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.jetBrainsMono(
+                color: color, fontSize: 11, fontWeight: FontWeight.w900)),
+      ],
     );
   }
+}
 
-  Widget _chip(
-          IconData icon, double ax, double ay, String label, double drift) =>
-      Align(
-        alignment: Alignment(ax + drift, ay + drift * .6),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.07),
-            border: Border.all(color: Colors.white.withOpacity(.12)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 14, color: Colors.white60),
-              const SizedBox(width: 6),
-              Text(label,
-                  style: const TextStyle(
-                      color: Colors.white60,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500)),
-            ],
-          ),
-        ).animate().fadeIn(duration: 600.ms),
-      );
+class _RadarPainter extends CustomPainter {
+  final double progress;
+  const _RadarPainter({required this.progress});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = size.shortestSide * .42;
+    final ring = Paint()
+      ..color = DS.signal.withOpacity(.18)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
+    final sweep = Paint()
+      ..color = DS.signal.withOpacity(.52)
+      ..strokeWidth = 2.2
+      ..strokeCap = StrokeCap.round;
+    final redPing = Paint()
+      ..color = DS.danger.withOpacity(.9)
+      ..style = PaintingStyle.fill;
+
+    for (final scale in const [.28, .52, .76, 1.0]) {
+      canvas.drawCircle(center, radius * scale, ring);
+    }
+    canvas.drawLine(Offset(center.dx - radius, center.dy),
+        Offset(center.dx + radius, center.dy), ring);
+    canvas.drawLine(Offset(center.dx, center.dy - radius),
+        Offset(center.dx, center.dy + radius), ring);
+
+    final angle = progress * math.pi * 2;
+    final sweepEnd = Offset(
+      center.dx + math.cos(angle) * radius,
+      center.dy + math.sin(angle) * radius,
+    );
+    final sweepPath = Path()
+      ..moveTo(center.dx, center.dy)
+      ..lineTo(sweepEnd.dx, sweepEnd.dy);
+    canvas.drawPath(sweepPath, sweep);
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), angle - .42,
+        .42, true, Paint()..color = DS.signal.withOpacity(.08));
+
+    final redNode = Offset(
+      center.dx + math.cos(angle + 1.15) * radius * .62,
+      center.dy + math.sin(angle + 1.15) * radius * .62,
+    );
+    canvas.drawCircle(redNode, 4.5, redPing);
+    canvas.drawCircle(redNode, 10, Paint()..color = DS.danger.withOpacity(.10));
+    canvas.drawCircle(Offset(center.dx - radius * .42, center.dy + radius * .3),
+        3.5, Paint()..color = DS.cyan);
+  }
+
+  @override
+  bool shouldRepaint(_RadarPainter old) => old.progress != progress;
 }
 
 class _GridPainter extends CustomPainter {
@@ -1484,7 +2108,7 @@ class _GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final p = Paint()
-      ..color = Colors.white.withOpacity(opacity)
+      ..color = DS.signal.withOpacity(opacity)
       ..strokeWidth = .5;
     const step = 36.0;
     for (double x = 0; x < size.width; x += step) {
@@ -1493,6 +2117,16 @@ class _GridPainter extends CustomPainter {
     for (double y = 0; y < size.height; y += step) {
       canvas.drawLine(Offset(0, y), Offset(size.width, y), p);
     }
+    final accent = Paint()
+      ..color = DS.cyan.withOpacity(opacity * 1.2)
+      ..strokeWidth = 1;
+    canvas.drawLine(
+        const Offset(0, 0), Offset(size.width, size.height), accent);
+    final breach = Paint()
+      ..color = DS.danger.withOpacity(opacity * .9)
+      ..strokeWidth = .8;
+    canvas.drawLine(
+        Offset(size.width, 0), Offset(size.width * .64, size.height), breach);
   }
 
   @override
@@ -1506,37 +2140,215 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(I18n.t('about_title'), kicker: '01 / About'),
-        const SizedBox(height: 16),
-        Text(
-          "Junior cybersecurity analyst with a development background, currently pursuing a Master's in AI & Cybersecurity. I started my journey in mobile development — I spent 3 years learning Android (Kotlin, Java, Flutter) and completed two internships building mobile apps and backend services. Along the way, I realized my real interest was in cybersecurity: understanding how systems break, how to defend them, and the constant intellectual challenge of the field. Since transitioning, I've earned my CompTIA Security+ certification, completed 175+ TryHackMe rooms (currently ranked in the top 2% globally), finished the Cyber Security 101 and SOC Level 1 paths, and competed in 1st edition of the Moroccan Academia Cyber Competition (MACC 2026), organized by the Direction Générale de la DGSSI - Direction Générale de la Sécurité des Systèmes d'Information a national inter-university cybersecurity competition. My development background gives me an edge in application security — I understand code from the inside, which helps when reviewing applications for vulnerabilities or analyzing how exploits work. Seeking entry-level freelance opportunities to apply my skills.",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(height: 1.7, color: Colors.white70),
-        ),
-        const SizedBox(height: 20),
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: const [
-            _Pill(
-                icon: Icons.integration_instructions,
-                text: 'Clean, testable app architectures'),
-            _Pill(
-                icon: Icons.dataset,
-                text: 'Data‑driven detections & dashboards'),
-            _Pill(icon: Icons.device_hub, text: 'Network & endpoint triage'),
-            _Pill(
-                icon: Icons.lock_outline,
-                text: 'Privacy by Design / Secure SDLC'),
+    final muted = Theme.of(context).colorScheme.onSurface.withOpacity(.72);
+
+    return LayoutBuilder(builder: (context, c) {
+      final wide = c.maxWidth > 840;
+      final narrative = _CyberPanel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('whoami: security-analyst',
+                style: GoogleFonts.spaceGrotesk(
+                    fontSize: 20, fontWeight: FontWeight.w800)),
+            const SizedBox(height: 12),
+            Text(
+              "Junior cybersecurity analyst pursuing a Master's in AI & Cybersecurity. My background started in mobile engineering, where I built Android, Kotlin, Flutter, backend, and database-driven systems before shifting into the work that kept triggering my curiosity: traffic patterns, attacker behavior, weak controls, and the evidence defenders use to make fast decisions.",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(height: 1.75, color: muted),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              "I bring a builder's eye into security work. I can read application logic, understand implementation tradeoffs, and map vulnerabilities to real product impact while still thinking like a SOC analyst watching the wire.",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(height: 1.75, color: muted),
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: const [
+                _Pill(icon: Icons.radar, text: 'Threat triage'),
+                _Pill(icon: Icons.search, text: 'nmap scan initialized'),
+                _Pill(icon: Icons.code, text: 'AppSec code review'),
+                _Pill(icon: Icons.memory, text: 'analyzing traffic...'),
+              ],
+            ),
           ],
         ),
+      );
+
+      final dossier = _CyberPanel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            _DossierHeader(),
+            SizedBox(height: 16),
+            _IntelTile(
+                icon: Icons.workspace_premium,
+                label: 'credentials',
+                value: 'CompTIA Security+'),
+            _IntelTile(
+                icon: Icons.flag,
+                label: 'lab telemetry',
+                value: '175+ TryHackMe rooms, top 2%'),
+            _IntelTile(
+                icon: Icons.route,
+                label: 'learning path',
+                value: 'Cyber Security 101, SOC Level 1'),
+            _IntelTile(
+                icon: Icons.warning_amber, label: 'red alert', value: 'CTFs'),
+          ],
+        ),
+      );
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(I18n.t('about_title'), kicker: '01 / About'),
+          const SizedBox(height: 18),
+          if (wide)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(flex: 7, child: narrative),
+                const SizedBox(width: 18),
+                Expanded(flex: 5, child: dossier),
+              ],
+            )
+          else
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                narrative,
+                const SizedBox(height: 16),
+                dossier,
+              ],
+            ),
+        ],
+      ).animate().fadeIn(duration: 500.ms);
+    });
+  }
+}
+
+class _CyberPanel extends StatelessWidget {
+  final Widget child;
+  const _CyberPanel({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: isDark ? DS.surface.withOpacity(.72) : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+            color: isDark
+                ? DS.signal.withOpacity(.18)
+                : DS.signal.withOpacity(.2)),
+        boxShadow: isDark
+            ? [
+                ...DS.shadowSoft(context),
+                BoxShadow(
+                  color: DS.danger.withOpacity(.055),
+                  blurRadius: 26,
+                  spreadRadius: -16,
+                  offset: const Offset(0, 18),
+                ),
+              ]
+            : null,
+      ),
+      child: child,
+    );
+  }
+}
+
+class _DossierHeader extends StatelessWidget {
+  const _DossierHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 42,
+          height: 42,
+          decoration: BoxDecoration(
+            color: DS.signal.withOpacity(.1),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: DS.signal.withOpacity(.3)),
+          ),
+          child: const Icon(Icons.verified_user_outlined, color: DS.signal),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('live analyst dossier',
+                  style: GoogleFonts.spaceGrotesk(
+                      fontWeight: FontWeight.w800, fontSize: 18)),
+              Text('access granted / evidence loaded',
+                  style: GoogleFonts.jetBrainsMono(
+                      color: DS.danger,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700)),
+            ],
+          ),
+        ),
       ],
-    ).animate().fadeIn(duration: 500.ms);
+    );
+  }
+}
+
+class _IntelTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  const _IntelTile(
+      {required this.icon, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = label.toLowerCase().contains('red') ? DS.danger : DS.signal;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: accent.withOpacity(.045),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: accent.withOpacity(.16)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: accent, size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label.toUpperCase(),
+                    style: GoogleFonts.jetBrainsMono(
+                        color: DS.cyan,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: .5)),
+                const SizedBox(height: 3),
+                Text(value,
+                    style: const TextStyle(
+                        height: 1.35, fontWeight: FontWeight.w600)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -1547,19 +2359,24 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accent = text.contains('nmap') || text.contains('traffic')
+        ? DS.danger
+        : DS.signal;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(.06),
-        border: Border.all(color: Colors.white10),
+        color: accent.withOpacity(.07),
+        border: Border.all(color: accent.withOpacity(.22)),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 15),
+          Icon(icon, size: 15, color: accent),
           const SizedBox(width: 8),
-          Text(text, style: const TextStyle(fontSize: 13)),
+          Text(text,
+              style: GoogleFonts.jetBrainsMono(
+                  fontSize: 12, fontWeight: FontWeight.w700)),
         ],
       ),
     );
@@ -1574,8 +2391,7 @@ class SkillsSection extends StatefulWidget {
   State<SkillsSection> createState() => _SkillsSectionState();
 }
 
-class _SkillsSectionState extends State<SkillsSection>
-    with SingleTickerProviderStateMixin {
+class _SkillsSectionState extends State<SkillsSection> {
   int _index = 0;
 
   @override
@@ -1584,21 +2400,27 @@ class _SkillsSectionState extends State<SkillsSection>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(I18n.t('skills_title'), kicker: '02 / Skills'),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
+        Text(
+            'Operator toolkit: detection logic, packet-level curiosity, secure app building, and field-ready tooling.',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color:
+                    Theme.of(context).colorScheme.onSurface.withOpacity(.62))),
+        const SizedBox(height: 14),
         Wrap(
           spacing: 8,
           runSpacing: 8,
           children: [
             ChoiceChip(
-                label: const Text('Mobile'),
+                label: const Text('Cybersecurity'),
                 selected: _index == 0,
                 onSelected: (_) => setState(() => _index = 0)),
             ChoiceChip(
-                label: const Text('SOC'),
+                label: const Text('App Build'),
                 selected: _index == 1,
                 onSelected: (_) => setState(() => _index = 1)),
             ChoiceChip(
-                label: const Text('Tools'),
+                label: const Text('Tooling'),
                 selected: _index == 2,
                 onSelected: (_) => setState(() => _index = 2)),
           ],
@@ -1615,8 +2437,8 @@ class _SkillsSectionState extends State<SkillsSection>
           child: _SkillCards(
             key: ValueKey(_index),
             skills: [
+              ProfileConfig.cybersecuritySkills,
               ProfileConfig.mobileSkills,
-              ProfileConfig.socSkills,
               ProfileConfig.toolSkills,
             ][_index],
           ),
@@ -1632,39 +2454,82 @@ class _SkillCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Wrap(
       spacing: 10,
       runSpacing: 10,
       children: skills.mapIndexed((i, s) {
+        final icon = _skillIcon(s.name);
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
+            color: isDark ? DS.surface.withOpacity(.72) : Colors.white,
+            borderRadius: BorderRadius.circular(DS.pill),
             border: Border.all(
-              color: primary.withOpacity(.35),
-              width: 1.2,
+              color: isDark
+                  ? DS.signal.withOpacity(.22)
+                  : DS.signal.withOpacity(.18),
             ),
-            color: isDark
-                ? Colors.white.withOpacity(.04)
-                : Colors.black.withOpacity(.04),
+            boxShadow: isDark
+                ? [
+                    BoxShadow(
+                      color: DS.signal.withOpacity(.06),
+                      blurRadius: 12,
+                      spreadRadius: -4,
+                    )
+                  ]
+                : [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(.05),
+                      blurRadius: 8,
+                      spreadRadius: -2,
+                    )
+                  ],
           ),
-          child: Text(
-            s.name,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white.withOpacity(.88) : Colors.black87,
-              letterSpacing: .2,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 15, color: DS.signal),
+              const SizedBox(width: 8),
+              Text(
+                s.name,
+                style: GoogleFonts.jetBrainsMono(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ),
         )
-            .animate(delay: Duration(milliseconds: 40 * i))
+            .animate(delay: Duration(milliseconds: 45 * i))
             .fadeIn(duration: 260.ms)
-            .scale(begin: const Offset(.92, .92), duration: 260.ms);
+            .slideY(begin: .08, duration: 260.ms);
       }).toList(),
     );
+  }
+
+  IconData _skillIcon(String name) {
+    final lower = name.toLowerCase();
+    if (lower.contains('siem') || lower.contains('splunk')) {
+      return Icons.monitor_heart_outlined;
+    }
+    if (lower.contains('incident') || lower.contains('threat')) {
+      return Icons.radar_outlined;
+    }
+    if (lower.contains('mitre') || lower.contains('yara')) {
+      return Icons.account_tree_outlined;
+    }
+    if (lower.contains('wireshark') || lower.contains('nmap')) {
+      return Icons.lan_outlined;
+    }
+    if (lower.contains('flutter') ||
+        lower.contains('kotlin') ||
+        lower.contains('dart')) {
+      return Icons.phone_android_outlined;
+    }
+    if (lower.contains('python')) return Icons.terminal_outlined;
+    if (lower.contains('docker')) return Icons.developer_board_outlined;
+    return Icons.shield_outlined;
   }
 }
 
@@ -1688,10 +2553,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             ? 2
             : 1;
     final ratio = w >= 1100
-        ? 1.05
+        ? 0.82
         : w >= 700
-            ? 0.90
-            : 0.78;
+            ? 0.78
+            : 0.70;
 
     final projects = _filter == 'all'
         ? ProfileConfig.projects
@@ -1702,11 +2567,11 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       children: [
         SectionTitle(I18n.t('projects_title'), kicker: '03 / Projects'),
         const SizedBox(height: 8),
-        Text('A mix of mobile apps and blue-team security work.',
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.white60)),
+        Text(
+            'Case files from the lab: apps, secure flows, telemetry, and threat-hunting experiments.',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color:
+                    Theme.of(context).colorScheme.onSurface.withOpacity(.62))),
         const SizedBox(height: 16),
         Wrap(
           spacing: 10,
@@ -1716,13 +2581,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 selected: _filter == 'all',
                 onSelected: (_) => setState(() => _filter = 'all')),
             ChoiceChip(
+                label: const Text('Cybersecurity'),
+                selected: _filter == 'cybersecurity',
+                onSelected: (_) => setState(() => _filter = 'cybersecurity')),
+            ChoiceChip(
                 label: const Text('Mobile'),
                 selected: _filter == 'mobile',
                 onSelected: (_) => setState(() => _filter = 'mobile')),
-            ChoiceChip(
-                label: const Text('Security'),
-                selected: _filter == 'security',
-                onSelected: (_) => setState(() => _filter = 'security')),
           ],
         ),
         const SizedBox(height: 16),
@@ -1755,44 +2620,54 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+    final primary = widget.project.category == 'security' ? DS.signal : DS.cyan;
+    final hoverAccent = _hover ? DS.danger : primary;
+    final muted = Colors.white.withOpacity(.64);
     return AnimatedScale(
-      scale: _hover ? 1.025 : 1.0,
+      scale: _hover ? 1.018 : 1.0,
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(DS.radius),
+          borderRadius: BorderRadius.circular(24),
           boxShadow: _hover
               ? [
                   BoxShadow(
-                      color: primary.withOpacity(.35),
-                      blurRadius: 22,
-                      spreadRadius: -4)
+                      color: hoverAccent.withOpacity(.28),
+                      blurRadius: 30,
+                      spreadRadius: -9)
                 ]
               : [],
           border: Border.all(
-            color: _hover ? primary.withOpacity(.4) : Colors.transparent,
+            color: _hover ? hoverAccent.withOpacity(.58) : DS.divider,
             width: 1.5,
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              DS.surfaceAlt.withOpacity(.74),
+              DS.surface.withOpacity(.58),
+              hoverAccent.withOpacity(_hover ? .075 : .045),
+            ],
           ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(DS.radius),
+          borderRadius: BorderRadius.circular(24),
           child: MouseRegion(
             onEnter: (_) => setState(() => _hover = true),
             onExit: (_) => setState(() => _hover = false),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // image
-                AspectRatio(
-                  aspectRatio: 16 / 9,
+                SizedBox(
+                  height: 172,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       AnimatedScale(
-                        scale: _hover ? 1.06 : 1.0,
+                        scale: _hover ? 1.04 : 1.0,
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.easeOut,
                         child: _netImage(widget.project.imageUrl,
@@ -1801,15 +2676,40 @@ class _ProjectCardState extends State<ProjectCard> {
                       Positioned(
                         left: 0,
                         right: 0,
+                        top: 0,
                         bottom: 0,
                         child: Container(
-                          height: 56,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [Color(0xAA000000), Color(0x00000000)],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(.10),
+                                Colors.black.withOpacity(.72)
+                              ],
                             ),
+                          ),
+                        ),
+                      ),
+                      CustomPaint(painter: _GridPainter(opacity: .035)),
+                      Positioned(
+                        left: 12,
+                        top: 12,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(.55),
+                            borderRadius: BorderRadius.circular(DS.pill),
+                            border:
+                                Border.all(color: hoverAccent.withOpacity(.42)),
+                          ),
+                          child: Text(
+                            widget.project.category.toUpperCase(),
+                            style: GoogleFonts.jetBrainsMono(
+                                color: hoverAccent,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w800),
                           ),
                         ),
                       ),
@@ -1825,18 +2725,22 @@ class _ProjectCardState extends State<ProjectCard> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(.55),
+                                color: DS.background.withOpacity(.72),
                                 borderRadius: BorderRadius.circular(DS.pill),
-                                border: Border.all(color: Colors.white24),
+                                border: Border.all(
+                                    color: hoverAccent.withOpacity(.38)),
                               ),
-                              child: const Row(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(Icons.visibility,
-                                      size: 16, color: Colors.white70),
-                                  SizedBox(width: 6),
+                                      size: 16, color: hoverAccent),
+                                  const SizedBox(width: 6),
                                   Text('View',
-                                      style: TextStyle(color: Colors.white70)),
+                                      style: GoogleFonts.jetBrainsMono(
+                                          color: Colors.white70,
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w700)),
                                 ],
                               ),
                             ),
@@ -1846,42 +2750,19 @@ class _ProjectCardState extends State<ProjectCard> {
                     ],
                   ),
                 ),
-                // content
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(14),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(.06),
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Text(widget.project.kind,
-                                style: const TextStyle(fontSize: 11)),
-                          ),
-                          const Spacer(),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: widget.project.tags
-                                  .take(2)
-                                  .map((t) => Padding(
-                                        padding: const EdgeInsets.only(left: 6),
-                                        child: Chip(
-                                            label: Text(t),
-                                            visualDensity: const VisualDensity(
-                                                horizontal: -2, vertical: -2)),
-                                      ))
-                                  .toList(),
-                            ),
-                          ),
-                        ]),
-                        const SizedBox(height: 8),
+                        Text(widget.project.kind.toUpperCase(),
+                            style: GoogleFonts.jetBrainsMono(
+                                color: primary,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: .8)),
+                        const SizedBox(height: 7),
                         Text(
                           widget.project.title,
                           maxLines: 1,
@@ -1889,31 +2770,63 @@ class _ProjectCardState extends State<ProjectCard> {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                              ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4),
                         Expanded(
                           child: Text(
                             widget.project.summary,
-                            maxLines: 3,
+                            maxLines: 4,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                color: Colors.white60, fontSize: 13),
+                            style: TextStyle(
+                                color: muted, fontSize: 13, height: 1.45),
                           ),
                         ),
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: widget.project.tags
+                              .take(3)
+                              .map((t) => Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 5),
+                                    decoration: BoxDecoration(
+                                      color: primary.withOpacity(.08),
+                                      borderRadius:
+                                          BorderRadius.circular(DS.pill),
+                                      border: Border.all(
+                                          color: primary.withOpacity(.18)),
+                                    ),
+                                    child: Text(t,
+                                        style: GoogleFonts.jetBrainsMono(
+                                            fontSize: 10,
+                                            color:
+                                                Colors.white.withOpacity(.72))),
+                                  ))
+                              .toList(),
+                        ),
+                        const SizedBox(height: 8),
                         Row(children: [
                           if (widget.project.github.isNotEmpty)
                             TextButton.icon(
                               onPressed: () => _launch(widget.project.github),
-                              icon: const Icon(Icons.code, size: 16),
-                              label: const Text('Code'),
+                              icon: const Icon(Icons.terminal, size: 16),
+                              label: const Text('Repo'),
+                              style: TextButton.styleFrom(
+                                  foregroundColor: primary,
+                                  padding: EdgeInsets.zero),
                             ),
-                          if (widget.project.demo.isNotEmpty)
-                            TextButton.icon(
-                              onPressed: () => _launch(widget.project.demo),
-                              icon: const Icon(Icons.open_in_new, size: 16),
-                              label: const Text('Live'),
-                            ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () =>
+                                _openDetails(context, widget.project),
+                            style: TextButton.styleFrom(
+                                foregroundColor: primary,
+                                padding: EdgeInsets.zero),
+                            child: const Text('Open file'),
+                          ),
                         ]),
                       ],
                     ),
@@ -1973,7 +2886,8 @@ class _TimelineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+    final primary = DS.signal;
+    final muted = Theme.of(context).colorScheme.onSurface.withOpacity(.68);
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2024,8 +2938,15 @@ class _TimelineItem extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: Colors.white10),
-                  color: Colors.white.withOpacity(.03),
+                  border: Border.all(color: DS.signal.withOpacity(.18)),
+                  gradient: LinearGradient(
+                    colors: [
+                      DS.signal.withOpacity(.045),
+                      Colors.transparent,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2064,8 +2985,8 @@ class _TimelineItem extends StatelessWidget {
                             Text('• ', style: TextStyle(color: primary)),
                             Expanded(
                                 child: Text(b,
-                                    style: const TextStyle(
-                                        color: Colors.white70, height: 1.5))),
+                                    style:
+                                        TextStyle(color: muted, height: 1.5))),
                           ],
                         ),
                       ),
@@ -2109,7 +3030,8 @@ class _EduTimelineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+    final primary = DS.cyan;
+    final muted = Theme.of(context).colorScheme.onSurface.withOpacity(.62);
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2162,11 +3084,14 @@ class _EduTimelineItem extends StatelessWidget {
                           ?.copyWith(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
                   Text('${edu.institution} · ${edu.years}',
-                      style:
-                          const TextStyle(color: Colors.white60, height: 1.5)),
+                      style: TextStyle(color: muted, height: 1.5)),
                   if (edu.details != null)
                     Text(edu.details!,
-                        style: const TextStyle(color: Colors.white38)),
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(.42))),
                 ],
               ),
             ),
@@ -2229,22 +3154,31 @@ class _CertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+    final primary = DS.signal;
+    final muted = Theme.of(context).colorScheme.onSurface.withOpacity(.62);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white12),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: primary.withOpacity(.2)),
         gradient: LinearGradient(
-          colors: [primary.withOpacity(.05), Colors.transparent],
+          colors: [primary.withOpacity(.075), DS.cyan.withOpacity(.025)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
       child: Row(
         children: [
-          Icon(Icons.verified, color: primary),
-          const SizedBox(width: 10),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: primary.withOpacity(.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(Icons.verified, color: primary),
+          ),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -2255,8 +3189,7 @@ class _CertCard extends StatelessWidget {
                         fontWeight: FontWeight.bold, fontSize: 13)),
                 const SizedBox(height: 3),
                 Text('${c.issuer} · ${c.year}',
-                    style:
-                        const TextStyle(color: Colors.white60, fontSize: 12)),
+                    style: TextStyle(color: muted, fontSize: 12)),
               ],
             ),
           ),
@@ -2280,11 +3213,13 @@ class ContactSection extends StatelessWidget {
         children: [
           SectionTitle(I18n.t('contact_title'), kicker: '09 / Contact'),
           const SizedBox(height: 8),
-          Text("Email me or send a message — I'll respond quickly.",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Colors.white60)),
+          Text(
+              "Send a mission brief, Cybersecurity question, app-security task, or freelance opportunity.",
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withOpacity(.62))),
           const SizedBox(height: 16),
           if (isWide)
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -2313,12 +3248,11 @@ class Footer extends StatelessWidget {
   const Footer({super.key});
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       child: Column(
         children: [
-          const Divider(color: Colors.white12),
+          const _GradientDivider(),
           const SizedBox(height: 20),
           // social links
           Wrap(
@@ -2345,13 +3279,10 @@ class Footer extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            '© ${DateTime.now().year} ${ProfileConfig.name}. All rights reserved.',
-            style: const TextStyle(color: Colors.white38, fontSize: 13),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'Built with Flutter · Deployed on GitHub Pages',
-            style: TextStyle(color: primary.withOpacity(.5), fontSize: 11),
+            '© ${DateTime.now().year} ${ProfileConfig.name}.',
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(.46),
+                fontSize: 13),
           ),
         ],
       ),
@@ -2374,7 +3305,8 @@ class _SocialBtn extends StatelessWidget {
       label: Text(label),
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        side: const BorderSide(color: Colors.white12),
+        side: BorderSide(color: DS.signal.withOpacity(.22)),
+        foregroundColor: DS.signal,
       ),
     );
   }
@@ -2388,18 +3320,29 @@ class _ContactSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white12),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: DS.signal.withOpacity(.2)),
+        gradient: LinearGradient(
+          colors: [DS.signal.withOpacity(.06), Colors.transparent],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ElevatedButton.icon(
+          Text('Secure channels',
+              style: GoogleFonts.spaceGrotesk(
+                  fontSize: 18, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 12),
+          FilledButton.icon(
             onPressed: () => _launch('mailto:${ProfileConfig.email}'),
             icon: const Icon(Icons.mail_outline),
             label: const Text('Email'),
+            style: FilledButton.styleFrom(
+                backgroundColor: DS.signal, foregroundColor: DS.background),
           ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
@@ -2415,19 +3358,27 @@ class _ContactSidebar extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Row(children: [
-            const Icon(Icons.place, size: 18, color: Colors.white60),
+            const Icon(Icons.place, size: 18, color: DS.signal),
             const SizedBox(width: 6),
             Expanded(
                 child: Text(ProfileConfig.location,
-                    style: const TextStyle(color: Colors.white60))),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.66)))),
           ]),
           const SizedBox(height: 8),
           Row(children: [
-            const Icon(Icons.phone, size: 18, color: Colors.white60),
+            const Icon(Icons.phone, size: 18, color: DS.signal),
             const SizedBox(width: 6),
             Expanded(
                 child: Text(ProfileConfig.phone,
-                    style: const TextStyle(color: Colors.white60))),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.66)))),
           ]),
         ],
       ),
@@ -2509,11 +3460,13 @@ class _ContactFormState extends State<_ContactForm> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white12),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: DS.signal.withOpacity(.2)),
+        color: isDark ? DS.surface.withOpacity(.42) : Colors.white,
       ),
       child: Form(
         key: _formKey,
@@ -2596,7 +3549,6 @@ class I18n {
       'education_title': 'Education',
       'certs_title': 'Certifications',
       'contact_title': 'Get in Touch',
-      'testimonials_title': 'Testimonials',
       'blog_title': 'Blog & Notes',
     },
     'fr': {
@@ -2607,7 +3559,6 @@ class I18n {
       'education_title': 'Formation',
       'certs_title': 'Certifications',
       'contact_title': 'Me contacter',
-      'testimonials_title': 'Témoignages',
       'blog_title': 'Articles & Notes',
     },
     'ar': {
@@ -2618,7 +3569,6 @@ class I18n {
       'education_title': 'التعليم',
       'certs_title': 'الشهادات',
       'contact_title': 'تواصل معي',
-      'testimonials_title': 'آراء العملاء',
       'blog_title': 'مقالات وملاحظات',
     },
   };
@@ -2925,69 +3875,6 @@ class _ImageLightboxState extends State<_ImageLightbox> {
   }
 }
 
-// ─── Testimonials ─────────────────────────────────────────────────────────────
-
-class TestimonialsSection extends StatefulWidget {
-  const TestimonialsSection({super.key});
-  @override
-  State<TestimonialsSection> createState() => _TestimonialsSectionState();
-}
-
-class _TestimonialsSectionState extends State<TestimonialsSection> {
-  final _ctrl = PageController(viewportFraction: 1.0);
-  int _index = 0;
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final items = ProfileConfig.testimonials;
-    if (items.isEmpty) return const SizedBox.shrink();
-    final width = MediaQuery.of(context).size.width;
-    final cardHeight = width < 700
-        ? 320.0
-        : width < 1100
-            ? 300.0
-            : 280.0;
-
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SectionTitle(I18n.t('testimonials_title'), kicker: '08 / Testimonials'),
-      const SizedBox(height: 12),
-      SizedBox(
-        height: cardHeight,
-        child: PageView.builder(
-          controller: _ctrl,
-          onPageChanged: (i) => setState(() => _index = i),
-          itemCount: items.length,
-          itemBuilder: (_, i) => _TestimonialCard(t: items[i]),
-        ),
-      ),
-      const SizedBox(height: 10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(items.length, (i) {
-          final active = i == _index;
-          return Container(
-            width: active ? 18 : 8,
-            height: 8,
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              color: active
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.white24,
-              borderRadius: BorderRadius.circular(999),
-            ),
-          );
-        }),
-      ),
-    ]);
-  }
-}
-
 class _TestimonialCard extends StatelessWidget {
   final Testimonial t;
   const _TestimonialCard({super.key, required this.t});
@@ -3132,12 +4019,27 @@ class _BlogCard extends StatelessWidget {
 class DS {
   static const radius = 16.0;
   static const pill = 999.0;
-  static const divider = Color(0x1AFFFFFF);
-  static List<BoxShadow> shadowSoft(BuildContext c) => [
+  static const background = Color(0xFF050A09);
+  static const surface = Color(0xFF071310);
+  static const surfaceAlt = Color(0xFF0B1D18);
+  static const signal = Color(0xFF00D084);
+  static const cyan = Color(0xFF00D8FF);
+  static const amber = Color(0xFFFFC857);
+  static const danger = Color(0xFFFF3347);
+  static const divider = Color(0x2600D084);
+  static List<BoxShadow> shadowSoft(BuildContext _) => [
         BoxShadow(
-            color: Colors.black.withOpacity(.25),
-            blurRadius: 18,
-            offset: const Offset(0, 10)),
+            color: DS.signal.withOpacity(.12),
+            blurRadius: 24,
+            offset: const Offset(0, 16)),
+      ];
+  static List<BoxShadow> redGlow() => [
+        BoxShadow(
+          color: DS.danger.withOpacity(.22),
+          blurRadius: 24,
+          spreadRadius: -10,
+          offset: const Offset(0, 14),
+        ),
       ];
 }
 
@@ -3151,9 +4053,9 @@ class ParallaxOrbs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseA = isDark ? const Color(0xFF6C63FF) : const Color(0xFF5B6CFF);
-    final baseB = isDark ? const Color(0xFF00E5FF) : const Color(0xFF00C8E5);
-    final baseC = isDark ? const Color(0xFFFF2D95) : const Color(0xFFFF4DAA);
+    final baseA = isDark ? DS.signal : const Color(0xFF00A86B);
+    final baseB = isDark ? DS.cyan : const Color(0xFF008DB3);
+    final baseC = isDark ? DS.danger : const Color(0xFFB91C1C);
 
     return IgnorePointer(
       child: RepaintBoundary(
@@ -3162,21 +4064,26 @@ class ParallaxOrbs extends StatelessWidget {
           builder: (_, __) {
             final o = controller.hasClients ? controller.offset : 0.0;
             return Stack(children: [
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _CyberBackdropPainter(offset: o, isDark: isDark),
+                ),
+              ),
               _orb(
                   left: -140 + o * .03,
                   top: -120 + o * .015,
                   size: 360,
-                  color: baseA.withOpacity(.22)),
+                  color: baseA.withOpacity(isDark ? .18 : .12)),
               _orb(
                   right: -120 - o * .06,
                   top: 220 - o * .048,
                   size: 300,
-                  color: baseB.withOpacity(.18)),
+                  color: baseB.withOpacity(isDark ? .14 : .09)),
               _orb(
                   left: -80 + o * .045 * .6,
                   bottom: -100 + o * .045,
                   size: 420,
-                  color: baseC.withOpacity(.16)),
+                  color: baseC.withOpacity(isDark ? .08 : .06)),
             ]);
           },
         ),
@@ -3206,6 +4113,46 @@ class ParallaxOrbs extends StatelessWidget {
       ),
     );
   }
+}
+
+class _CyberBackdropPainter extends CustomPainter {
+  final double offset;
+  final bool isDark;
+  const _CyberBackdropPainter({required this.offset, required this.isDark});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final grid = Paint()
+      ..color = (isDark ? DS.signal : const Color(0xFF007A5A))
+          .withOpacity(isDark ? .045 : .05)
+      ..strokeWidth = .6;
+    const step = 72.0;
+    final shift = offset % step;
+
+    for (double x = -step + shift; x < size.width + step; x += step) {
+      canvas.drawLine(
+          Offset(x, 0), Offset(x + size.height * .18, size.height), grid);
+    }
+    for (double y = -step + shift * .35; y < size.height + step; y += step) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
+    }
+
+    final node = Paint()
+      ..color = DS.cyan.withOpacity(isDark ? .10 : .07)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    for (double x = 80; x < size.width; x += 220) {
+      for (double y = 120; y < size.height; y += 260) {
+        final p = Offset(x + (offset * .02 % 28), y - (offset * .01 % 18));
+        canvas.drawCircle(p, 4, node);
+        canvas.drawLine(p, p + const Offset(72, -36), node);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CyberBackdropPainter old) =>
+      old.offset != offset || old.isDark != isDark;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
